@@ -49,7 +49,10 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 
     "home",
+    "users",
 ]
+
+AUTH_USER_MODEL = 'auth.User' 
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -151,6 +154,11 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+# Aqui você pode definir onde Django deve buscar arquivos estáticos antes de executar 'collectstatic'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'home', 'static'),  # Adicionando o diretório 'home/static'
+]
+
 #if not DEBUG:
 #    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
@@ -163,3 +171,7 @@ LOGIN_REDIRECT_URL = '/'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 CSRF_TRUSTED_ORIGINS = ['http://*', 'https://*', 'http://localhost:5085']
+
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

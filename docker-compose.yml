@@ -2,26 +2,28 @@ version: '3.8'
 services:
   appseed-app:
     container_name: appseed_app
-    restart: always
     build: .
+    volumes:
+      - .:/app
+      - ./home/static:/app/home/static  # Mapeamento específico para estáticos em 'home'
+      - ./media:/app/media              # Mapeamento correto para arquivos de mídia
     networks:
-      - db_network
       - web_network
+
   nginx:
     container_name: nginx
-    restart: always
     image: "nginx:latest"
     ports:
       - "5085:5085"
     volumes:
       - ./nginx:/etc/nginx/conf.d
+      - ./home/static:/app/home/static  # Mapeamento para estáticos em 'home'
+      - ./media:/app/media              # Mapeamento correto para arquivos de mídia
+    depends_on:
+      - appseed-app
     networks:
       - web_network
-    depends_on: 
-      - appseed-app
+
 networks:
-  db_network:
-    driver: bridge
   web_network:
     driver: bridge
- 
