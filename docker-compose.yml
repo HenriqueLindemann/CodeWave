@@ -5,8 +5,8 @@ services:
     build: .
     volumes:
       - .:/app
-      - ./home/static:/app/home/static  # Mapeamento específico para estáticos em 'home'
-      - ./media:/app/media              # Mapeamento correto para arquivos de mídia
+      - ./home/static:/app/home/static 
+      - ./media:/app/media             
     networks:
       - web_network
 
@@ -17,8 +17,8 @@ services:
       - "5085:5085"
     volumes:
       - ./nginx:/etc/nginx/conf.d
-      - ./home/static:/app/home/static  # Mapeamento para estáticos em 'home'
-      - ./media:/app/media              # Mapeamento correto para arquivos de mídia
+      - ./home/static:/app/home/static  
+      - ./media:/app/media              
     depends_on:
       - appseed-app
     networks:

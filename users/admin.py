@@ -12,7 +12,7 @@ class TagInline(admin.TabularInline):
 @admin.register(UserProfile)
 class UserProfileAdmin(admin.ModelAdmin):
     inlines = [SkillInline, TagInline]
-    list_display = ['user', 'bio', 'phone_number']
+    list_display = ['user', 'bio', 'phone_number', 'rating', 'location']
     exclude = ('skills', 'tags',)
 
 @admin.register(Skill)

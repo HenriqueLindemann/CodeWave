@@ -17,9 +17,10 @@ class UserProfile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='profile')
     bio = models.TextField(blank=True, null=True)
     phone_number = models.CharField(max_length=15, blank=True, null=True)
-    image = models.ImageField(upload_to='profile_images/', default='profile_images/default.jpg', blank=True, null=True)
-    rating = models.DecimalField(max_digits=3, decimal_places=2, null=True, blank=True)  # Média das avaliações
+    # image = models.ImageField(upload_to='profile_images/', default='profile_images/default.jpg', blank=True, null=True)
+    rating = models.DecimalField(max_digits=4, decimal_places=2, null=True, blank=True)  # Média das avaliações
     skills = models.ManyToManyField(Skill, blank=True)  # Relacionamento ManyToMany com Skill
+    location = models.CharField(max_length=20, null=True)
     tags = models.ManyToManyField(Tag, blank=True)  # Relacionamento ManyToMany com Tag
 
     def __str__(self):
