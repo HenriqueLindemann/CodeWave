@@ -1,0 +1,21 @@
+{% extends "dashboard/Templates/base.html" %}
+{% load i18n %}
+
+{% block page_content %}
+    {% blocktrans with name=user.name %}
+        Bem Vindo <b style="color: #27639d;">{{ name }}</b>!
+    {% endblocktrans %}
+    <br>
+
+
+    <hr>
+
+    <div class="card">
+        <div class="card-body">
+            <h1 class="display-1">CodeWave</h1>
+            <p class="sub-header">
+                {% trans "Conectando visões a soluções: onde sua ideia encontra seu desenvolvedor ideal."%}
+            </p>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,1279 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-06-01 16:52-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\accounts\Templates\index.html:8 .\accounts\Templates\index.html:19
+msgid "My Account"
+msgstr ""
+
+#: .\accounts\Templates\index.html:14
+msgid "Welcome"
+msgstr ""
+
+#: .\accounts\Templates\index.html:26
+msgid "Change Profile"
+msgstr ""
+
+#: .\accounts\Templates\index.html:50
+msgid "Change Password"
+msgstr ""
+
+#: .\accounts\Templates\index.html:64
+#: .\dashboard\Templates\add_company_profile.html:725
+msgid "Save"
+msgstr ""
+
+#: .\accounts\forms.py:38
+msgid "Password"
+msgstr ""
+
+#: .\accounts\forms.py:42
+msgid "Repeat the password"
+msgstr "Repeat the password"
+
+#: .\accounts\forms.py:44
+msgid "Repeat the same password for verification."
+msgstr "Repeat the same password for verification."
+
+#: .\accounts\forms.py:77
+msgid "Senha"
+msgstr "Password"
+
+#: .\accounts\models.py:17 .\dashboard\Templates\user_profile.html:10
+msgid "Username"
+msgstr ""
+
+#: .\accounts\models.py:23
+msgid ""
+"Enter a valid username. This value may contain only letters, numbers, and "
+"@/./+/-/_ characters."
+msgstr ""
+
+#: .\accounts\models.py:27
+msgid ""
+"A username that will be used for identification and login on the platform."
+msgstr ""
+
+#: .\accounts\models.py:29 .\dashboard\Templates\user_profile.html:11
+#: .\dashboard\models.py:10
+msgid "Name"
+msgstr ""
+
+#: .\accounts\models.py:30 .\dashboard\Templates\user_profile.html:12
+msgid "E-mail"
+msgstr ""
+
+#: .\accounts\models.py:31 .\dashboard\Templates\user_profile.html:16
+msgid "Staff Status"
+msgstr ""
+
+#: .\accounts\models.py:32 .\dashboard\Templates\user_profile.html:17
+msgid "Active Status"
+msgstr ""
+
+#: .\accounts\models.py:33 .\dashboard\Templates\user_profile.html:18
+msgid "Date Joined"
+msgstr ""
+
+#: .\accounts\models.py:34 .\dashboard\Templates\user_profile.html:13
+msgid "Institution"
+msgstr ""
+
+#: .\accounts\models.py:35 .\dashboard\Templates\user_profile.html:14
+msgid "Job"
+msgstr ""
+
+#: .\accounts\models.py:36 .\dashboard\Templates\user_profile.html:15
+msgid "Role"
+msgstr ""
+
+#: .\accounts\models.py:44
+msgid "user"
+msgstr ""
+
+#: .\accounts\models.py:45
+msgid "users"
+msgstr ""
+
+#: .\core\Templates\login\login.html:10 .\core\Templates\login\register.html:8
+#: .\dashboard\Templates\base.html:7
+msgid "GT-IMPACTO - Simulation of Economic Aspects of Cybersecurity"
+msgstr ""
+
+#: .\core\Templates\login\login.html:90
+msgid "Entrar"
+msgstr "Login"
+
+#: .\core\Templates\login\login.html:91
+msgid "Type your username and password to access the platform"
+msgstr ""
+
+#: .\core\Templates\login\login.html:111
+msgid "Remember"
+msgstr ""
+
+#: .\core\Templates\login\login.html:115
+msgid "Enter"
+msgstr ""
+
+#: .\core\Templates\login\login.html:121
+msgid "Don't have an account?"
+msgstr ""
+
+#: .\core\Templates\login\login.html:123
+msgid "Register"
+msgstr ""
+
+#: .\core\Templates\login\register.html:52
+msgid "Register in the platform"
+msgstr ""
+
+#: .\core\Templates\login\register.html:53
+msgid ""
+"Don't have an account to access the platform? Create one now. It's quick :)"
+msgstr ""
+
+#: .\core\Templates\login\register.html:131
+msgid "Create account"
+msgstr ""
+
+#: .\core\Templates\login\register.html:138
+msgid "Already have an account?"
+msgstr ""
+
+#: .\core\Templates\login\register.html:140
+msgid "Login"
+msgstr ""
+
+#: .\core\settings.py:122
+msgid "English"
+msgstr ""
+
+#: .\core\settings.py:123
+msgid "Português"
+msgstr ""
+
+#: .\dashboard\Templates\add_company_profile.html:11
+msgid "Add Company Profile"
+msgstr ""
+
+#: .\dashboard\Templates\add_company_profile.html:26
+#: .\dashboard\Templates\company_profile_detail.html:23
+msgid "Business Dimension"
+msgstr ""
+
+#: .\dashboard\Templates\add_company_profile.html:199
+#: .\dashboard\Templates\company_profile_detail.html:95
+msgid "Technical Dimension"
+msgstr ""
+
+#: .\dashboard\Templates\add_company_profile.html:391
+#: .\dashboard\Templates\company_profile_detail.html:208
+msgid "Human Dimension"
+msgstr ""
+
+#: .\dashboard\Templates\add_company_profile.html:507
+#: .\dashboard\Templates\company_profile_detail.html:282
+msgid "Governance Dimension"
+msgstr ""
+
+#: .\dashboard\Templates\add_company_profile.html:705
+msgid "Visibility"
+msgstr ""
+
+#: .\dashboard\Templates\base.html:57
+msgid "Configurations"
+msgstr ""
+
+#: .\dashboard\Templates\base.html:63 .\dashboard\Templates\base.html:205
+msgid "Log out"
+msgstr ""
+
+#: .\dashboard\Templates\base.html:74
+msgid "Menu"
+msgstr ""
+
+#: .\dashboard\Templates\base.html:79
+#: .\dashboard\Templates\company_profile_detail.html:12
+msgid "Company Profile"
+msgstr ""
+
+#: .\dashboard\Templates\base.html:86
+msgid "View Company"
+msgstr ""
+
+#: .\dashboard\Templates\base.html:91
+msgid "Add Company"
+msgstr ""
+
+#: .\dashboard\Templates\base.html:191
+msgid "My account"
+msgstr ""
+
+#: .\dashboard\Templates\base.html:197
+msgid "Settings"
+msgstr ""
+
+#: .\dashboard\Templates\base.html:250
+msgid "About"
+msgstr ""
+
+#: .\dashboard\Templates\base.html:251
+msgid "Team"
+msgstr ""
+
+#: .\dashboard\Templates\base.html:252
+msgid "Contact"
+msgstr ""
+
+#: .\dashboard\Templates\company_analisys.html:5
+msgid "Analisys of"
+msgstr ""
+
+#: .\dashboard\Templates\company_analisys.html:13
+msgid "Technical Dimension Protection"
+msgstr ""
+
+#: .\dashboard\Templates\company_profile_detail.html:27
+msgid "Company Name"
+msgstr ""
+
+#: .\dashboard\Templates\company_profile_detail.html:31
+#: .\dashboard\models.py:17
+msgid "Headquarters Country"
+msgstr ""
+
+#: .\dashboard\Templates\company_profile_detail.html:36
+#: .\dashboard\models.py:49
+msgid "Industry Type"
+msgstr ""
+
+#: .\dashboard\Templates\company_profile_detail.html:42
+#: .\dashboard\models.py:368 .\dashboard\models.py:391
+#: .\dashboard\models.py:414 .\dashboard\models.py:436
+msgid "Company Size"
+msgstr ""
+
+#: .\dashboard\Templates\company_profile_detail.html:48
+msgid "Annual Revenue"
+msgstr ""
+
+#: .\dashboard\Templates\company_profile_detail.html:52
+#: .\dashboard\models.py:56
+msgid "Employee Count"
+msgstr ""
+
+#: .\dashboard\Templates\company_profile_detail.html:56
+#, python-format
+msgid "Remote Work (%%)"
+msgstr ""
+
+#: .\dashboard\Templates\company_profile_detail.html:60
+#, python-format
+msgid "Growth Rate (%%)"
+msgstr ""
+
+#: .\dashboard\Templates\company_profile_detail.html:64
+msgid "Cybersecurity Spending"
+msgstr ""
+
+#: .\dashboard\Templates\company_profile_detail.html:72
+msgid "Company has Global Presence"
+msgstr ""
+
+#: .\dashboard\Templates\company_profile_detail.html:78
+#: .\dashboard\models.py:74
+msgid "Balanced Investments"
+msgstr ""
+
+#: .\dashboard\Templates\company_profile_detail.html:84
+msgid "Assets Value are Determined"
+msgstr ""
+
+#: .\dashboard\Templates\company_profile_detail.html:99
+msgid "Number of Authentication Factors"
+msgstr ""
+
+#: .\dashboard\Templates\company_profile_detail.html:104
+msgid "Cloud Solution"
+msgstr ""
+
+#: .\dashboard\Templates\company_profile_detail.html:109
+#: .\dashboard\models.py:161
+msgid "Network Infrastructure"
+msgstr ""
+
+#: .\dashboard\Templates\company_profile_detail.html:118
+msgid "Company has Updated Asset Inventory"
+msgstr ""
+
+#: .\dashboard\Templates\company_profile_detail.html:125
+msgid "Systems have Periodic System Updates"
+msgstr ""
+
+#: .\dashboard\Templates\company_profile_detail.html:132
+msgid "IT System are Monitored"
+msgstr ""
+
+#: .\dashboard\Templates\company_profile_detail.html:139
+#: .\dashboard\models.py:107
+msgid "Regular Critical Information Backups"
+msgstr ""
+
+#: .\dashboard\Templates\company_profile_detail.html:146
+#: .\dashboard\models.py:112
+msgid "Offsite Backups"
+msgstr ""
+
+#: .\dashboard\Templates\company_profile_detail.html:153
+#: .\dashboard\models.py:117
+msgid "Regular Backup Checks"
+msgstr ""
+
+#: .\dashboard\Templates\company_profile_detail.html:160
+#: .\dashboard\models.py:122
+msgid "Data Encryption in Storage"
+msgstr ""
+
+#: .\dashboard\Templates\company_profile_detail.html:167
+#: .\dashboard\models.py:127
+msgid "Data Encryption in Transit"
+msgstr ""
+
+#: .\dashboard\Templates\company_profile_detail.html:174
+#: .\dashboard\models.py:132
+msgid "Secure Data Disposal Process"
+msgstr ""
+
+#: .\dashboard\Templates\company_profile_detail.html:181
+#: .\dashboard\models.py:137
+msgid "Properly Configured IT Systems"
+msgstr ""
+
+#: .\dashboard\Templates\company_profile_detail.html:188
+#: .\dashboard\models.py:172
+msgid "VPN for Remote Access"
+msgstr ""
+
+#: .\dashboard\Templates\company_profile_detail.html:195
+#: .\dashboard\models.py:177
+msgid "Continuous Vulnerability Identification"
+msgstr ""
+
+#: .\dashboard\Templates\company_profile_detail.html:215
+#: .\dashboard\models.py:183
+msgid "Cybersecurity Awareness"
+msgstr ""
+
+#: .\dashboard\Templates\company_profile_detail.html:222
+#: .\dashboard\models.py:188
+msgid "Cybersecurity Training"
+msgstr ""
+
+#: .\dashboard\Templates\company_profile_detail.html:229
+#: .\dashboard\models.py:193
+msgid "Incident Reporting Procedures"
+msgstr ""
+
+#: .\dashboard\Templates\company_profile_detail.html:236
+#: .\dashboard\models.py:198
+msgid "Documented Response Plan"
+msgstr ""
+
+#: .\dashboard\Templates\company_profile_detail.html:243
+#: .\dashboard\models.py:203
+msgid "Incident Report Awareness"
+msgstr ""
+
+#: .\dashboard\Templates\company_profile_detail.html:250
+msgid "Response Plan is Updated"
+msgstr ""
+
+#: .\dashboard\Templates\company_profile_detail.html:257
+#: .\dashboard\models.py:213
+msgid "Incident Simulation"
+msgstr ""
+
+#: .\dashboard\Templates\company_profile_detail.html:264
+#: .\dashboard\models.py:218
+msgid "Operational Recovery Capacity"
+msgstr ""
+
+#: .\dashboard\Templates\company_profile_detail.html:271
+msgid "Continuous Credential Maintenance"
+msgstr ""
+
+#: .\dashboard\Templates\company_profile_detail.html:286
+#, python-format
+msgid "Service Provider Risk (%%)"
+msgstr ""
+
+#: .\dashboard\Templates\company_profile_detail.html:290
+#, python-format
+msgid "Critical Supplier Dependency (%%)"
+msgstr ""
+
+#: .\dashboard\Templates\company_profile_detail.html:294
+msgid "Cybersecurity Investment"
+msgstr ""
+
+#: .\dashboard\Templates\company_profile_detail.html:302
+#: .\dashboard\models.py:229
+msgid "Risk Prioritization"
+msgstr ""
+
+#: .\dashboard\Templates\company_profile_detail.html:308
+#: .\dashboard\models.py:234
+msgid "Risk Reassessment"
+msgstr ""
+
+#: .\dashboard\Templates\company_profile_detail.html:314
+#: .\dashboard\models.py:239
+msgid "Vulnerability Identification"
+msgstr ""
+
+#: .\dashboard\Templates\company_profile_detail.html:320
+#: .\dashboard\models.py:244
+msgid "IT Records Presence"
+msgstr ""
+
+#: .\dashboard\Templates\company_profile_detail.html:326
+msgid "Network Systems have Traffic Monitoring"
+msgstr ""
+
+#: .\dashboard\Templates\company_profile_detail.html:332
+#: .\dashboard\models.py:254
+msgid "Threat Identification Process"
+msgstr ""
+
+#: .\dashboard\Templates\company_profile_detail.html:338
+msgid "Metrics are Used for Comparison"
+msgstr ""
+
+#: .\dashboard\Templates\company_profile_detail.html:344
+#: .\dashboard\models.py:282
+msgid "Updated Data Protection Policies"
+msgstr ""
+
+#: .\dashboard\Templates\company_profile_detail.html:350
+#: .\dashboard\models.py:287
+msgid "Privacy Notifications Provision"
+msgstr ""
+
+#: .\dashboard\Templates\company_profile_detail.html:356
+#: .\dashboard\models.py:292
+msgid "Minimal Data Collection"
+msgstr ""
+
+#: .\dashboard\Templates\company_profile_detail.html:362
+msgid "Data is Secure and is Deleted and Anonymized"
+msgstr ""
+
+#: .\dashboard\Templates\company_profile_detail.html:368
+#: .\dashboard\models.py:302
+msgid "Security Controls Implementation"
+msgstr ""
+
+#: .\dashboard\Templates\company_profile_detail.html:378
+msgid "Company Analisys"
+msgstr ""
+
+#: .\dashboard\Templates\company_profile_list.html:6
+msgid "Company Profiles"
+msgstr ""
+
+#: .\dashboard\Templates\index.html:5
+#, python-format
+msgid ""
+"\n"
+"        Welcome <b>%(name)s</b>!\n"
+"    "
+msgstr ""
+
+#: .\dashboard\Templates\index.html:16
+msgid ""
+"Plataforma de Capacitação em Cibersegurança Baseada em Modelagem e Simulação "
+"de Aspectos e Impactos Econômicos de Ciberataques"
+msgstr "Cybersecurity Training Platform Based on Modeling and Simulation of Economic Aspects and Impacts of Cyberattacks"
+
+
+#: .\dashboard\Templates\user_profile.html:8
+msgid "User Profile"
+msgstr ""
+
+#: .\dashboard\Templates\user_profile.html:16
+#: .\dashboard\Templates\user_profile.html:17
+msgid "Yes,No"
+msgstr ""
+
+#: .\dashboard\admin.py:99 .\dashboard\models.py:323 .\dashboard\models.py:332
+#: .\dashboard\models.py:345
+msgid "Publisher"
+msgstr ""
+
+#: .\dashboard\admin.py:102 .\dashboard\models.py:343
+msgid "Link"
+msgstr ""
+
+#: .\dashboard\admin.py:103
+msgid "View Report"
+msgstr ""
+
+#: .\dashboard\admin.py:117 .\dashboard\admin.py:144 .\dashboard\admin.py:170
+#: .\dashboard\admin.py:196
+msgid "No report available"
+msgstr ""
+
+#: .\dashboard\admin.py:118 .\dashboard\admin.py:145 .\dashboard\admin.py:171
+#: .\dashboard\admin.py:197 .\dashboard\models.py:361
+msgid "Report"
+msgstr ""
+
+#: .\dashboard\admin.py:123 .\dashboard\admin.py:150 .\dashboard\admin.py:176
+#: .\dashboard\admin.py:202
+msgid "Not available"
+msgstr ""
+
+#: .\dashboard\admin.py:124 .\dashboard\admin.py:151 .\dashboard\admin.py:177
+#: .\dashboard\admin.py:203 .\dashboard\models.py:373 .\dashboard\models.py:396
+#: .\dashboard\models.py:418 .\dashboard\models.py:439
+msgid "Cost"
+msgstr ""
+
+#: .\dashboard\models.py:13
+msgid "Enter the full legal name of the company."
+msgstr ""
+
+#: .\dashboard\models.py:20
+msgid ""
+"Specify the country where the company's main headquarters is located. GV.OC"
+msgstr ""
+
+#: .\dashboard\models.py:24
+msgid "Global Presence"
+msgstr ""
+
+#: .\dashboard\models.py:25
+msgid ""
+"Mark this box if the company operates in multiple countries around the "
+"world. GV.OC"
+msgstr ""
+
+#: .\dashboard\models.py:29
+msgid "Annual Revenue ($)"
+msgstr ""
+
+#: .\dashboard\models.py:31
+msgid ""
+"Specify the company's total annual revenue in U.S. dollars. Example: 500000 "
+"for $500,000. GV.OC"
+msgstr ""
+
+#: .\dashboard\models.py:35
+msgid "Size"
+msgstr ""
+
+#: .\dashboard\models.py:38
+msgid "Micro"
+msgstr ""
+
+#: .\dashboard\models.py:39
+msgid "Small"
+msgstr ""
+
+#: .\dashboard\models.py:40
+msgid "Medium"
+msgstr ""
+
+#: .\dashboard\models.py:41
+msgid "Large"
+msgstr ""
+
+#: .\dashboard\models.py:45
+msgid ""
+"Choose the size category that best represents the company based on number of "
+"employees or annual revenue. GV.OC"
+msgstr ""
+
+#: .\dashboard\models.py:52
+msgid ""
+"Enter the primary industry or sector in which the company operates. GV.OC"
+msgstr ""
+
+#: .\dashboard\models.py:58
+msgid ""
+"Enter the total number of individuals employed by the company. Example: 250. "
+"GV.OC"
+msgstr ""
+
+#: .\dashboard\models.py:62
+msgid "Remote Work Rate (%)"
+msgstr ""
+
+#: .\dashboard\models.py:64
+msgid ""
+"Enter the approximate percentage of employees working remotely. Example: "
+"Enter 70 for 70%. GV.OC"
+msgstr ""
+
+#: .\dashboard\models.py:68
+msgid "Growth Rate (%)"
+msgstr ""
+
+#: .\dashboard\models.py:70
+msgid ""
+"Enter the annual growth rate as a percentage. Example: Enter 10 for 10%. GV."
+"OC"
+msgstr ""
+
+#: .\dashboard\models.py:75
+msgid ""
+"Check this box if the company maintains a balanced approach to investments, "
+"considering both risks and financial impacts. ID.RA"
+msgstr ""
+
+#: .\dashboard\models.py:79
+msgid "Cybersecurity Spending ($)"
+msgstr ""
+
+#: .\dashboard\models.py:81
+msgid ""
+"Enter the annual amount spent on cybersecurity in U.S. dollars. Example: "
+"100000 for $100,000. GV.RM"
+msgstr ""
+
+#: .\dashboard\models.py:85
+msgid "Assets Value"
+msgstr ""
+
+#: .\dashboard\models.py:86
+msgid ""
+"Mark this box if the value of the company's assets includes tangible items "
+"like hardware and software as well as intangibles like data and intellectual "
+"property. ID.AM"
+msgstr ""
+
+#: .\dashboard\models.py:92
+msgid "Updated Inventory"
+msgstr ""
+
+#: .\dashboard\models.py:93
+msgid ""
+"Check this box if the company maintains an up-to-date inventory of all "
+"hardware, software, and digital assets. ID.AM, PR.PS-02"
+msgstr ""
+
+#: .\dashboard\models.py:97
+msgid "Periodic System Updates"
+msgstr ""
+
+#: .\dashboard\models.py:98
+msgid ""
+"Mark this if the company regularly updates its operating systems and "
+"software to ensure security. ID.AM, PR.PS-02, PR.PS-03"
+msgstr ""
+
+#: .\dashboard\models.py:102
+msgid "IT System Monitoring"
+msgstr ""
+
+#: .\dashboard\models.py:103
+msgid ""
+"Check this box if the company's IT systems are continuously monitored for "
+"any unusual activities or threats. PR.PS"
+msgstr ""
+
+#: .\dashboard\models.py:108
+msgid ""
+"Indicate here if the company regularly backs up essential data to prevent "
+"loss in case of system failures. PR.DS-11"
+msgstr ""
+
+#: .\dashboard\models.py:113
+msgid ""
+"Check this if backups are stored in a secure, remote location separate from "
+"the main place of business. PR.DS-11"
+msgstr ""
+
+#: .\dashboard\models.py:118
+msgid ""
+"Mark this box if the company routinely checks backup integrity and "
+"accessibility. PR.DS-11"
+msgstr ""
+
+#: .\dashboard\models.py:123
+msgid ""
+"Indicate here if the company employs encryption to protect stored data from "
+"unauthorized access. PR.DS-01"
+msgstr ""
+
+#: .\dashboard\models.py:128
+msgid ""
+"Mark this if the company encrypts data during transmission to prevent "
+"interception. PR.DS-02"
+msgstr ""
+
+#: .\dashboard\models.py:133
+msgid ""
+"Check this box if the company follows a secure process for disposing of or "
+"deleting data that is no longer needed. PR.DS"
+msgstr ""
+
+#: .\dashboard\models.py:138
+msgid ""
+"Indicate here if the company ensures that all IT systems are properly set up "
+"and configured for optimal security. PR.PS-01, PR.PS-02, PR.PS-03"
+msgstr ""
+
+#: .\dashboard\models.py:142
+msgid "Authentication Factors"
+msgstr ""
+
+#: .\dashboard\models.py:144
+msgid ""
+"Enter the total number of authentication factors used for securing user "
+"access. Common factors include passwords, security tokens, and biometrics. "
+"PR.AA"
+msgstr ""
+
+#: .\dashboard\models.py:148
+msgid "Cloud Solution Type"
+msgstr ""
+
+#: .\dashboard\models.py:151
+msgid "None"
+msgstr ""
+
+#: .\dashboard\models.py:152
+msgid "Private"
+msgstr ""
+
+#: .\dashboard\models.py:153
+msgid "Public"
+msgstr ""
+
+#: .\dashboard\models.py:154
+msgid "Hybrid"
+msgstr ""
+
+#: .\dashboard\models.py:157
+msgid ""
+"Select the type of cloud solution your company uses. 'None' for no cloud "
+"usage, 'Private' for internal cloud services, 'Public' for external cloud "
+"services, and 'Hybrid' for a mix of both. PR.PS, PR.DS"
+msgstr ""
+
+#: .\dashboard\models.py:164
+msgid "LAN"
+msgstr ""
+
+#: .\dashboard\models.py:165
+msgid "WAN"
+msgstr ""
+
+#: .\dashboard\models.py:168
+msgid ""
+"Choose the primary network infrastructure type. 'LAN' for Local Area Network "
+"typically used within a single building, 'WAN' for Wide Area Network used "
+"for larger geographical areas. PR.PS, PR.DS"
+msgstr ""
+
+#: .\dashboard\models.py:173
+msgid ""
+"Check this box if the company uses a Virtual Private Network (VPN) to secure "
+"remote access to the company's network. PR.PS, PR.DS"
+msgstr ""
+
+#: .\dashboard\models.py:178
+msgid ""
+"Indicate here if the company has processes in place for the continuous "
+"identification of vulnerabilities in its software or network. DE.CM,"
+msgstr ""
+
+#: .\dashboard\models.py:184
+msgid ""
+"Mark this box if the company actively promotes cybersecurity awareness among "
+"all employees. PR.AT, GV.RR"
+msgstr ""
+
+#: .\dashboard\models.py:189
+msgid ""
+"Check this if the company provides regular cybersecurity training to "
+"employees to enhance security practices. GV.PO, PR.AT"
+msgstr ""
+
+#: .\dashboard\models.py:194
+msgid ""
+"Check this if the company has formal procedures in place for employees to "
+"report cybersecurity incidents. GV.PO"
+msgstr ""
+
+#: .\dashboard\models.py:199
+msgid ""
+"Mark this box if the company has a documented plan detailing steps to be "
+"taken in response to cybersecurity incidents. GV.PO"
+msgstr ""
+
+#: .\dashboard\models.py:204
+msgid ""
+"Check this if there is a company-wide understanding of the importance and "
+"procedures for reporting cybersecurity incidents. GV.PO"
+msgstr ""
+
+#: .\dashboard\models.py:208
+msgid "Response Plan Update"
+msgstr ""
+
+#: .\dashboard\models.py:209
+msgid ""
+"Mark this box if the company routinely reviews and updates its incident "
+"response plan to adapt to new threats. GV.OV, GV.PO, ID.IM, RS.MA, RS.AN"
+msgstr ""
+
+#: .\dashboard\models.py:214
+msgid ""
+"Check this if the company conducts simulated cybersecurity incidents to test "
+"and improve its response strategies. ID.IM, RS.AN"
+msgstr ""
+
+#: .\dashboard\models.py:219
+msgid ""
+"Mark this box if the company is equipped to quickly restore critical "
+"functions and return to normal operations after a cyberattack. RC.RP, RC.CO"
+msgstr ""
+
+#: .\dashboard\models.py:223
+msgid "Credentials Maintenance"
+msgstr ""
+
+#: .\dashboard\models.py:224
+msgid ""
+"Check this if the company actively maintains and updates system credentials "
+"to ensure secure access. PR.AA, GV.RR"
+msgstr ""
+
+#: .\dashboard\models.py:230
+msgid ""
+"Check this box if the company actively prioritizes risks based on their "
+"potential impact and likelihood of occurrence. GV.RM, ID.RA"
+msgstr ""
+
+#: .\dashboard\models.py:235
+msgid ""
+"Mark this box if the company regularly reassesses its risks to account for "
+"new developments or changes in the business environment. GV.RM, ID.RA"
+msgstr ""
+
+#: .\dashboard\models.py:240
+msgid ""
+"Check this if the company has processes in place to continually identify "
+"vulnerabilities in its IT infrastructure. DE.CM"
+msgstr ""
+
+#: .\dashboard\models.py:245
+msgid ""
+"Indicate here if the company maintains comprehensive records and history "
+"logs of all IT systems and activities. PR.PS-04"
+msgstr ""
+
+#: .\dashboard\models.py:249
+msgid "Network Systems Traffic Monitoring"
+msgstr ""
+
+#: .\dashboard\models.py:250
+msgid ""
+"Mark this box if there is ongoing monitoring of network and system traffic "
+"to detect unusual patterns or potential breaches. DE.CM-01"
+msgstr ""
+
+#: .\dashboard\models.py:255
+msgid ""
+"Check this if the company employs a continuous process for the assessment "
+"and identification of potential security threats. DE.CM"
+msgstr ""
+
+#: .\dashboard\models.py:259
+msgid "Service Provider Risk (%)"
+msgstr ""
+
+#: .\dashboard\models.py:261
+msgid ""
+"Enter the percentage representing the level of risk associated with the "
+"company's service providers. Example: Enter 20 for 20%. GV.SC"
+msgstr ""
+
+#: .\dashboard\models.py:265
+msgid "Critical Supplier Dependency (%)"
+msgstr ""
+
+#: .\dashboard\models.py:267
+#, python-format
+msgid ""
+"Specify the percentage that represents the company's dependency on critical "
+"suppliers. Example: Enter 30 for 30% dependency. ID.RA-10, GV.RM-05"
+msgstr ""
+
+#: .\dashboard\models.py:271
+msgid "Cybersecurity Investment ($)"
+msgstr ""
+
+#: .\dashboard\models.py:273
+msgid ""
+"Enter the annual dollar amount the company invests in cybersecurity measures "
+"and technologies. Example: 50000 for $50,000. GV.OC"
+msgstr ""
+
+#: .\dashboard\models.py:277
+msgid "Metrics Use for Comparison"
+msgstr ""
+
+#: .\dashboard\models.py:278
+msgid ""
+"Check this box if the company utilizes specific metrics to evaluate and "
+"compare cybersecurity solutions for effective prioritization. ID.IM, ID.RA"
+msgstr ""
+
+#: .\dashboard\models.py:283
+msgid ""
+"Mark this box if the company maintains data protection policies that are "
+"regularly reviewed and updated to stay aligned with current regulations. GV."
+"OV, PR.DS"
+msgstr ""
+
+#: .\dashboard\models.py:288
+msgid ""
+"Indicate here if the company provides clear and understandable notifications "
+"to users about data collection, usage, and sharing practices. GV.OC-03"
+msgstr ""
+
+#: .\dashboard\models.py:293
+msgid ""
+"Check this if the company practices data minimization by collecting, "
+"processing, and storing only the essential amount of personal data required "
+"for its operations. PR.DS, GV.OC-03"
+msgstr ""
+
+#: .\dashboard\models.py:297
+msgid "Data Secure Deletion and Anonymization"
+msgstr ""
+
+#: .\dashboard\models.py:298
+msgid ""
+"Mark this box if there are established practices in place for the secure "
+"deletion or anonymization of personal data when it is no longer necessary. "
+"PR.DS, GV.OC-03"
+msgstr ""
+
+#: .\dashboard\models.py:303
+msgid ""
+"Indicate here if the company has implemented effective security controls to "
+"safeguard personal information against unauthorized access or breaches. GV."
+"OC-03, PR.DS"
+msgstr ""
+
+#: .\dashboard\models.py:308
+msgid "Public Visibility"
+msgstr ""
+
+#: .\dashboard\models.py:309
+msgid ""
+"Determines if the company should be shared with other users or not. Further "
+"implementation will be done for sharing with specific groups and users."
+msgstr ""
+
+#: .\dashboard\models.py:325
+msgid "Reputation"
+msgstr ""
+
+#: .\dashboard\models.py:325
+msgid "Reputation score of the publisher."
+msgstr ""
+
+#: .\dashboard\models.py:333
+msgid "Publishers"
+msgstr ""
+
+#: .\dashboard\models.py:337
+msgid "Muito Relevante"
+msgstr "Very Relevant"
+
+#: .\dashboard\models.py:338
+msgid "Relevante"
+msgstr "Relevant"
+
+#: .\dashboard\models.py:339
+msgid "Pouco Relevante"
+msgstr "Slightly Relevant"
+
+#: .\dashboard\models.py:342
+msgid "Report Name"
+msgstr ""
+
+#: .\dashboard\models.py:342
+msgid "Name of the report."
+msgstr ""
+
+#: .\dashboard\models.py:343
+msgid "URL link to the report."
+msgstr ""
+
+#: .\dashboard\models.py:347
+msgid "Year"
+msgstr ""
+
+#: .\dashboard\models.py:347
+msgid "Year the report was published."
+msgstr ""
+
+#: .\dashboard\models.py:348
+msgid "Periodicity"
+msgstr ""
+
+#: .\dashboard\models.py:349
+msgid "Coverage"
+msgstr ""
+
+#: .\dashboard\models.py:350
+msgid "Scope"
+msgstr ""
+
+#: .\dashboard\models.py:351
+msgid "Attack Range"
+msgstr ""
+
+#: .\dashboard\models.py:352
+msgid "Research Methodology"
+msgstr ""
+
+#: .\dashboard\models.py:354
+msgid "Final Score"
+msgstr ""
+
+#: .\dashboard\models.py:362
+msgid "Reports"
+msgstr ""
+
+#: .\dashboard\models.py:365 .\dashboard\models.py:388
+#: .\dashboard\models.py:411 .\dashboard\models.py:433
+msgid "Data Year"
+msgstr ""
+
+#: .\dashboard\models.py:365
+msgid "Year the attack data was reported."
+msgstr ""
+
+#: .\dashboard\models.py:366 .\dashboard\models.py:413
+#: .\dashboard\models.py:435
+msgid "Type of Attack"
+msgstr ""
+
+#: .\dashboard\models.py:366
+msgid "Type of attack covered in the report."
+msgstr ""
+
+#: .\dashboard\models.py:367
+msgid "Condition"
+msgstr ""
+
+#: .\dashboard\models.py:367
+msgid "Condition reported during the attacks."
+msgstr ""
+
+#: .\dashboard\models.py:368
+msgid "Size of the companies affected as reported."
+msgstr ""
+
+#: .\dashboard\models.py:369 .\dashboard\models.py:392
+#: .\dashboard\models.py:415
+msgid "Region"
+msgstr ""
+
+#: .\dashboard\models.py:369
+msgid "Region where the attacks were reported to have occurred."
+msgstr ""
+
+#: .\dashboard\models.py:370 .\dashboard\models.py:393
+#: .\dashboard\models.py:416
+msgid "Country"
+msgstr ""
+
+#: .\dashboard\models.py:370
+msgid "Countries covered in the attack data."
+msgstr ""
+
+#: .\dashboard\models.py:371 .\dashboard\models.py:394
+#: .\dashboard\models.py:412 .\dashboard\models.py:437
+msgid "Sector"
+msgstr ""
+
+#: .\dashboard\models.py:371
+msgid "Sectors reported to be affected by the attacks."
+msgstr ""
+
+#: .\dashboard\models.py:372 .\dashboard\models.py:395
+#: .\dashboard\models.py:417 .\dashboard\models.py:438
+msgid "Probability"
+msgstr ""
+
+#: .\dashboard\models.py:372
+msgid "Probability of occurrence as reported for the attacks."
+msgstr ""
+
+#: .\dashboard\models.py:373
+msgid "Cost associated with the attacks as reported."
+msgstr ""
+
+#: .\dashboard\models.py:374 .\dashboard\models.py:397
+#: .\dashboard\models.py:419 .\dashboard\models.py:440
+msgid "Cost Metric"
+msgstr ""
+
+#: .\dashboard\models.py:374 .\dashboard\models.py:397
+#: .\dashboard\models.py:419 .\dashboard\models.py:440
+msgid "Unit of the reported costs, such as USD or EUR."
+msgstr ""
+
+#: .\dashboard\models.py:375 .\dashboard\models.py:398
+#: .\dashboard\models.py:420 .\dashboard\models.py:441
+msgid "Source Report"
+msgstr ""
+
+#: .\dashboard\models.py:381 .\dashboard\models.py:382
+msgid "Attack Data"
+msgstr ""
+
+#: .\dashboard\models.py:388
+msgid "Year the impact data was reported."
+msgstr ""
+
+#: .\dashboard\models.py:389
+msgid "Impact"
+msgstr ""
+
+#: .\dashboard\models.py:389
+msgid "Impact reported in the report."
+msgstr ""
+
+#: .\dashboard\models.py:390
+msgid "Condition/Attack"
+msgstr ""
+
+#: .\dashboard\models.py:390
+msgid "Condition or attack associated with the impact."
+msgstr ""
+
+#: .\dashboard\models.py:391
+msgid "Size of the company affected as reported."
+msgstr ""
+
+#: .\dashboard\models.py:392
+msgid "Region where the impact was reported."
+msgstr ""
+
+#: .\dashboard\models.py:393
+msgid "Country where the impact was reported."
+msgstr ""
+
+#: .\dashboard\models.py:394
+msgid "Sector reported to be affected by the impact."
+msgstr ""
+
+#: .\dashboard\models.py:395
+msgid "Reported probability of the impact occurring."
+msgstr ""
+
+#: .\dashboard\models.py:396
+msgid "Estimated cost associated with the impact."
+msgstr ""
+
+#: .\dashboard\models.py:404 .\dashboard\models.py:405
+msgid "Impact Data"
+msgstr ""
+
+#: .\dashboard\models.py:411
+msgid "Year the sector data was reported."
+msgstr ""
+
+#: .\dashboard\models.py:412
+msgid "Sector reported to be affected."
+msgstr ""
+
+#: .\dashboard\models.py:413
+msgid "Type of attack reported in the sector."
+msgstr ""
+
+#: .\dashboard\models.py:414
+msgid "Size of the companies within the sector affected as reported."
+msgstr ""
+
+#: .\dashboard\models.py:415
+msgid "Region where the sector was affected."
+msgstr ""
+
+#: .\dashboard\models.py:416
+msgid "Country where the sector was affected."
+msgstr ""
+
+#: .\dashboard\models.py:417
+msgid "Reported probability of the attack occurring in the sector."
+msgstr ""
+
+#: .\dashboard\models.py:418
+msgid "Estimated cost associated with the impact on the sector."
+msgstr ""
+
+#: .\dashboard\models.py:426 .\dashboard\models.py:427
+msgid "Sector Data"
+msgstr ""
+
+#: .\dashboard\models.py:433
+msgid "Year the location data was reported."
+msgstr ""
+
+#: .\dashboard\models.py:434
+msgid "Location"
+msgstr ""
+
+#: .\dashboard\models.py:434
+msgid "Region or country where the data was reported."
+msgstr ""
+
+#: .\dashboard\models.py:435
+msgid "Type of attack reported in the location."
+msgstr ""
+
+#: .\dashboard\models.py:436
+msgid "Size of the companies within the location affected as reported."
+msgstr ""
+
+#: .\dashboard\models.py:437
+msgid "Sector reported to be affected in the location."
+msgstr ""
+
+#: .\dashboard\models.py:438
+msgid "Reported probability of the attack occurring in the location."
+msgstr ""
+
+#: .\dashboard\models.py:439
+msgid "Estimated cost associated with the impact in the location."
+msgstr ""
+
+#: .\dashboard\models.py:447 .\dashboard\models.py:448
+msgid "Location Data"
+msgstr ""

@@ -1,0 +1,733 @@
+{% extends "dashboard/Templates/base.html" %}
+{% load form_tags %}
+{% load i18n %}
+{% block page_content %}
+<div class="container-fluid">
+
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <h4 class="page-title">{% trans "Add Company Profile" %}</h4>
+            </div>
+        </div>
+    </div>
+    <!-- end page title -->
+
+    <form method="post" class="form">
+
+        {% csrf_token %}
+
+        <!-- Business Dimension -->
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="header-title">{% trans "Business Dimension" %}</h4>
+
+                        <!-- Campo 'name' -->
+                        <div class="mb-3">
+                            <label for="{{ form.name.id_for_label }}" class="form-label">
+                                {{ form.name.label }}
+                                <a tabindex="0" class="text-muted" role="button" data-bs-toggle="popover" data-bs-trigger="hover" title="{{ form.name.label }}" data-bs-content="{{ form.name.help_text }}">
+                                    <i class="fas fa-question-circle"></i>
+                                </a>
+                            </label>
+                            {{ form.name|add_class:'form-control' }}
+                            {% if form.name.errors %}
+                                <div class="text-danger">{{ form.name.errors.as_text }}</div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Campo 'headquarters_country' -->
+                        <div class="mb-3">
+                            <label for="{{ form.headquarters_country.id_for_label }}" class="form-label">
+                                {{ form.headquarters_country.label }}
+                                <a tabindex="0" class="text-muted" role="button" data-bs-toggle="popover" data-bs-trigger="hover" title="{{ form.headquarters_country.label }}" data-bs-content="{{ form.headquarters_country.help_text }}">
+                                    <i class="fas fa-question-circle"></i>
+                                </a>
+                            </label>
+                            {{ form.headquarters_country|add_class:'form-control' }}
+                            {% if form.headquarters_country.errors %}
+                                <div class="text-danger">{{ form.headquarters_country.errors.as_text }}</div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Campo 'industry_type' -->
+                        <div class="mb-3">
+                            <label for="{{ form.industry_type.id_for_label }}" class="form-label">
+                                {{ form.industry_type.label }}
+                                <a tabindex="0" class="text-muted" role="button" data-bs-toggle="popover" data-bs-trigger="hover" title="{{ form.industry_type.label }}" data-bs-content="{{ form.industry_type.help_text }}">
+                                    <i class="fas fa-question-circle"></i>
+                                </a>
+                            </label>
+                            {{ form.industry_type|add_class:'form-control' }}
+                            {% if form.industry_type.errors %}
+                                <div class="text-danger">{{ form.industry_type.errors.as_text }}</div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Campo 'size' -->
+                        <div class="mb-3">
+                            <label for="{{ form.size.id_for_label }}" class="form-label">
+                                {{ form.size.label }}
+                                <a tabindex="0" class="text-muted" role="button" data-bs-toggle="popover" data-bs-trigger="hover" title="{{ form.size.label }}" data-bs-content="{{ form.size.help_text }}">
+                                    <i class="fas fa-question-circle"></i>
+                                </a>
+                            </label>
+                            {{ form.size|add_class:'form-control' }}
+                            {% if form.size.errors %}
+                                <div class="text-danger">{{ form.size.errors.as_text }}</div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Campo 'annual_revenue' -->
+                        <div class="mb-3">
+                            <label for="{{ form.annual_revenue.id_for_label }}" class="form-label">
+                                {{ form.annual_revenue.label }}
+                                <a tabindex="0" class="text-muted" role="button" data-bs-toggle="popover" data-bs-trigger="hover" title="{{ form.annual_revenue.label }}" data-bs-content="{{ form.annual_revenue.help_text }}">
+                                    <i class="fas fa-question-circle"></i>
+                                </a>
+                            </label>
+                            {{ form.annual_revenue|add_class:'form-control' }}
+                            {% if form.annual_revenue.errors %}
+                                <div class="text-danger">{{ form.annual_revenue.errors.as_text }}</div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Campo 'employee_count' -->
+                        <div class="mb-3">
+                            <label for="{{ form.employee_count.id_for_label }}" class="form-label">
+                                {{ form.employee_count.label }}
+                                <a tabindex="0" class="text-muted" role="button" data-bs-toggle="popover" data-bs-trigger="hover" title="{{ form.employee_count.label }}" data-bs-content="{{ form.employee_count.help_text }}">
+                                    <i class="fas fa-question-circle"></i>
+                                </a>
+                            </label>
+                            {{ form.employee_count|add_class:'form-control' }}
+                            {% if form.employee_count.errors %}
+                                <div class="text-danger">{{ form.employee_count.errors.as_text }}</div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Campo 'remote_work' -->
+                        <div class="mb-3">
+                            <label for="{{ form.remote_work.id_for_label }}" class="form-label">
+                                {{ form.remote_work.label }}
+                                <a tabindex="0" class="text-muted" role="button" data-bs-toggle="popover" data-bs-trigger="hover" title="{{ form.remote_work.label }}" data-bs-content="{{ form.remote_work.help_text }}">
+                                    <i class="fas fa-question-circle"></i>
+                                </a>
+                            </label>
+                            {{ form.remote_work|add_class:'form-control' }}
+                            {% if form.remote_work.errors %}
+                                <div class="text-danger">{{ form.remote_work.errors.as_text }}</div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Campo 'growth_rate' -->
+                        <div class="mb-3">
+                            <label for="{{ form.growth_rate.id_for_label }}" class="form-label">
+                                {{ form.growth_rate.label }}
+                                <a tabindex="0" class="text-muted" role="button" data-bs-toggle="popover" data-bs-trigger="hover" title="{{ form.growth_rate.label }}" data-bs-content="{{ form.growth_rate.help_text }}">
+                                    <i class="fas fa-question-circle"></i>
+                                </a>
+                            </label>
+                            {{ form.growth_rate|add_class:'form-control' }}
+                            {% if form.growth_rate.errors %}
+                                <div class="text-danger">{{ form.growth_rate.errors.as_text }}</div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Campo 'cybersecurity_spending' -->
+                        <div class="mb-3">
+                            <label for="{{ form.cybersecurity_spending.id_for_label }}" class="form-label">
+                                {{ form.cybersecurity_spending.label }}
+                                <a tabindex="0" class="text-muted" role="button" data-bs-toggle="popover" data-bs-trigger="hover" title="{{ form.cybersecurity_spending.label }}" data-bs-content="{{ form.cybersecurity_spending.help_text }}">
+                                    <i class="fas fa-question-circle"></i>
+                                </a>
+                            </label>
+                            {{ form.cybersecurity_spending|add_class:'form-control' }}
+                            {% if form.cybersecurity_spending.errors %}
+                                <div class="text-danger">{{ form.cybersecurity_spending.errors.as_text }}</div>
+                            {% endif %}
+                        </div>
+
+
+                        <!-- Campos Booleanos (Switches) -->
+                        <!-- Campo 'global_presence' -->
+                        <div class="switchery-demo form-check form-switch">
+                            {{ form.global_presence|add_class:'form-check-input' }}
+                            <label for="{{ form.global_presence.id_for_label }}" class="form-check-label">
+                                {{ form.global_presence.label }}
+                                <a tabindex="0" class="text-muted" role="button" data-bs-toggle="popover" data-bs-trigger="hover" title="{{ form.global_presence.label }}" data-bs-content="{{ form.global_presence.help_text }}">
+                                    <i class="fas fa-question-circle"></i>
+                                </a>
+                            </label>
+                        </div>
+                        <br>
+
+                        <!-- Campo 'balanced_investments' -->
+                        <div class="form-check form-switch">
+                            {{ form.balanced_investments|add_class:'form-check-input' }}
+                            <label for="{{ form.balanced_investments.id_for_label }}" class="form-check-label">
+                                {{ form.balanced_investments.label }}
+                                <a tabindex="0" class="text-muted" role="button" data-bs-toggle="popover" data-bs-trigger="hover" title="{{ form.balanced_investments.label }}" data-bs-content="{{ form.balanced_investments.help_text }}">
+                                    <i class="fas fa-question-circle"></i>
+                                </a>
+                            </label>
+                        </div>
+                        <br>
+
+                        <!-- Campo 'assets_value' -->
+                        <div class="form-check form-switch">
+                            {{ form.assets_value|add_class:'form-check-input' }}
+                            <label for="{{ form.assets_value.id_for_label }}" class="form-check-label">
+                                {{ form.assets_value.label }}
+                                <a tabindex="0" class="text-muted" role="button" data-bs-toggle="popover" data-bs-trigger="hover" title="{{ form.assets_value.label }}" data-bs-content="{{ form.assets_value.help_text }}">
+                                    <i class="fas fa-question-circle"></i>
+                                </a>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Technical Dimension -->
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="header-title">{% trans "Technical Dimension" %}</h4>
+
+                        <!-- Campo 'auth_factors' -->
+                        <div class="mb-3">
+                            <label for="{{ form.auth_factors.id_for_label }}" class="form-label">
+                                {{ form.auth_factors.label }}
+                                <a tabindex="0" class="text-muted" role="button" data-bs-toggle="popover" data-bs-trigger="hover" title="{{ form.auth_factors.label }}" data-bs-content="{{ form.auth_factors.help_text }}">
+                                    <i class="fas fa-question-circle"></i>
+                                </a>
+                            </label>
+                            {{ form.auth_factors|add_class:'form-control' }}
+                            {% if form.auth_factors.errors %}
+                                <div class="text-danger">{{ form.auth_factors.errors.as_text }}</div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Campo 'cloud_solution' -->
+                        <div class="mb-3">
+                            <label for="{{ form.cloud_solution.id_for_label }}" class="form-label">
+                                {{ form.cloud_solution.label }}
+                                <a tabindex="0" class="text-muted" role="button" data-bs-toggle="popover" data-bs-trigger="hover" title="{{ form.cloud_solution.label }}" data-bs-content="{{ form.cloud_solution.help_text }}">
+                                    <i class="fas fa-question-circle"></i>
+                                </a>
+                            </label>
+                            {{ form.cloud_solution|add_class:'form-control' }}
+                        </div>
+
+                        <!-- Campo 'network_infrastructure' -->
+                        <div class="mb-3">
+                            <label for="{{ form.network_infrastructure.id_for_label }}" class="form-label">
+                                {{ form.network_infrastructure.label }}
+                                <a tabindex="0" class="text-muted" role="button" data-bs-toggle="popover" data-bs-trigger="hover" title="{{ form.network_infrastructure.label }}" data-bs-content="{{ form.network_infrastructure.help_text }}">
+                                    <i class="fas fa-question-circle"></i>
+                                </a>
+                            </label>
+                            {{ form.network_infrastructure|add_class:'form-control' }}
+                        </div>
+
+                        <!-- Campos Booleanos (Switches) -->
+
+                        <!-- Inventário Atualizado de Ativos -->
+                        <div class="form-check form-switch">
+                            {{ form.updated_inventory|add_class:'form-check-input' }}
+                            <label for="{{ form.updated_inventory.id_for_label }}" class="form-check-label">
+                                {{ form.updated_inventory.label }}
+                                <a tabindex="0" class="text-muted" role="button" data-bs-toggle="popover" data-bs-trigger="hover" title="{{ form.updated_inventory.label }}" data-bs-content="{{ form.updated_inventory.help_text }}">
+                                    <i class="fas fa-question-circle"></i>
+                                </a>
+                            </label>
+                        </div>
+                        <br>
+
+                        <!-- Atualizações Periódicas nos Sistemas -->
+                        <div class="form-check form-switch">
+                            {{ form.periodic_updates|add_class:'form-check-input' }}
+                            <label for="{{ form.periodic_updates.id_for_label }}" class="form-check-label">
+                                {{ form.periodic_updates.label }}
+                                <a tabindex="0" class="text-muted" role="button" data-bs-toggle="popover" data-bs-trigger="hover" title="{{ form.periodic_updates.label }}" data-bs-content="{{ form.periodic_updates.help_text }}">
+                                    <i class="fas fa-question-circle"></i>
+                                </a>
+                            </label>
+                        </div>
+                        <br>
+
+                        <!-- Monitoramento dos Sistemas de TI -->
+                        <div class="form-check form-switch">
+                            {{ form.it_monitoring|add_class:'form-check-input' }}
+                            <label for="{{ form.it_monitoring.id_for_label }}" class="form-check-label">
+                                {{ form.it_monitoring.label }}
+                                <a tabindex="0" class="text-muted" role="button" data-bs-toggle="popover" data-bs-trigger="hover" title="{{ form.it_monitoring.label }}" data-bs-content="{{ form.it_monitoring.help_text }}">
+                                    <i class="fas fa-question-circle"></i>
+                                </a>
+                            </label>
+                        </div>
+                        <br>
+
+                        <!-- Backups Regulares de Informações Críticas -->
+                        <div class="form-check form-switch">
+                            {{ form.regular_backups|add_class:'form-check-input' }}
+                            <label for="{{ form.regular_backups.id_for_label }}" class="form-check-label">
+                                {{ form.regular_backups.label }}
+                                <a tabindex="0" class="text-muted" role="button" data-bs-toggle="popover" data-bs-trigger="hover" title="{{ form.regular_backups.label }}" data-bs-content="{{ form.regular_backups.help_text }}">
+                                    <i class="fas fa-question-circle"></i>
+                                </a>
+                            </label>
+                        </div>
+                        <br>
+
+                        <!-- Backups em Localização Protegida Fora do Local -->
+                        <div class="form-check form-switch">
+                            {{ form.offsite_backups|add_class:'form-check-input' }}
+                            <label for="{{ form.offsite_backups.id_for_label }}" class="form-check-label">
+                                {{ form.offsite_backups.label }}
+                                <a tabindex="0" class="text-muted" role="button" data-bs-toggle="popover" data-bs-trigger="hover" title="{{ form.offsite_backups.label }}" data-bs-content="{{ form.offsite_backups.help_text }}">
+                                    <i class="fas fa-question-circle"></i>
+                                </a>
+                            </label>
+                        </div>
+                        <br>
+
+                        <!-- Checagem Regular dos Backups -->
+                        <div class="form-check form-switch">
+                            {{ form.backup_checks|add_class:'form-check-input' }}
+                            <label for="{{ form.backup_checks.id_for_label }}" class="form-check-label">
+                                {{ form.backup_checks.label }}
+                                <a tabindex="0" class="text-muted" role="button" data-bs-toggle="popover" data-bs-trigger="hover" title="{{ form.backup_checks.label }}" data-bs-content="{{ form.backup_checks.help_text }}">
+                                    <i class="fas fa-question-circle"></i>
+                                </a>
+                            </label>
+                        </div>
+                        <br>
+
+                        <!-- Criptografia de Dados Armazenados -->
+                        <div class="form-check form-switch">
+                            {{ form.data_encryption_storage|add_class:'form-check-input' }}
+                            <label for="{{ form.data_encryption_storage.id_for_label }}" class="form-check-label">
+                                {{ form.data_encryption_storage.label }}
+                                <a tabindex="0" class="text-muted" role="button" data-bs-toggle="popover" data-bs-trigger="hover" title="{{ form.data_encryption_storage.label }}" data-bs-content="{{ form.data_encryption_storage.help_text }}">
+                                    <i class="fas fa-question-circle"></i>
+                                </a>
+                            </label>
+                        </div>
+                        <br>
+
+                        <!-- Criptografia de Dados em Trânsito -->
+                        <div class="form-check form-switch">
+                            {{ form.data_encryption_transit|add_class:'form-check-input' }}
+                            <label for="{{ form.data_encryption_transit.id_for_label }}" class="form-check-label">
+                                {{ form.data_encryption_transit.label }}
+                                <a tabindex="0" class="text-muted" role="button" data-bs-toggle="popover" data-bs-trigger="hover" title="{{ form.data_encryption_transit.label }}" data-bs-content="{{ form.data_encryption_transit.help_text }}">
+                                    <i class="fas fa-question-circle"></i>
+                                </a>
+                            </label>
+                        </div>
+                        <br>
+
+                        <!-- Processo para o Descarte Seguro de Dados -->
+                        <div class="form-check form-switch">
+                            {{ form.secure_data_disposal|add_class:'form-check-input' }}
+                            <label for="{{ form.secure_data_disposal.id_for_label }}" class="form-check-label">
+                                {{ form.secure_data_disposal.label }}
+                                <a tabindex="0" class="text-muted" role="button" data-bs-toggle="popover" data-bs-trigger="hover" title="{{ form.secure_data_disposal.label }}" data-bs-content="{{ form.secure_data_disposal.help_text }}">
+                                    <i class="fas fa-question-circle"></i>
+                                </a>
+                            </label>
+                        </div>
+                        <br>
+
+                        <!-- Sistemas de TI Configurados Corretamente -->
+                        <div class="form-check form-switch">
+                            {{ form.configured_it_systems|add_class:'form-check-input' }}
+                            <label for="{{ form.configured_it_systems.id_for_label }}" class="form-check-label">
+                                {{ form.configured_it_systems.label }}
+                                <a tabindex="0" class="text-muted" role="button" data-bs-toggle="popover" data-bs-trigger="hover" title="{{ form.configured_it_systems.label }}" data-bs-content="{{ form.configured_it_systems.help_text }}">
+                                    <i class="fas fa-question-circle"></i>
+                                </a>
+                            </label>
+                        </div>
+                        <br>
+
+                        <!-- VPN para Acesso Remoto -->
+                        <div class="form-check form-switch">
+                            {{ form.remote_access_vpn|add_class:'form-check-input' }}
+                            <label for="{{ form.remote_access_vpn.id_for_label }}" class="form-check-label">
+                                {{ form.remote_access_vpn.label }}
+                                <a tabindex="0" class="text-muted" role="button" data-bs-toggle="popover" data-bs-trigger="hover" title="{{ form.remote_access_vpn.label }}" data-bs-content="{{ form.remote_access_vpn.help_text }}">
+                                    <i class="fas fa-question-circle"></i>
+                                </a>
+                            </label>
+                        </div>
+                        <br>
+
+                        <!-- Identificação Contínua de Vulnerabilidades -->
+                        <div class="form-check form-switch">
+                            {{ form.vulnerability_ID|add_class:'form-check-input' }}
+                            <label for="{{ form.vulnerability_ID.id_for_label }}" class="form-check-label">
+                                {{ form.vulnerability_ID.label }}
+                                <a tabindex="0" class="text-muted" role="button" data-bs-toggle="popover" data-bs-trigger="hover" title="{{ form.vulnerability_ID.label }}" data-bs-content="{{ form.vulnerability_ID.help_text }}">
+                                    <i class="fas fa-question-circle"></i>
+                                </a>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Human Dimension -->
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="header-title">{% trans "Human Dimension" %}</h4>
+        
+                        <!-- Conscientização em Segurança Cibernética -->
+                        <div class="form-check form-switch">
+                            {{ form.cybersec_awareness|add_class:'form-check-input' }}
+                            <label for="{{ form.cybersec_awareness.id_for_label }}" class="form-check-label">
+                                {{ form.cybersec_awareness.label }}
+                                <a tabindex="0" class="text-muted" role="button" data-bs-toggle="popover" data-bs-trigger="hover" title="{{ form.cybersec_awareness.label }}" data-bs-content="{{ form.cybersec_awareness.help_text }}">
+                                    <i class="fas fa-question-circle"></i>
+                                </a>
+                            </label>
+                        </div>
+                        <br>
+
+                        <!-- Treinamento em Segurança Cibernética -->
+                        <div class="form-check form-switch">
+                            {{ form.cybersec_training|add_class:'form-check-input' }}
+                            <label for="{{ form.cybersec_training.id_for_label }}" class="form-check-label">
+                                {{ form.cybersec_training.label }}
+                                <a tabindex="0" class="text-muted" role="button" data-bs-toggle="popover" data-bs-trigger="hover" title="{{ form.cybersec_training.label }}" data-bs-content="{{ form.cybersec_training.help_text }}">
+                                    <i class="fas fa-question-circle"></i>
+                                </a>
+                            </label>
+                        </div>
+                        <br>
+
+                        <!-- Procedimentos para Relatar Incidentes -->
+                        <div class="form-check form-switch">
+                            {{ form.incident_reporting_procedures|add_class:'form-check-input' }}
+                            <label for="{{ form.incident_reporting_procedures.id_for_label }}" class="form-check-label">
+                                {{ form.incident_reporting_procedures.label }}
+                                <a tabindex="0" class="text-muted" role="button" data-bs-toggle="popover" data-bs-trigger="hover" title="{{ form.incident_reporting_procedures.label }}" data-bs-content="{{ form.incident_reporting_procedures.help_text }}">
+                                    <i class="fas fa-question-circle"></i>
+                                </a>
+                            </label>
+                        </div>
+                        <br>
+
+                        <!-- Plano de Resposta Documentado -->
+                        <div class="form-check form-switch">
+                            {{ form.documented_response_plan|add_class:'form-check-input' }}
+                            <label for="{{ form.documented_response_plan.id_for_label }}" class="form-check-label">
+                                {{ form.documented_response_plan.label }}
+                                <a tabindex="0" class="text-muted" role="button" data-bs-toggle="popover" data-bs-trigger="hover" title="{{ form.documented_response_plan.label }}" data-bs-content="{{ form.documented_response_plan.help_text }}">
+                                    <i class="fas fa-question-circle"></i>
+                                </a>
+                            </label>
+                        </div>
+                        <br>
+
+                        <!-- Conscientização sobre Relatórios de Incidentes -->
+                        <div class="form-check form-switch">
+                            {{ form.incident_report_awareness|add_class:'form-check-input' }}
+                            <label for="{{ form.incident_report_awareness.id_for_label }}" class="form-check-label">
+                                {{ form.incident_report_awareness.label }}
+                                <a tabindex="0" class="text-muted" role="button" data-bs-toggle="popover" data-bs-trigger="hover" title="{{ form.incident_report_awareness.label }}" data-bs-content="{{ form.incident_report_awareness.help_text }}">
+                                    <i class="fas fa-question-circle"></i>
+                                </a>
+                            </label>
+                        </div>
+                        <br>
+
+                        <!-- Atualização do Plano de Resposta a Incidentes -->
+                        <div class="form-check form-switch">
+                            {{ form.response_plan_update|add_class:'form-check-input' }}
+                            <label for="{{ form.response_plan_update.id_for_label }}" class="form-check-label">
+                                {{ form.response_plan_update.label }}
+                                <a tabindex="0" class="text-muted" role="button" data-bs-toggle="popover" data-bs-trigger="hover" title="{{ form.response_plan_update.label }}" data-bs-content="{{ form.response_plan_update.help_text }}">
+                                    <i class="fas fa-question-circle"></i>
+                                </a>
+                            </label>
+                        </div>
+                        <br>
+
+                        <!-- Simulação de Incidentes para Testar a Prontidão -->
+                        <div class="form-check form-switch">
+                            {{ form.incident_simulation|add_class:'form-check-input' }}
+                            <label for="{{ form.incident_simulation.id_for_label }}" class="form-check-label">
+                                {{ form.incident_simulation.label }}
+                                <a tabindex="0" class="text-muted" role="button" data-bs-toggle="popover" data-bs-trigger="hover" title="{{ form.incident_simulation.label }}" data-bs-content="{{ form.incident_simulation.help_text }}">
+                                    <i class="fas fa-question-circle"></i>
+                                </a>
+                            </label>
+                        </div>
+                        <br>
+
+                        <!-- Capacidade de Retomada de Operações Após Ciberataque -->
+                        <div class="form-check form-switch">
+                            {{ form.operational_recovery_capacity|add_class:'form-check-input' }}
+                            <label for="{{ form.operational_recovery_capacity.id_for_label }}" class="form-check-label">
+                                {{ form.operational_recovery_capacity.label }}
+                                <a tabindex="0" class="text-muted" role="button" data-bs-toggle="popover" data-bs-trigger="hover" title="{{ form.operational_recovery_capacity.label }}" data-bs-content="{{ form.operational_recovery_capacity.help_text }}">
+                                    <i class="fas fa-question-circle"></i>
+                                </a>
+                            </label>
+                        </div>
+                        <br>
+
+                        <!-- Manutenção Contínua de Credenciais -->
+                        <div class="form-check form-switch">
+                            {{ form.credentials_maintenance|add_class:'form-check-input' }}
+                            <label for="{{ form.credentials_maintenance.id_for_label }}" class="form-check-label">
+                                {{ form.credentials_maintenance.label }}
+                                <a tabindex="0" class="text-muted" role="button" data-bs-toggle="popover" data-bs-trigger="hover" title="{{ form.credentials_maintenance.label }}" data-bs-content="{{ form.credentials_maintenance.help_text }}">
+                                    <i class="fas fa-question-circle"></i>
+                                </a>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Governance Dimension -->
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="header-title">{% trans "Governance Dimension" %}</h4>
+                        <!-- Campo 'service_provider_risk' -->
+                        <!-- Campo 'service_provider_risk' -->
+                        <div class="mb-3">
+                            <label for="{{ form.service_provider_risk.id_for_label }}" class="form-label">
+                                {{ form.service_provider_risk.label }}
+                                <a tabindex="0" class="text-muted" role="button" data-bs-toggle="popover" data-bs-trigger="hover" title="{{ form.service_provider_risk.label }}" data-bs-content="{{ form.service_provider_risk.help_text }}">
+                                    <i class="fas fa-question-circle"></i>
+                                </a>
+                            </label>
+                            {{ form.service_provider_risk|add_class:'form-control' }}
+                            {% if form.service_provider_risk.errors %}
+                                <div class="text-danger">{{ form.service_provider_risk.errors.as_text }}</div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Campo 'critical_supplier_dependency' -->
+                        <div class="mb-3">
+                            <label for="{{ form.critical_supplier_dependency.id_for_label }}" class="form-label">
+                                {{ form.critical_supplier_dependency.label }}
+                                <a tabindex="0" class="text-muted" role="button" data-bs-toggle="popover" data-bs-trigger="hover" title="{{ form.critical_supplier_dependency.label }}" data-bs-content="{{ form.critical_supplier_dependency.help_text }}">
+                                    <i class="fas fa-question-circle"></i>
+                                </a>
+                            </label>
+                            {{ form.critical_supplier_dependency|add_class:'form-control' }}
+                            {% if form.critical_supplier_dependency.errors %}
+                                <div class="text-danger">{{ form.critical_supplier_dependency.errors.as_text }}</div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Campo 'cybersecurity_investment' -->
+                        <div class="mb-3">
+                            <label for="{{ form.cybersecurity_investment.id_for_label }}" class="form-label">
+                                {{ form.cybersecurity_investment.label }}
+                                <a tabindex="0" class="text-muted" role="button" data-bs-toggle="popover" data-bs-trigger="hover" title="{{ form.cybersecurity_investment.label }}" data-bs-content="{{ form.cybersecurity_investment.help_text }}">
+                                    <i class="fas fa-question-circle"></i>
+                                </a>
+                            </label>
+                            {{ form.cybersecurity_investment|add_class:'form-control' }}
+                            {% if form.cybersecurity_investment.errors %}
+                                <div class="text-danger">{{ form.cybersecurity_investment.errors.as_text }}</div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Campos Booleanos -->
+                        <!-- Campo 'risk_prioritization' -->
+                        <div class="form-check form-switch">
+                            {{ form.risk_prioritization|add_class:'form-check-input' }}
+                            <label for="{{ form.risk_prioritization.id_for_label }}" class="form-check-label">
+                                {{ form.risk_prioritization.label }}
+                                <a tabindex="0" class="text-muted" role="button" data-bs-toggle="popover" data-bs-trigger="hover" title="{{ form.risk_prioritization.label }}" data-bs-content="{{ form.risk_prioritization.help_text }}">
+                                    <i class="fas fa-question-circle"></i>
+                                </a>
+                            </label>
+                        </div>
+                        <br>
+
+                        <!-- Campo 'risk_reassessment' -->
+                        <div class="form-check form-switch">
+                            {{ form.risk_reassessment|add_class:'form-check-input' }}
+                            <label for="{{ form.risk_reassessment.id_for_label }}" class="form-check-label">
+                                {{ form.risk_reassessment.label }}
+                                <a tabindex="0" class="text-muted" role="button" data-bs-toggle="popover" data-bs-trigger="hover" title="{{ form.risk_reassessment.label }}" data-bs-content="{{ form.risk_reassessment.help_text }}">
+                                    <i class="fas fa-question-circle"></i>
+                                </a>
+                            </label>
+                        </div>
+                        <br>
+
+                        <!-- Campo 'vulnerability_identification' -->
+                        <div class="form-check form-switch">
+                            {{ form.vulnerability_identification|add_class:'form-check-input' }}
+                            <label for="{{ form.vulnerability_identification.id_for_label }}" class="form-check-label">
+                                {{ form.vulnerability_identification.label }}
+                                <a tabindex="0" class="text-muted" role="button" data-bs-toggle="popover" data-bs-trigger="hover" title="{{ form.vulnerability_identification.label }}" data-bs-content="{{ form.vulnerability_identification.help_text }}">
+                                    <i class="fas fa-question-circle"></i>
+                                </a>
+                            </label>
+                        </div>
+                        <br>
+                        
+                        <!-- Campo 'it_records_presence' -->
+                        <div class="form-check form-switch">
+                            {{ form.it_records_presence|add_class:'form-check-input' }}
+                            <label for="{{ form.it_records_presence.id_for_label }}" class="form-check-label">
+                                {{ form.it_records_presence.label }}
+                                <a tabindex="0" class="text-muted" role="button" data-bs-toggle="popover" data-bs-trigger="hover" title="{{ form.it_records_presence.label }}" data-bs-content="{{ form.it_records_presence.help_text }}">
+                                    <i class="fas fa-question-circle"></i>
+                                </a>
+                            </label>
+                        </div>
+                        <br>
+
+                        <!-- Campo 'network_systems_traffic_monitoring' -->
+                        <div class="form-check form-switch">
+                            {{ form.network_systems_traffic_monitoring|add_class:'form-check-input' }}
+                            <label for="{{ form.network_systems_traffic_monitoring.id_for_label }}" class="form-check-label">
+                                {{ form.network_systems_traffic_monitoring.label }}
+                                <a tabindex="0" class="text-muted" role="button" data-bs-toggle="popover" data-bs-trigger="hover" title="{{ form.network_systems_traffic_monitoring.label }}" data-bs-content="{{ form.network_systems_traffic_monitoring.help_text }}">
+                                    <i class="fas fa-question-circle"></i>
+                                </a>
+                            </label>
+                        </div>
+                        <br>
+
+                        <!-- Campo 'threat_identification_process' -->
+                        <div class="form-check form-switch">
+                            {{ form.threat_identification_process|add_class:'form-check-input' }}
+                            <label for="{{ form.threat_identification_process.id_for_label }}" class="form-check-label">
+                                {{ form.threat_identification_process.label }}
+                                <a tabindex="0" class="text-muted" role="button" data-bs-toggle="popover" data-bs-trigger="hover" title="{{ form.threat_identification_process.label }}" data-bs-content="{{ form.threat_identification_process.help_text }}">
+                                    <i class="fas fa-question-circle"></i>
+                                </a>
+                            </label>
+                        </div>
+                        <br>
+
+                        <!-- Campo 'metrics_use_comparison' -->
+                        <div class="form-check form-switch">
+                            {{ form.metrics_use_comparison|add_class:'form-check-input' }}
+                            <label for="{{ form.metrics_use_comparison.id_for_label }}" class="form-check-label">
+                                {{ form.metrics_use_comparison.label }}
+                                <a tabindex="0" class="text-muted" role="button" data-bs-toggle="popover" data-bs-trigger="hover" title="{{ form.metrics_use_comparison.label }}" data-bs-content="{{ form.metrics_use_comparison.help_text }}">
+                                    <i class="fas fa-question-circle"></i>
+                                </a>
+                            </label>
+                        </div>
+                        <br>
+
+                        <!-- Campo 'updated_data_protection_policies' -->
+                        <div class="form-check form-switch">
+                            {{ form.updated_data_protection_policies|add_class:'form-check-input' }}
+                            <label for="{{ form.updated_data_protection_policies.id_for_label }}" class="form-check-label">
+                                {{ form.updated_data_protection_policies.label }}
+                                <a tabindex="0" class="text-muted" role="button" data-bs-toggle="popover" data-bs-trigger="hover" title="{{ form.updated_data_protection_policies.label }}" data-bs-content="{{ form.updated_data_protection_policies.help_text }}">
+                                    <i class="fas fa-question-circle"></i>
+                                </a>
+                            </label>
+                        </div>
+                        <br>
+
+                        <!-- Campo 'privacy_notifications_provision' -->
+                        <div class="form-check form-switch">
+                            {{ form.privacy_notifications_provision|add_class:'form-check-input' }}
+                            <label for="{{ form.privacy_notifications_provision.id_for_label }}" class="form-check-label">
+                                {{ form.privacy_notifications_provision.label }}
+                                <a tabindex="0" class="text-muted" role="button" data-bs-toggle="popover" data-bs-trigger="hover" title="{{ form.privacy_notifications_provision.label }}" data-bs-content="{{ form.privacy_notifications_provision.help_text }}">
+                                    <i class="fas fa-question-circle"></i>
+                                </a>
+                            </label>
+                        </div>
+                        <br>
+
+                        <!-- Campo 'minimal_data_collection' -->
+                        <div class="form-check form-switch">
+                            {{ form.minimal_data_collection|add_class:'form-check-input' }}
+                            <label for="{{ form.minimal_data_collection.id_for_label }}" class="form-check-label">
+                                {{ form.minimal_data_collection.label }}
+                                <a tabindex="0" class="text-muted" role="button" data-bs-toggle="popover" data-bs-trigger="hover" title="{{ form.minimal_data_collection.label }}" data-bs-content="{{ form.minimal_data_collection.help_text }}">
+                                    <i class="fas fa-question-circle"></i>
+                                </a>
+                            </label>
+                        </div>
+                        <br>
+
+                        <!-- Campo 'data_secure_deletion_anonymization' -->
+                        <div class="form-check form-switch">
+                            {{ form.data_secure_deletion_anonymization|add_class:'form-check-input' }}
+                            <label for="{{ form.data_secure_deletion_anonymization.id_for_label }}" class="form-check-label">
+                                {{ form.data_secure_deletion_anonymization.label }}
+                                <a tabindex="0" class="text-muted" role="button" data-bs-toggle="popover" data-bs-trigger="hover" title="{{ form.data_secure_deletion_anonymization.label }}" data-bs-content="{{ form.data_secure_deletion_anonymization.help_text }}">
+                                    <i class="fas fa-question-circle"></i>
+                                </a>
+                            </label>
+                        </div>
+                        <br>
+
+                        <!-- Campo 'security_controls_implementation' -->
+                        <div class="form-check form-switch">
+                            {{ form.security_controls_implementation|add_class:'form-check-input' }}
+                            <label for="{{ form.security_controls_implementation.id_for_label }}" class="form-check-label">
+                                {{ form.security_controls_implementation.label }}
+                                <a tabindex="0" class="text-muted" role="button" data-bs-toggle="popover" data-bs-trigger="hover" title="{{ form.security_controls_implementation.label }}" data-bs-content="{{ form.security_controls_implementation.help_text }}">
+                                    <i class="fas fa-question-circle"></i>
+                                </a>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end row -->
+
+        <!-- Visibility Dimension -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="header-title">{% trans "Visibility" %}</h4>
+                        <!-- Campo Booleano (Switch) para Visibilidade Pública -->
+                        <div class="form-check form-switch">
+                            {{ form.public_visibility|add_class:'form-check-input' }}
+                            <label for="{{ form.public_visibility.id_for_label }}" class="form-check-label">
+                                {{ form.public_visibility.label }}
+                                <a tabindex="0" class="text-muted" role="button" data-bs-toggle="popover" data-bs-trigger="hover" title="{{ form.public_visibility.label }}" data-bs-content="{{ form.public_visibility.help_text }}">
+                                    <i class="fas fa-question-circle"></i>
+                                </a>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- end row -->
+
+        <div class="row">
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">{% trans "Save" %}</button>
+            </div>
+        </div>
+    </form>
+
+    <br> 
+
+</div> <!-- container -->
+{% endblock %}

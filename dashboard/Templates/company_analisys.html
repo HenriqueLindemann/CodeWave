@@ -1,0 +1,141 @@
+{% extends "dashboard/Templates/base.html" %}
+{% load i18n %}
+{% block page_content %}
+
+<style>
+    .theme-color {
+        color: var(--ct-menu-item-active-color); /* variável CSS definida globalmente */
+    }
+</style>
+
+<div class="container-fluid">
+
+    <h2>{% trans "Analysis of" %} <span style="color: var(--ct-menu-item-active-color);">{{ company.name }}</span></h2>
+
+    <div class="mb-3 d-flex justify-content-start">
+        <!-- Botão para visualizar detalhes da empresa -->
+        <a href="{% url 'dashboard:company_profile_detail' pk=company.pk %}" class="btn btn-primary me-2">{% trans "View Company" %}</a>
+        <!-- Botão para editar o perfil da empresa -->
+        <a href="{% url 'dashboard:edit_company_profile' pk=company.pk %}" class="btn btn-secondary">{% trans "Edit Company" %}</a>
+    </div>
+
+    <div class="row">
+        <!-- Gráfico de Barras - Ataques Mensais -->
+        <div class="col-xl-6">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="header-title mb-0">
+                        {% trans "Estimated attacks per month" %}
+                        <a tabindex="0" class="text-muted" role="button" data-bs-toggle="popover" data-bs-trigger="hover focus" title="{% trans 'Estimated attacks per month' %}" data-bs-content="{% trans 'This chart displays the estimated number of cyber attacks each month.' %}">
+                            <i class="fas fa-question-circle"></i>
+                        </a>
+                    </h4>
+                    <div id="cardCollpase8" class="collapse show" dir="ltr">
+                        <div id="apex-bar-1" class="apex-charts pt-3" data-colors="#1abc9c"></div>
+                    </div>
+                    <p class="theme-text">{% trans "Estimated atacks for companies in the" %} <span class="theme-color">{{ industry_type }}</span> {% trans "sector, located in" %} <span class="theme-color">{{ headquarters_country }}</span>.</p>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Gráfico de Risco de Ataques Cibernéticos -->
+        <div class="col-xl-6">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="header-title mb-0">
+                        {% trans "Cyber Attack Risk Levels" %}
+                        <a tabindex="0" class="text-muted" role="button" data-bs-toggle="popover" data-bs-trigger="hover focus" title="{% trans 'Cyber Attack Risk Levels' %}" data-bs-content="{% trans 'This chart shows the risk level for different types of cyber attacks.' %}">
+                            <i class="fas fa-question-circle"></i>
+                        </a>
+                    </h4>
+                    <div id="apex-bar-2" class="apex-charts pt-3"></div>
+                    <p class="theme-text">{% trans "Risk for companies in the" %} <span class="theme-color">{{ industry_type }}</span> {% trans "sector, located in" %} <span class="theme-color">{{ headquarters_country }}</span>.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    function getThemeColors() {
+        const style = getComputedStyle(document.documentElement);
+        return {
+            chartColor: style.getPropertyValue('--ct-menu-item-active-color') || '#1abc9c',
+            highRiskColor: '#B22222' // Cor para riscos altos
+        };
+    }
+
+    const themeColors = getThemeColors();
+
+    function createChart(options) {
+        var chart = new ApexCharts(document.querySelector(options.chartId), options.settings);
+        chart.render();
+        return chart;
+    }
+
+    // Gráfico de ataques por mês com condição de cor aplicada diretamente na série
+    var monthlyData = {{ bar_chart_data.values|safe }};
+    var monthlyLabels = {{ bar_chart_data.labels|safe }};
+    var monthlySeriesData = monthlyData.map((value, index) => ({
+        x: monthlyLabels[index],
+        y: value,
+        fillColor: value > 50 ? themeColors.highRiskColor : themeColors.chartColor
+    }));
+
+    var monthlyPerformanceOptions = {
+        chartId: "#apex-bar-1",
+        settings: {
+            chart: {
+                type: 'bar',
+                toolbar: {
+                    tools: {
+                        download: true
+                    }
+                }
+            },
+            series: [{
+                name: 'Attacks',
+                data: monthlySeriesData
+            }],
+            xaxis: {
+                categories: monthlyLabels
+            },
+            colors: monthlySeriesData.map(data => data.fillColor) // Mapeia as cores diretamente dos dados da série
+        }
+    };
+
+    createChart(monthlyPerformanceOptions);
+
+    // Gráfico de risco de ataques cibernéticos com condição de cor
+    var attackTypes = {{ attack_types|safe }};
+    var risks = {{ risks|safe }};
+    var riskChartOptions = {
+        chartId: "#apex-bar-2",
+        settings: {
+            chart: {
+                type: 'bar',
+                toolbar: {
+                    tools: {
+                        download: true
+                    }
+                }
+            },
+            series: [{
+                name: 'Risk Level',
+                data: risks.map((risk, index) => ({
+                    x: attackTypes[index],
+                    y: risk,
+                    fillColor: risk > 30 ? themeColors.highRiskColor : themeColors.chartColor
+                }))
+            }],
+            xaxis: {
+                categories: attackTypes
+            },
+        }
+    };
+    createChart(riskChartOptions);
+});
+</script>
+    
+{% endblock %}

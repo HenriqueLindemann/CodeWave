@@ -1,0 +1,285 @@
+{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="en" data-menu-color="brand">
+    <head>
+        <meta charset="utf-8" />
+        <title>{% trans "CodeWave - Conectando visões a soluções" %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="CodeWave - Conectando visões a soluções: onde sua ideia encontra seu desenvolvedor ideal" name="description" />
+        <meta content="CodeWave" name="author" />
+
+        <!-- App favicon -->
+        <link rel="shortcut icon" href={% static "assets/images/favicon.ico" %}>
+
+        <!-- Plugins css -->
+        <link href={% static "assets/libs/flatpickr/flatpickr.min.css" %} rel="stylesheet" type="text/css" />
+        <link href={% static "assets/libs/selectize/css/selectize.bootstrap3.css" %} rel="stylesheet" type="text/css" />
+        
+        <!-- Theme Config Js -->
+        <script src={% static "assets/js/head.js" %}></script>
+
+        <!-- Bootstrap css -->
+        <link href={% static "assets/css/bootstrap.min.css" %} rel="stylesheet" type="text/css" id="app-style" />
+
+        <!-- App css -->
+        <link href={% static "assets/css/app.min.css" %} rel="stylesheet" type="text/css" />
+
+        <!-- Icons css -->
+        <link href={% static "assets/css/icons.min.css" %} rel="stylesheet" type="text/css" />
+    </head>
+
+    <body>
+
+        <!-- Begin page -->
+        <div id="wrapper">
+            <!-- ========== Menu ========== -->
+            <div class="app-menu">  
+                <!-- Brand Logo -->
+                <div class="logo-box">
+                    <!-- Brand Logo Light -->
+                    <a href="/dashboard/" class="logo-light">
+                        <img src={% static "assets/images/logo-light.png" %} alt="logo" class="logo-lg">
+                        <img src={% static "assets/images/logo-sm.png" %} alt="small logo" class="logo-sm">
+                    </a>
+                </div>
+
+                <!-- menu-left -->
+                <div class="scrollbar">
+
+                    <!-- User box -->
+                    <div class="user-box text-center">
+                        <div class="dropdown">
+                            <a href="javascript: void(0);" class="dropdown-toggle h5 mb-1 d-block" data-bs-toggle="dropdown">-</a>
+                            <div class="dropdown-menu user-pro-dropdown">
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                    <i class="fe-settings me-1"></i>
+                                    <span>{% trans "Configurations" %}</span>
+                                </a>
+
+                                <!-- item-->
+                                <a href="/logout/" class="dropdown-item notify-item">
+                                    <i class="fe-log-out me-1"></i>
+                                    <span>{% trans "Log out" %}</span>
+                                </a>
+
+                            </div>
+                        </div>
+                        <p class="text-muted mb-0">-</p>
+                    </div>
+
+                    <!--- Menu -->
+                    <ul class="menu">
+
+                        <li class="menu-title">{% trans "Menu" %}</li>
+
+                        <li class="menu-item"> 
+                            <a href="#menuDashboards" data-bs-toggle="collapse" class="menu-link">
+                                <span class="menu-icon"><i data-feather="airplay"></i></span>
+                                <span class="menu-text"> {% trans "Sites" %} </span>
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <div class="collapse" id="menuDashboards">
+                                <ul class="sub-menu">
+                                    <li class="menu-item">
+                                        <a href="youtube.com" class="menu-link">
+                                            <span class="menu-text">{% trans "Youtube"%}</span>
+                                        </a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a href="instagram.com" class="menu-link">
+                                            <span class="menu-text">{% trans "Instagram" %}</span>
+                                        </a>                                                                         
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>                       
+
+                    </ul>
+                    <!--- End Menu -->
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            <!-- ========== Left menu End ========== -->
+            <!-- ============================================================== -->
+            <!-- Start Page Content here -->
+            <!-- ============================================================== -->
+
+            <div class="content-page">
+
+                <!-- ========== Topbar Start ========== -->
+                <div class="navbar-custom">
+                    <div class="topbar">
+                        <div class="topbar-menu d-flex align-items-center gap-1">
+
+                            <!-- Topbar Brand Logo -->
+                            <div class="logo-box">
+                                <!-- Brand Logo Light -->
+                                <a href="/dashboard/" class="logo-light">
+                                    <img src={% static "assets/images/logo-light.png" %} alt="logo" class="logo-lg">
+                                    <img src={% static "assets/images/logo-sm.png" %} alt="small logo" class="logo-sm">
+                                </a>
+                            </div>
+
+                            <!-- Sidebar Menu Toggle Button -->
+                            <button class="button-toggle-menu">
+                                <i class="mdi mdi-menu"></i>
+                            </button>
+
+                            
+                        </div>
+
+                        <ul class="topbar-menu d-flex align-items-center">
+                          
+                            <!-- Fullscreen Button -->
+                            <li class="d-none d-md-inline-block">
+                                <a class="nav-link waves-effect waves-light" href="" data-toggle="fullscreen">
+                                    <i class="fe-maximize font-22"></i>
+                                </a>
+                            </li>
+
+                            <!-- Language flag dropdown -->
+                            <li class="dropdown d-none d-md-inline-block">
+                                <a class="nav-link dropdown-toggle waves-effect waves-light arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                                    {% if request.LANGUAGE_CODE == 'en' %}
+                                        <img src="{% static 'assets/images/flags/us.jpg' %}" alt="English" class="me-2" height="12">
+                                    {% else %}
+                                        <img src="{% static 'assets/images/flags/br.png' %}" alt="Português" class="me-1" height="12">
+                                    {% endif %}
+                                    <span class="align-middle"></span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated">
+                                    {% get_current_language as LANGUAGE_CODE %}
+                                    {% get_available_languages as LANGUAGES %}
+                                    {% get_language_info_list for LANGUAGES as languages %}
+                                    {% for language in languages %}
+                                        <form action="{% url 'set_language' %}" method="post" class="form-inline">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="language" value="{{ language.code }}">
+                                            <input type="hidden" name="next" value="{{ request.path }}">
+                                            <button type="submit" class="dropdown-item {% if LANGUAGE_CODE == language.code %} active {% endif %}" style="background: none; border: none; padding: 0;">
+                                                {% if language.code == 'en' %}
+                                                    <img src="{% static 'assets/images/flags/us.jpg' %}" alt="English" class="me-1" height="12">
+                                                {% else %}
+                                                    <img src="{% static 'assets/images/flags/br.png' %}" alt="Português" class="me-1" height="12">
+                                                {% endif %}
+                                                {{ language.name_local }}
+                                            </button>
+                                        </form>
+                                    {% endfor %}
+                                </div>
+                            </li>
+
+                            <!-- Light/Dark Mode Toggle Button -->
+                            <li class="d-none d-sm-inline-block">
+                                <div class="nav-link waves-effect waves-light" id="light-dark-mode">
+                                    <i class="ri-moon-line font-22"></i>
+                                </div>
+                            </li>
+
+                            <!-- User Dropdown -->
+                            <li class="dropdown">
+                                <a class="nav-link dropdown-toggle nav-user me-0 waves-effect waves-light" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                                    <span class="ms-1 d-none d-md-inline-block">
+                                        {{ user.name }} <i class="mdi mdi-chevron-down"></i>
+                                    </span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end profile-dropdown ">
+                                    <!-- item-->
+                                    <a href="{% url 'dashboard:user_profile' %}" class="dropdown-item notify-item">
+                                        <i class="fe-user"></i>
+                                        <span>{% trans "My account" %}</span>
+                                    </a>
+
+                                    <!-- item-->
+                                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                        <i class="fe-settings"></i>
+                                        <span>{% trans "Settings"%}</span>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+
+                                    <form action="{% url 'logout' %}" method="post">
+                                        {% csrf_token %}
+                                        <button type="submit" class="dropdown-item notify-item">
+                                            <i class="fe-log-out me-1"></i>
+                                            <span>{% trans "Log out" %}</span>
+                                        </button>
+                                    </form>
+                                </div>
+                            </li>
+
+                           
+                        </ul>
+                    </div>
+                </div>
+                <!-- ========== Topbar End ========== -->
+
+                <div class="content">
+
+                    <!-- Start Content-->
+                    <div class="container-fluid">
+                        
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box">
+                                    <div class="page-title-right">
+                                        
+                                    </div>
+                                    <h4 class="page-title"><!--Dashboard--></h4>
+                                </div>
+                            </div>
+                        </div>     
+<!-- ========== Start Django content ========== -->
+                    {% block page_content %}
+                     {% endblock %}
+ <!-- ========== End Django content ========== -->                      
+                        
+                    </div> <!-- container -->
+
+                </div> <!-- content -->
+
+                <!-- Footer Start -->
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div><script>document.write(new Date().getFullYear())</script> © CodeWave by <a href="https://inf.ufrgs.br/" target="_blank">INF@UFRGS</a></div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="d-none d-md-flex gap-4 align-item-center justify-content-md-end footer-links">
+                                    <a href="javascript: void(0);">{% trans "About" %}</a>
+                                    <a href="javascript: void(0);">{% trans "Team" %}</a>
+                                    <a href="mailto:gt.impacto.ufrgs@gmail.com">{% trans "Contact" %}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+                <!-- end Footer -->
+
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- End Page content -->
+            <!-- ============================================================== -->
+
+        </div>
+        <!-- END wrapper -->
+               
+        <!-- Vendor js -->
+        <script src={% static "assets/js/vendor.min.js" %}></script>
+        <!-- App js -->
+        <script src={% static "assets/js/app.min.js" %}></script>
+        
+        <!-- Plugins js-->
+        <script src={% static "assets/libs/flatpickr/flatpickr.min.js" %}></script>
+        <script src={% static "assets/libs/apexcharts/apexcharts.min.js" %}></script>
+        <script src={% static "assets/libs/selectize/js/standalone/selectize.min.js" %}></script>
+
+        <!-- Dashboar 1 init js-->
+        <script src={% static "assets/js/pages/dashboard-1.init.js" %}></script>
+
+
+    </body>
+</html>

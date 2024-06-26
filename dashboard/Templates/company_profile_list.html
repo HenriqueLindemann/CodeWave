@@ -1,0 +1,14 @@
+{% extends "dashboard/Templates/base.html" %}
+{% load form_tags %}
+{% load i18n %}
+
+{% block page_content %}
+    <h2>{% trans "Company Profiles"%}</h2>
+    <ul>
+        {% for company in companies %}
+            <li>
+                <a href="{% url 'dashboard:company_profile_detail' pk=company.pk %}">{{ company.name }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

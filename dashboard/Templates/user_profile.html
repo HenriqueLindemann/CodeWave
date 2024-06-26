@@ -1,0 +1,23 @@
+{% extends "dashboard/Templates/base.html" %}
+{% load i18n %}
+
+{% block page_content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>{% trans "User Profile" %}</h2>
+            <div class="profile-details">
+                <p><strong>{% trans "Username" %}:</strong> {{ user.username }}</p>
+                <p><strong>{% trans "Name" %}:</strong> {{ user.get_full_name }}</p>
+                <p><strong>{% trans "E-mail" %}:</strong> {{ user.email }}</p>
+                <p><strong>{% trans "Institution" %}:</strong> {{ user.institution }}</p>
+                <p><strong>{% trans "Job" %}:</strong> {{ user.job }}</p>
+                <p><strong>{% trans "Role" %}:</strong> {{ user.role }}</p>
+                <p><strong>{% trans "Staff Status" %}:</strong> {{ user.is_staff|yesno:_("Yes,No") }}</p>
+                <p><strong>{% trans "Active Status" %}:</strong> {{ user.is_active|yesno:_("Yes,No") }}</p>
+                <p><strong>{% trans "Date Joined" %}:</strong> {{ user.date_joined|date:"DATE_FORMAT" }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

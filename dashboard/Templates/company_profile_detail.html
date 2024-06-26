@@ -1,0 +1,378 @@
+{% extends "dashboard/Templates/base.html" %}
+{% load form_tags %}
+{% load i18n %}
+
+{% block page_content %}
+<div class="container-fluid">
+
+    <!-- start page title -->
+    <h2>{% trans "Company Profile of " %} <span style="color: var(--ct-menu-item-active-color);">{{ company.name }}</span></h2>
+    <!-- end page title -->
+
+    <div class="mb-3">
+        <a href="{% url 'dashboard:company_analisys' pk=company.pk %}" class="btn btn-primary me-2">{% trans "Company Analisys"%}</a>
+        <a href="{% url 'dashboard:edit_company_profile' pk=company.pk %}" class="btn btn-secondary">{% trans "Edit Company" %}</a>
+    </div>
+
+    <!-- Business Dimension -->
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="header-title">{% trans "Business Dimension" %}</h4>
+
+                    <!-- Text Fields -->
+                    <div class="mb-3">
+                        <label class="form-label">{% trans "Company Name" %}</label>
+                        <p>{{ company.name }}</p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">{% trans "Headquarters Country" %}</label>
+                        <p>{{ company.headquarters_country }}</p>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">{% trans "Industry Type" %}</label>
+                        <p>{{ company.industry_type }}</p>
+                    </div>
+
+                    <!-- Select Box -->
+                    <div class="mb-3">
+                        <label class="form-label">{% trans "Company Size" %}</label>
+                        <p>{{ company.get_size_display }}</p>
+                    </div>
+
+                    <!-- Numeric Fields -->
+                    <div class="mb-3">
+                        <label class="form-label">{% trans "Annual Revenue" %}</label>
+                        <p>{{ company.annual_revenue }}</p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">{% trans "Employee Count" %}</label>
+                        <p>{{ company.employee_count }}</p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">{% trans "Remote Work (%)" %}</label>
+                        <p>{{ company.remote_work }}</p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">{% trans "Growth Rate (%)" %}</label>
+                        <p>{{ company.growth_rate }}</p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">{% trans "Cybersecurity Spending" %}</label>
+                        <p>{{ company.cybersecurity_spending }}</p>
+                    </div>
+
+                    <!-- Boolean Fields (Switches) -->
+                    <div class="switchery-demo">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="global_presence" disabled {% if company.global_presence %} checked {% endif %}>
+                            <label class="form-check-label" for="global_presence">{% trans "Company has Global Presence" %}</label>
+                        </div>
+                        <br>
+
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="balanced_investments" disabled {% if company.balanced_investments %} checked {% endif %}>
+                            <label class="form-check-label" for="balanced_investments">{% trans "Balanced Investments" %}</label>
+                        </div>
+                        <br>
+
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="assets_value" disabled {% if company.assets_value %} checked {% endif %}>
+                            <label class="form-check-label" for="assets_value">{% trans "Assets Value are Determined" %}</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Technical Dimension -->
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="header-title">{% trans "Technical Dimension" %}</h4>
+
+                    <!-- Numeric Fields and Select Box -->
+                    <div class="mb-3">
+                        <label class="form-label">{% trans "Number of Authentication Factors" %}</label>
+                        <p>{{ company.auth_factors }}</p>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">{% trans "Cloud Solution" %}</label>
+                        <p>{{ company.get_cloud_solution_display }}</p>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">{% trans "Network Infrastructure" %}</label>
+                        <p>{{ company.get_network_infrastructure_display }}</p>
+                    </div>
+
+                    <!-- Boolean Fields (Switches) -->
+                    <div class="switchery-demo">
+                        <!-- Updated Asset Inventory -->
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="updated_inventory" disabled {% if company.updated_inventory %} checked {% endif %}>
+                            <label class="form-check-label" for="updated_inventory">{% trans "Company has Updated Asset Inventory" %}</label>
+                        </div>
+                        <br>
+
+                        <!-- Periodic System Updates -->
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="periodic_updates" disabled {% if company.periodic_updates %} checked {% endif %}>
+                            <label class="form-check-label" for="periodic_updates">{% trans "Systems have Periodic System Updates" %}</label>
+                        </div>
+                        <br>
+
+                        <!-- IT System Monitoring -->
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="it_monitoring" disabled {% if company.it_monitoring %} checked {% endif %}>
+                            <label class="form-check-label" for="it_monitoring">{% trans "IT System are Monitored" %}</label>
+                        </div>
+                        <br>
+
+                        <!-- Regular Critical Information Backups -->
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="regular_backups" disabled {% if company.regular_backups %} checked {% endif %}>
+                            <label class="form-check-label" for="regular_backups">{% trans "Regular Critical Information Backups" %}</label>
+                        </div>
+                        <br>
+
+                        <!-- Offsite Backups -->
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="offsite_backups" disabled {% if company.offsite_backups %} checked {% endif %}>
+                            <label class="form-check-label" for="offsite_backups">{% trans "Offsite Backups" %}</label>
+                        </div>
+                        <br>
+
+                        <!-- Regular Backup Checks -->
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="backup_checks" disabled {% if company.backup_checks %} checked {% endif %}>
+                            <label class="form-check-label" for="backup_checks">{% trans "Regular Backup Checks" %}</label>
+                        </div>
+                        <br>
+
+                        <!-- Data Encryption in Storage -->
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="data_encryption_storage" disabled {% if company.data_encryption_storage %} checked {% endif %}>
+                            <label class="form-check-label" for="data_encryption_storage">{% trans "Data Encryption in Storage" %}</label>
+                        </div>
+                        <br>
+
+                        <!-- Data Encryption in Transit -->
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="data_encryption_transit" disabled {% if company.data_encryption_transit %} checked {% endif %}>
+                            <label class="form-check-label" for="data_encryption_transit">{% trans "Data Encryption in Transit" %}</label>
+                        </div>
+                        <br>
+
+                        <!-- Secure Data Disposal Process -->
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="secure_data_disposal" disabled {% if company.secure_data_disposal %} checked {% endif %}>
+                            <label class="form-check-label" for="secure_data_disposal">{% trans "Secure Data Disposal Process" %}</label>
+                        </div>
+                        <br>
+
+                        <!-- Properly Configured IT Systems -->
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="configured_it_systems" disabled {% if company.configured_it_systems %} checked {% endif %}>
+                            <label class="form-check-label" for="configured_it_systems">{% trans "Properly Configured IT Systems" %}</label>
+                        </div>
+                        <br>
+
+                        <!-- VPN for Remote Access -->
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="remote_access_vpn" disabled {% if company.remote_access_vpn %} checked {% endif %}>
+                            <label class="form-check-label" for="remote_access_vpn">{% trans "VPN for Remote Access" %}</label>
+                        </div>
+                        <br>
+
+                        <!-- Continuous Vulnerability Identification -->
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="vulnerability_ID" disabled {% if company.vulnerability_ID %} checked {% endif %}>
+                            <label class="form-check-label" for="vulnerability_ID">{% trans "Continuous Vulnerability Identification" %}</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Human Dimension -->
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="header-title">{% trans "Human Dimension" %}</h4>
+
+                    <!-- Boolean Fields (Switches) -->
+                    <div class="switchery-demo">
+                        <!-- Cybersecurity Awareness -->
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="cybersec_awareness" disabled {% if company.cybersec_awareness %} checked {% endif %}>
+                            <label class="form-check-label" for="cybersec_awareness">{% trans "Cybersecurity Awareness" %}</label>
+                        </div>
+                        <br>
+
+                        <!-- Cybersecurity Training -->
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="cybersec_training" disabled {% if company.cybersec_training %} checked {% endif %}>
+                            <label class="form-check-label" for="cybersec_training">{% trans "Cybersecurity Training" %}</label>
+                        </div>
+                        <br>
+
+                        <!-- Incident Reporting Procedures -->
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="incident_reporting_procedures" disabled {% if company.incident_reporting_procedures %} checked {% endif %}>
+                            <label class="form-check-label" for="incident_reporting_procedures">{% trans "Incident Reporting Procedures" %}</label>
+                        </div>
+                        <br>
+
+                        <!-- Documented Response Plan -->
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="documented_response_plan" disabled {% if company.documented_response_plan %} checked {% endif %}>
+                            <label class="form-check-label" for="documented_response_plan">{% trans "Documented Response Plan" %}</label>
+                        </div>
+                        <br>
+
+                        <!-- Incident Report Awareness -->
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="incident_report_awareness" disabled {% if company.incident_report_awareness %} checked {% endif %}>
+                            <label class="form-check-label" for="incident_report_awareness">{% trans "Incident Report Awareness" %}</label>
+                        </div>
+                        <br>
+
+                        <!-- Response Plan Update -->
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="response_plan_update" disabled {% if company.response_plan_update %} checked {% endif %}>
+                            <label class="form-check-label" for="response_plan_update">{% trans "Response Plan is Updated" %}</label>
+                        </div>
+                        <br>
+
+                        <!-- Incident Simulation -->
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="incident_simulation" disabled {% if company.incident_simulation %} checked {% endif %}>
+                            <label class="form-check-label" for="incident_simulation">{% trans "Incident Simulation" %}</label>
+                        </div>
+                        <br>
+
+                        <!-- Operational Recovery Capacity -->
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="operational_recovery_capacity" disabled {% if company.operational_recovery_capacity %} checked {% endif %}>
+                            <label class="form-check-label" for="operational_recovery_capacity">{% trans "Operational Recovery Capacity" %}</label>
+                        </div>
+                        <br>
+
+                        <!-- Continuous Credential Maintenance -->
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="credentials_maintenance" disabled {% if company.credentials_maintenance %} checked {% endif %}>
+                            <label class="form-check-label" for="credentials_maintenance">{% trans "Continuous Credential Maintenance" %}</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Governance Dimension -->
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="header-title">{% trans "Governance Dimension" %}</h4>
+
+                    <!-- Numeric Fields -->
+                    <div class="mb-3">
+                        <label class="form-label">{% trans "Service Provider Risk (%)" %}</label>
+                        <p>{{ company.service_provider_risk }}</p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">{% trans "Critical Supplier Dependency (%)" %}</label>
+                        <p>{{ company.critical_supplier_dependency }}</p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">{% trans "Cybersecurity Investment" %}</label>
+                        <p>{{ company.cybersecurity_investment }}</p>
+                    </div>
+
+                    <!-- Boolean Fields (Switches) -->
+                    <div class="switchery-demo">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="risk_prioritization" disabled {% if company.risk_prioritization %} checked {% endif %}>
+                            <label class="form-check-label" for="risk_prioritization">{% trans "Risk Prioritization" %}</label>
+                        </div>
+                        <br>
+
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="risk_reassessment" disabled {% if company.risk_reassessment %} checked {% endif %}>
+                            <label class="form-check-label" for="risk_reassessment">{% trans "Risk Reassessment" %}</label>
+                        </div>
+                        <br>
+
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="vulnerability_identification" disabled {% if company.vulnerability_identification %} checked {% endif %}>
+                            <label class="form-check-label" for="vulnerability_identification">{% trans "Vulnerability Identification" %}</label>
+                        </div>
+                        <br>
+
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="it_records_presence" disabled {% if company.it_records_presence %} checked {% endif %}>
+                            <label class="form-check-label" for="it_records_presence">{% trans "IT Records Presence" %}</label>
+                        </div>
+                        <br>
+
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="network_systems_traffic_monitoring" disabled {% if company.network_systems_traffic_monitoring %} checked {% endif %}>
+                            <label class="form-check-label" for="network_systems_traffic_monitoring">{% trans "Network Systems have Traffic Monitoring" %}</label>
+                        </div>
+                        <br>
+
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="threat_identification_process" disabled {% if company.threat_identification_process %} checked {% endif %}>
+                            <label class="form-check-label" for="threat_identification_process">{% trans "Threat Identification Process" %}</label>
+                        </div>
+                        <br>
+
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="metrics_use_comparison" disabled {% if company.metrics_use_comparison %} checked {% endif %}>
+                            <label class="form-check-label" for="metrics_use_comparison">{% trans "Metrics are Used for Comparison" %}</label>
+                        </div>
+                        <br>
+
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="updated_data_protection_policies" disabled {% if company.updated_data_protection_policies %} checked {% endif %}>
+                            <label class="form-check-label" for="updated_data_protection_policies">{% trans "Updated Data Protection Policies" %}</label>
+                        </div>
+                        <br>
+
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="privacy_notifications_provision" disabled {% if company.privacy_notifications_provision %} checked {% endif %}>
+                            <label class="form-check-label" for="privacy_notifications_provision">{% trans "Privacy Notifications Provision" %}</label>
+                        </div>
+                        <br>
+
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="minimal_data_collection" disabled {% if company.minimal_data_collection %} checked {% endif %}>
+                            <label class="form-check-label" for="minimal_data_collection">{% trans "Minimal Data Collection" %}</label>
+                        </div>
+                        <br>
+                        
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="data_secure_deletion_anonymization" disabled {% if company.data_secure_deletion_anonymization %} checked {% endif %}>
+                            <label class="form-check-label" for="data_secure_deletion_anonymization">{% trans "Data is Secure and is Deleted and Anonymized" %}</label>
+                        </div>
+                        <br>
+                        
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="security_controls_implementation" disabled {% if company.security_controls_implementation %} checked {% endif %}>
+                            <label class="form-check-label" for="security_controls_implementation">{% trans "Security Controls Implementation" %}</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end row -->
+
+
+</div>
+{% endblock %}
