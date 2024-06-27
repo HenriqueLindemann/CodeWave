@@ -36,19 +36,19 @@ def change_language(request, language_code):
 
 class UserCreate(CreateView):
     model = User
-    template_name = current_dir +'login/register.html'
+    template_name = 'login/register.html'  # Confirme se o caminho do template está correto
     form_class = UserCreationForm
-    success_url = reverse_lazy('index')
+    success_url = reverse_lazy('index')  # Certifique-se de que a URL 'index' está corretamente configurada
 
     def form_valid(self, form):
         valid = super(UserCreate, self).form_valid(form)
         username, password = form.cleaned_data.get('username'), form.cleaned_data.get('password1')
         new_user = authenticate(username=username, password=password)
-        login(self.request, new_user)
+        if new_user:
+            login(self.request, new_user)
         return valid
 
     def get_context_data(self, **kwargs):
-        ctx = super(UserCreate, self).get_context_data(**kwargs)
-        ctx['formup'] = self.get_form()
-        ctx['form'] = Autenticacao
-        return ctx
+        context = super(UserCreate, self).get_context_data(**kwargs)
+        context['form'] = self.get_form()  # Isso garante que o formulário seja passado como 'form'
+        return context

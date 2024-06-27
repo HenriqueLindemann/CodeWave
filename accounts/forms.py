@@ -46,13 +46,16 @@ class UserCreationForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ('username', 'name', 'email', 'institution', 'job') 
+        fields = ('username', 'name', 'email', 'is_developer', 'is_client', 'skills','bio')
         widgets = {
             'username': forms.TextInput(attrs={'class': 'form-control'}),
             'name': forms.TextInput(attrs={'class': 'form-control'}),
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
-            'institution': forms.TextInput(attrs={'class': 'form-control'}),
-            'job': forms.TextInput(attrs={'class': 'form-control'}),
+            'is_developer': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'is_client': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'skills': forms.SelectMultiple(attrs={'class': 'form-control'}),
+            'bio': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),  
+
         }
 
     # def save(self, commit=True):

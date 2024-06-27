@@ -2,20 +2,48 @@
 {% load i18n %}
 
 {% block page_content %}
-<div class="container">
+<style>
+    .user-name {
+        font-size: 1.8em; 
+        color: #27639d; 
+        font-weight: bold; 
+    }
+    .profile-details {
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        margin-bottom: 20px; 
+    }
+</style>
+
+<div class="container-fluid">
     <div class="row">
-        <div class="col-md-12">
-            <h2>{% trans "User Profile" %}</h2>
-            <div class="profile-details">
-                <p><strong>{% trans "Username" %}:</strong> {{ user.username }}</p>
-                <p><strong>{% trans "Name" %}:</strong> {{ user.get_full_name }}</p>
-                <p><strong>{% trans "E-mail" %}:</strong> {{ user.email }}</p>
-                <p><strong>{% trans "Institution" %}:</strong> {{ user.institution }}</p>
-                <p><strong>{% trans "Job" %}:</strong> {{ user.job }}</p>
-                <p><strong>{% trans "Role" %}:</strong> {{ user.role }}</p>
-                <p><strong>{% trans "Staff Status" %}:</strong> {{ user.is_staff|yesno:_("Yes,No") }}</p>
-                <p><strong>{% trans "Active Status" %}:</strong> {{ user.is_active|yesno:_("Yes,No") }}</p>
-                <p><strong>{% trans "Date Joined" %}:</strong> {{ user.date_joined|date:"DATE_FORMAT" }}</p>
+        <div class="col-12">
+            <div class="card card-body">
+                <h4 class="mb-4">{% trans "Profile of" %} <span class="user-name">{{ user.get_full_name }}</span></h4>
+                <div class="profile-details">
+                    <p class="profile-text"><strong>{% trans "Username" %}:</strong> {{ user.username }}</p>
+                    <p class="profile-text"><strong>{% trans "E-mail" %}:</strong> {{ user.email }}</p>
+                    <p class="profile-text"><strong>{% trans "Developer Status" %}:</strong> {{ user.is_developer|yesno:_("Yes,No") }}</p>
+                    <p class="profile-text"><strong>{% trans "Client Status" %}:</strong> {{ user.is_client|yesno:_("Yes,No") }}</p>
+                    <!-- Ribbon da Bio -->
+                    <div class="card ribbon-box">
+                        <div class="card-body">
+                            <div class="ribbon ribbon-primary float-end">{{ user.get_full_name }}</div>
+                            <h5 class="profile-text">{% trans "Biografy"%}</h5>
+                            <div class="ribbon-content">
+                                <p class="mb-0">{{ user.bio }}</p>
+                            </div>
+                        </div>
+                    </div>                    <p class="profile-text"><strong>{% trans "Balance" %}:</strong> {{ user.balance }}</p>
+                    <p class="profile-text"><strong>{% trans "Rank" %}:</strong> {{ user.rank }}</p>
+                    <p class="profile-text"><strong>{% trans "Rating" %}:</strong> {{ user.rating }}</p>
+                    <p class="profile-text"><strong>{% trans "Skills" %}:</strong> {{ user.skills.all|join:", " }}</p>
+                    <p class="profile-text"><strong>{% trans "Staff Status" %}:</strong> {{ user.is_staff|yesno:_("Yes,No") }}</p>
+                    <p class="profile-text"><strong>{% trans "Active Status" %}:</strong> {{ user.is_active|yesno:_("Yes,No") }}</p>
+                    <p class="profile-text"><strong>{% trans "Date Joined" %}:</strong> {{ user.date_joined|date:"DATE_FORMAT" }}</p>
+                </div>
+                <a href="" class="btn btn-primary waves-effect waves-light">{% trans "Edit Profile" %}</a>
             </div>
         </div>
     </div>
