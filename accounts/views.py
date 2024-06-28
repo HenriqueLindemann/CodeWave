@@ -12,29 +12,28 @@ from .models import User
 from .forms import *
 
 
-@login_required
-def index(request):
-    profile_form = Profile_Form(instance=request.user)
-    password_form = PasswordChangeForm(user=request.user)
-    if request.method == 'POST':
-        if request.POST.get('profile'):
-            profile_form = Profile_Form(request.POST, instance=request.user)
-            if profile_form.is_valid():
-                profile_form.save()
-                messages.success(request, 'Profile has been updated!')
-            else:
-                messages.error(request, 'Input Error')
-        if request.POST.get('password'):
-            password_form = PasswordChangeForm(user=request.user, data=request.POST)
-            if password_form.is_valid():
-                password_form.save()
-                messages.success(request, 'Password has been changed!')
-            else:
-                messages.error(request, 'Input Error')
-    context = {'profile_form': profile_form,
-               'password_form': password_form}
-    return render(request, 'accounts/Templates/index.html', context)
-
+current_dir = 'accounts/Templates/' # Path for specific apps templates
+app_name = 'accounts'
 
 class IndexView(LoginRequiredMixin, TemplateView):
     template_name = 'accounts/Templates/index.html'
+
+@login_required
+def user_profile(request):
+    user = request.user
+    return render(request, current_dir + 'user_profile.html', {'user': user})
+
+@login_required
+def edit_profile(request):
+    if request.method == 'POST':
+        form = UserProfileEditForm(request.POST, instance=request.user)  # Passa a instância atual do usuário
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Your profile has been updated successfully!')
+            return redirect('accounts:user_profile')  
+        else:
+            messages.error(request, 'Please correct the error below.')
+    else:
+        form = UserProfileEditForm(instance=request.user)  # Formulário pré-preenchido com os dados do usuário
+
+    return render(request, current_dir + 'edit_profile.html', {'form': form})

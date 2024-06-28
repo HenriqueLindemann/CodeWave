@@ -1,0 +1,57 @@
+{% extends "dashboard/Templates/base.html" %}
+{% load i18n %}
+
+{% block page_content %}
+<div class="container mt-4">
+    <!-- Título do Projeto Estilizado -->
+    <div class="row">
+        <div class="col-12">
+            <h1>
+                {% trans "Projeto:" %}
+                <span style="color: #27639d; font-weight: bold; font-size: 1.5em;">{{ project.title }}</span>
+            </h1>
+        </div>
+    </div>
+    
+    <!-- Colunas para Dados do Projeto e Tasks -->
+    <div class="row">
+        <!-- Coluna com os Dados do Projeto -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <p><strong>{% trans "Category:" %}</strong> {{ project.category }}</p>
+                    <p><strong>{% trans "Description:" %}</strong> {{ project.description }}</p>
+                    <p><strong>{% trans "Created by:" %}</strong> {{ project.created_by }}</p>
+                    <p><strong>{% trans "Date Created:" %}</strong> {{ project.date_created|date:"Y-m-d" }}</p>
+                    <p><strong>{% trans "Last Updated:" %}</strong> {{ project.date_updated|date:"Y-m-d" }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Coluna com as Tasks -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h2>{% trans "Tasks" %}</h2>
+                    <div class="list-group">
+                        {% for task in tasks %}
+                        <div class="list-group-item">
+                            <h4>{{ task.title }}</h4>
+                            <p>{{ task.description }}</p>
+                            <p><strong>{% trans "Status:" %}</strong> {{ task.status }}</p>
+                            <p><strong>{% trans "Due Date:" %}</strong> {{ task.due_date|date:"Y-m-d" }}</p>
+                            <p><strong>{% trans "Proposed Value:" %}</strong> {{ task.proposed_value }}</p>
+                            <p><strong>{% trans "Accepted:" %}</strong> {{ task.is_accepted|yesno:"Yes,No" }}</p>
+                            <p><strong>{% trans "Application Status:" %}</strong> {{ task.application_status }}</p>
+                            <p><strong>{% trans "Assigned to:" %}</strong> {{ task.assigned_to }}</p>
+                        </div>
+                        {% empty %}
+                        <p>{% trans "No tasks available." %}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

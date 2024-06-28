@@ -43,7 +43,7 @@
                     <p class="profile-text"><strong>{% trans "Active Status" %}:</strong> {{ user.is_active|yesno:_("Yes,No") }}</p>
                     <p class="profile-text"><strong>{% trans "Date Joined" %}:</strong> {{ user.date_joined|date:"DATE_FORMAT" }}</p>
                 </div>
-                <a href="" class="btn btn-primary waves-effect waves-light">{% trans "Edit Profile" %}</a>
+                <a href="{% url 'accounts:edit_profile' %}" class="btn btn-primary waves-effect waves-light">{% trans "Edit Profile" %}</a>
             </div>
         </div>
     </div>

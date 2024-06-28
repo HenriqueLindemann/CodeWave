@@ -23,6 +23,8 @@ urlpatterns = [
 
 urlpatterns += i18n_patterns(
     path("dashboard/", include(("dashboard.urls"), namespace="dashboard")),
+    path('accounts/', include(('accounts.urls', 'accounts'), namespace='accounts')),
+    path('projects/', include(('projects.urls', 'projects'), namespace='projects')),
     path('register/', UserCreate.as_view(template_name=current_dir +'login/register.html'),name='register'),
     path('logout/', LogoutView.as_view(next_page=settings.LOGOUT_REDIRECT_URL), name='logout'),
     path('login/', MyLoginView.as_view(template_name=current_dir +'login/login.html'),name='login'),

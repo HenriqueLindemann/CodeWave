@@ -15,6 +15,5 @@ urlpatterns = [
     path("", views.index, name="index"),
     path('change_language/<str:language_code>/', change_language, name='change_language'),
 
-    path('profile/', views.user_profile, name='user_profile'),
 
 ] #+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

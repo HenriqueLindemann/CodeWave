@@ -1,0 +1,101 @@
+{% extends "dashboard/Templates/base.html" %}
+{% load i18n %}
+
+{% block page_content %}
+<div class="container mt-5">
+    <h4 class="mt-0">{% trans "Edit Your Profile" %}</h4>
+    <p class="text-muted mb-4">{% trans "Update your account details below." %}</p>
+
+    <!-- Formulário de Edição de Perfil -->
+    <form action="{% url 'accounts:edit_profile' %}" method="post" class="text-left">
+        {% csrf_token %}
+
+        <!-- Exibir erros que não estão ligados a um campo específico -->
+        {% for error in form.non_field_errors %}
+            <div class="alert alert-danger">
+                {{ error }}
+            </div>
+        {% endfor %}
+
+        <!-- Campo Username -->
+        <div class="form-group">
+            <label for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
+            {{ form.username }}
+            {% for error in form.username.errors %}
+                <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+        <br>
+
+        <!-- Campo Nome -->
+        <div class="form-group">
+            <label for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
+            {{ form.name }}
+            {% for error in form.name.errors %}
+                <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+        <br>
+
+        <!-- Campo E-mail -->
+        <div class="form-group">
+            <label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
+            {{ form.email }}
+            {% for error in form.email.errors %}
+                <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+        <br>
+
+        <!-- Campo Is Developer -->
+        <div class="form-group">
+            <div class="form-check">
+                {{ form.is_developer }}
+                <label class="form-check-label" for="{{ form.is_developer.id_for_label }}">
+                    {{ form.is_developer.label }}
+                </label>
+            </div>
+        </div>
+        <br>
+
+        <!-- Campo Is Client -->
+        <div class="form-group">
+            <div class="form-check">
+                {{ form.is_client }}
+                <label class="form-check-label" for="{{ form.is_client.id_for_label }}">
+                    {{ form.is_client.label }}
+                </label>
+            </div>
+        </div>
+        <br>
+
+        <!-- Campo Skills -->
+        <div class="form-group">
+            <label for="{{ form.skills.id_for_label }}">{{ form.skills.label }}</label>
+            {{ form.skills }}
+            <small class="form-text text-muted">
+                {% trans "To select multiple skills, press Ctrl while clicking." %}
+            </small>
+            {% for error in form.skills.errors %}
+                <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <!-- Campo Bio -->
+        <div class="form-group">
+            <label for="{{ form.bio.id_for_label }}">{{ form.bio.label }}</label>
+            {{ form.bio }}
+            {% for error in form.bio.errors %}
+                <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+        <br>
+
+        <!-- Botão de envio -->
+        <div class="text-center">
+            <button class="btn btn-primary" type="submit">{% trans "Save Changes" %}</button>
+        </div>
+        <br>
+    </form>
+</div>
+{% endblock %}

@@ -1,6 +1,6 @@
 # coding=utf-8
 
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UserChangeForm
 from django import forms
 from .models import User
 from django.utils.translation import gettext as _
@@ -69,6 +69,27 @@ class UserCreationForm(UserCreationForm):
     #         group.user_set.add(instance)
     #     return instance
 
+class UserProfileEditForm(UserChangeForm):
+    password = None  # Desabilita a edição de senha neste formulário
+
+    class Meta:
+        model = User
+        fields = ('username', 'name', 'email', 'bio', 'is_developer', 'is_client', 'skills')
+        widgets = {
+            'username': forms.TextInput(attrs={'class': 'form-control'}),
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'bio': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+            'is_developer': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'is_client': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'skills': forms.SelectMultiple(attrs={'class': 'form-control'}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(UserProfileEditForm, self).__init__(*args, **kwargs)
+        self.fields['username'].help_text = None
+        self.fields['email'].help_text = None
+
 
 class UserAdminForm(forms.ModelForm):
     class Meta:
@@ -79,4 +100,6 @@ class Autenticacao(AuthenticationForm):
     username = forms.CharField(max_length=254, widget=forms.TextInput(attrs={'class': 'form-control form-control-sm'}))
     password = forms.CharField(label=_("Senha"),
                                widget=forms.PasswordInput(attrs={'class': 'form-control form-control-sm'}))
+    
+
 

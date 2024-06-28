@@ -2,20 +2,59 @@
 {% load i18n %}
 
 {% block page_content %}
-    {% blocktrans with name=user.name %}
-        Bem Vindo <b style="color: #27639d;">{{ name }}</b>!
-    {% endblocktrans %}
-    <br>
-
-
-    <hr>
-
-    <div class="card">
-        <div class="card-body">
-            <h1 class="display-1">CodeWave</h1>
-            <p class="sub-header">
-                {% trans "Conectando visões a soluções: onde sua ideia encontra seu desenvolvedor ideal."%}
-            </p>
+<div class="container mt-4">  
+    <div class="row">
+        <div class="col-12">
+            {% blocktrans with name=user.name %}
+                Bem Vindo <b style="color: #27639d;">{{ name }}</b>!
+            {% endblocktrans %}
+            <hr>
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="display-1">CodeWave</h1>
+                    <p class="sub-header">
+                        {% trans "Conectando visões a soluções: onde sua ideia encontra seu desenvolvedor ideal." %}
+                    </p>
+                </div>
+            </div>
         </div>
     </div>
+    <div class="row">
+        <!-- Coluna de Projetos -->
+        <div class="col-md-6">
+            <h2>{% trans "Projetos Disponíveis" %}</h2>
+            <div class="list-group">
+                {% for project in projects %}
+                    <a href="{% url 'projects:project_detail' project.id %}" class="list-group-item list-group-item-action flex-column align-items-start">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">{{ project.title }}</h5>
+                            <small>{% trans "Criado em" %}: {{ project.date_created|date:"SHORT_DATE_FORMAT" }}</small>
+                        </div>
+                        <p class="mb-1">{{ project.description|truncatechars:150 }}</p>
+                    </a>
+                {% empty %}
+                    <p>{% trans "Nenhum projeto disponível no momento." %}</p>
+                {% endfor %}
+            </div>
+        </div>
+
+
+        <!-- Coluna de Desenvolvedores -->
+        <div class="col-md-6">
+            <h2>{% trans "Desenvolvedores Disponíveis" %}</h2>
+            <div class="list-group">
+                {% for developer in developers %}
+                    <div class="list-group-item">
+                        <h5 class="mb-1">{{ developer.name }}</h5>
+                        <p>{% trans "Avaliação" %}: {{ developer.rating }}/10</p>
+                        <p>{% trans "Rank" %}: {{ developer.rank }}</p>
+                        <p>{% trans "Habilidades" %}: {{ developer.skills.all|join:", " }}</p>
+                    </div>
+                {% empty %}
+                    <p>{% trans "Nenhum desenvolvedor disponível no momento." %}</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
