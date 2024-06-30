@@ -56,7 +56,16 @@
                         <h5 class="mb-1">{{ developer.name }}</h5>
                         <p>{% trans "Avaliação" %}: {{ developer.rating }}/10</p>
                         <p>{% trans "Rank" %}: {{ developer.rank }}</p>
-                        <p>{% trans "Habilidades" %}: {{ developer.skills.all|join:", " }}</p>
+                        <!-- habilidades com estilo inline -->
+                        <p><strong>{% trans "Habilidades" %}:</strong>
+                            {% with developer.skills.all as skills %}
+                                {% for skill in skills %}
+                                    <span style="color: #27639d; font-weight: bold;">{{ skill.name }}</span>{% if not forloop.last %}, {% endif %}
+                                {% empty %}
+                                    <span style="color: #27639d; font-weight: bold;">{% trans "Sem habilidades especificadas" %}</span>
+                                {% endfor %}
+                            {% endwith %}
+                        </p>
                     </div>
                 {% empty %}
                     <p>{% trans "Nenhum desenvolvedor disponível no momento." %}</p>
