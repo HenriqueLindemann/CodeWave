@@ -31,13 +31,21 @@
                             <small>{% trans "Criado em" %}: {{ project.date_created|date:"SHORT_DATE_FORMAT" }}</small>
                         </div>
                         <p class="mb-1">{{ project.description|truncatechars:150 }}</p>
+                        <!-- linguagens de programação com estilo inline -->
+                        <div>
+                            <strong>{% trans "Linguagens de Programação:" %}</strong>
+                            {% for language in project.get_unique_languages %}
+                                <span style="color: #27639d; font-weight: bold;">{{ language.name }}</span>{% if not forloop.last %}, {% endif %}
+                            {% empty %}
+                                <span style="color: #27639d; font-weight: bold;">{% trans "No languages specified" %}</span>
+                            {% endfor %}
+                        </div>
                     </a>
                 {% empty %}
                     <p>{% trans "Nenhum projeto disponível no momento." %}</p>
                 {% endfor %}
             </div>
         </div>
-
 
         <!-- Coluna de Desenvolvedores -->
         <div class="col-md-6">

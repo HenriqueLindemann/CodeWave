@@ -28,13 +28,13 @@ def change_language(request, language_code):
     return redirect(request.META.get('HTTP_REFERER', '/'))
 
  
-
+@login_required
 def index(request):
     projects = Project.objects.all()  # Obtém todos os projetos
-    developers = User.objects.filter(is_developer=True)  # Supõe que há um campo 'is_developer' no modelo User
+    developers = User.objects.filter(is_developer=True)  # Obtém todos os desenvolvedores
     
     context = {
         'projects': projects,
         'developers': developers
     }
-    return render(request, 'index.html', context)  # Ajuste o caminho do template conforme necessário
+    return render(request, 'index.html', context)  

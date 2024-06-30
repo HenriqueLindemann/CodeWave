@@ -2,6 +2,15 @@
 {% load i18n %}
 
 {% block page_content %}
+
+<style>
+    .programming-lang {
+        color: #27639d;  /* Aplicando a cor desejada */
+        font-weight: bold;
+        margin-right: 5px;  /* Espaçamento entre os nomes das linguagens */
+    }
+</style>
+
 <div class="container mt-4">
     <!-- Título do Projeto Estilizado -->
     <div class="row">
@@ -44,6 +53,12 @@
                             <p><strong>{% trans "Accepted:" %}</strong> {{ task.is_accepted|yesno:"Yes,No" }}</p>
                             <p><strong>{% trans "Application Status:" %}</strong> {{ task.application_status }}</p>
                             <p><strong>{% trans "Assigned to:" %}</strong> {{ task.assigned_to }}</p>
+                            <!-- Lista de Linguagens de Programação -->
+                            <p><strong>{% trans "Programming Languages:" %}</strong>
+                                {% for language in task.programming_languages.all %}
+                                    <span class="programming-lang">{{ language.name }}</span>
+                                {% endfor %}
+                            </p>
                         </div>
                         {% empty %}
                         <p>{% trans "No tasks available." %}</p>
