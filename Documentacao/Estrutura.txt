@@ -13,16 +13,15 @@ localhost:8000/admin - Sistema de administração do Django
  - urls.py: Arquivo de urls que apontam para os diferents apps do projeto. URLs principal.
  - settings.py: Arquivo de configurações de todo o projeto
  
- [dashboard] -> Onde será desenvolvido a plataforma
+ [dashboard] -> Onde será desenvolvido as telas iniciais da plataforma e base para o desenvolvimento de telas específicas
  -> Templates/base.html: O arquivo "base.html" fornece toda a interface Web que pode ser estendido por outros arquivos html para preencher o {% block page_content %}
 -> Templates/index.html: Arquivo de exemplo que estende a base e adiciona conteúdo na página. Esse será o estilo que iremos utilizar para todo o projeto
--> urls.py: Caminhos e URLs da plataforma. Aqui poderemos criar subaplicações para o dashboard.
--> views.py: Conterá todas as funções para processamento, manipulação e criação das páginas Web necessárias para a plataforma
--> models.py: Iremos utilizar para criação do banco de dados para a plataforma
+-> urls.py: Caminhos e URLs da dashboard. Aqui poderemos criar subaplicações para o dashboard.
+-> views.py: Conterá todas as funções para processamento, manipulação e criação das páginas Web necessárias para as telas da dashboard.
 
-[accounts] -> Core onde está implementado o sistema de logins
-models.py: Definição das informações dos usuários da plataforma
-* Os demais arquivos estão pré-prontos para criarmos uma interface de alteração de conta pelos usuários.
+[accounts] -> Onde será definido nosso usuário que expande o padrão do django e telas de edição e visualização de contas
+
+[projects] -> Onde será definida todos templates, views e models específicos do projeto
 
 
 Comandos úteis:
