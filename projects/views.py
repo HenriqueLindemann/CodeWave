@@ -1,22 +1,37 @@
 from django.shortcuts import get_object_or_404, render, redirect
-from .models import Project
+from .models import Project, Task, TaskApplication
+from django.db.models import Prefetch
 from django.contrib.auth.decorators import login_required
 from .forms import ProjectForm, TaskFormSet
 
 
 @login_required
 def project_detail(request, pk):
-    project = get_object_or_404(Project, id=pk)
+    project = get_object_or_404(
+        Project.objects.prefetch_related(
+            Prefetch(
+                'tasks',
+                queryset=Task.objects.prefetch_related(
+                    'programming_languages',
+                    Prefetch(
+                        'applications',
+                        queryset=TaskApplication.objects.select_related('developer'),
+                        to_attr='prefetched_applications'
+                    )
+                )
+            )
+        ),
+        id=pk
+    )
+    
     is_project_owner = project.created_by == request.user
-    
-    if is_project_owner:
-        tasks = project.tasks.prefetch_related('applications', 'applications__developer')
-    else:
-        tasks = project.tasks.all()
-    
+
+    # Debug print
+    for task in project.tasks.all():
+        print(f"Task: {task.title}, Application Status: {task.application_status}")
+
     return render(request, 'project_detail.html', {
-        'project': project, 
-        'tasks': tasks,
+        'project': project,
         'is_project_owner': is_project_owner
     })
 

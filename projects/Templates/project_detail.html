@@ -9,10 +9,22 @@
         font-weight: bold;
         margin-right: 5px;
     }
-    .task-application {
+    .task-details {
         margin-top: 10px;
         padding: 10px;
         background-color: #f8f9fa;
+        border-radius: 5px;
+    }
+    .owner-only {
+        background-color: #e9ecef;
+        padding: 10px;
+        border-radius: 5px;
+        margin-top: 10px;
+    }
+    .applications {
+        margin-top: 10px;
+        padding: 10px;
+        background-color: #f1f3f5;
         border-radius: 5px;
     }
 </style>
@@ -37,8 +49,15 @@
                     <p><strong>{% trans "Category:" %}</strong> {{ project.category }}</p>
                     <p><strong>{% trans "Description:" %}</strong> {{ project.description }}</p>
                     <p><strong>{% trans "Created by:" %}</strong> {{ project.created_by }}</p>
-                    <p><strong>{% trans "Date Created:" %}</strong> {{ project.date_created|date:"Y-m-d" }}</p>
-                    <p><strong>{% trans "Last Updated:" %}</strong> {{ project.date_updated|date:"Y-m-d" }}</p>
+                    <p><strong>{% trans "Date Created:" %}</strong> {{ project.date_created|date:"Y-m-d H:i" }}</p>
+                    <p><strong>{% trans "Last Updated:" %}</strong> {{ project.date_updated|date:"Y-m-d H:i" }}</p>
+                    <p><strong>{% trans "Unique Programming Languages:" %}</strong>
+                        {% for language in project.get_unique_languages %}
+                            <span class="programming-lang">{{ language.name }}</span>
+                        {% empty %}
+                            {% trans "No languages specified" %}
+                        {% endfor %}
+                    </p>
                 </div>
             </div>
         </div>
@@ -49,34 +68,42 @@
                 <div class="card-body">
                     <h2>{% trans "Tasks" %}</h2>
                     <div class="list-group">
-                        {% for task in tasks %}
+                        {% for task in project.tasks.all %}
                         <div class="list-group-item">
                             <h4>{{ task.title }}</h4>
                             <p>{{ task.description }}</p>
-                            <p><strong>{% trans "Status:" %}</strong> {{ task.status }}</p>
-                            <p><strong>{% trans "Due Date:" %}</strong> {{ task.due_date|date:"Y-m-d" }}</p>
-                            <p><strong>{% trans "Initial Value:" %}</strong> {{ task.initial_value }}</p>
-                            <!-- Lista de Linguagens de Programação -->
-                            <p><strong>{% trans "Programming Languages:" %}</strong>
-                                {% for language in task.programming_languages.all %}
-                                    <span class="programming-lang">{{ language.name }}</span>
-                                {% endfor %}
-                            </p>
+                            <div class="task-details">
+                                <p><strong>{% trans "Status:" %}</strong> {{ task.get_status_display }}</p>
+                                <p><strong>{% trans "Due Date:" %}</strong> {{ task.due_date|date:"Y-m-d" }}</p>
+                                <p><strong>{% trans "Initial Value:" %}</strong> {{ task.initial_value }}</p>
+                                <p><strong>{% trans "Application Status:" %}</strong> {{ task.get_application_status_display }}</p>
+                                <p><strong>{% trans "Programming Languages:" %}</strong>
+                                    {% for language in task.programming_languages.all %}
+                                        <span class="programming-lang">{{ language.name }}</span>
+                                    {% empty %}
+                                        {% trans "No languages specified" %}
+                                    {% endfor %}
+                                </p>
+                            </div>
                             
                             {% if is_project_owner %}
-                            <!-- Aplicações para esta task (apenas visível para o criador do projeto) -->
-                            <div class="task-application">
-                                <h5>{% trans "Applications" %}</h5>
-                                {% for application in task.taskapplication_set.all %}
-                                    <p>
-                                        <strong>{% trans "Developer:" %}</strong> {{ application.developer }}<br>
-                                        <strong>{% trans "Proposed Value:" %}</strong> {{ application.proposed_value }}<br>
-                                        <strong>{% trans "Status:" %}</strong> {{ application.get_status_display }}
-                                    </p>
+                            <div class="owner-only">
+                                <p><strong>{% trans "Assigned to:" %}</strong> {{ task.assigned_to|default_if_none:"Not assigned" }}</p>
+                                
+                                <div class="applications">
+                                    <h5>{% trans "Applications" %}</h5>
+                                    {% for application in task.applications.all %}
+                                    <div class="application">
+                                        <p><strong>{% trans "Developer:" %}</strong> {{ application.developer.username }}</p>
+                                        <p><strong>{% trans "Proposed Value:" %}</strong> {{ application.proposed_value }}</p>
+                                        <p><strong>{% trans "Application Date:" %}</strong> {{ application.application_date|date:"Y-m-d H:i" }}</p>
+                                        <p><strong>{% trans "Status:" %}</strong> {{ application.get_status_display }}</p>
+                                    </div>
                                     {% if not forloop.last %}<hr>{% endif %}
-                                {% empty %}
+                                    {% empty %}
                                     <p>{% trans "No applications yet." %}</p>
-                                {% endfor %}
+                                    {% endfor %}
+                                </div>
                             </div>
                             {% endif %}
                         </div>

@@ -15,20 +15,23 @@ class TaskForm(forms.ModelForm):
 
     class Meta:
         model = Task
-        fields = ['title', 'description', 'status', 'due_date', 'initial_value', 'programming_languages']
+        fields = ['title', 'description', 'status', 'due_date', 'initial_value', 'programming_languages', 'application_status']
         widgets = {
             'due_date': forms.DateInput(attrs={'type': 'date'}),
+            'application_status': forms.Select(attrs={'class': 'form-select'}),
         }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields.pop('id', None)
         self.fields.pop('project', None)
+        self.fields['application_status'].label = "Application Status"
+        self.fields['application_status'].help_text = "Choose whether this task is open or closed for applications"
 
 TaskFormSet = forms.inlineformset_factory(
     Project, Task, form=TaskForm,
     extra=1, can_delete=True,
-    fields=['title', 'description', 'status', 'due_date', 'initial_value', 'programming_languages']
+    fields=['title', 'description', 'status', 'due_date', 'initial_value', 'programming_languages', 'application_status']
 )
 
 class TaskApplicationForm(forms.ModelForm):

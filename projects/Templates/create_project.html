@@ -49,20 +49,31 @@
                                             <button type="button" class="btn btn-danger btn-sm remove-task">Remover Tarefa</button>
                                         </h5>
                                         {% for field in task_form %}
-                                            {% if field.name != 'DELETE' and field.name != 'id' and field.name != 'project' %}
-                                                <div class="form-group row">
-                                                    <label for="{{ field.id_for_label }}" class="col-sm-3 col-form-label">{{ field.label }}</label>
-                                                    <div class="col-sm-9">
+                                        {% if field.name != 'DELETE' and field.name != 'id' and field.name != 'project' %}
+                                            <div class="form-group row">
+                                                <label for="{{ field.id_for_label }}" class="col-sm-3 col-form-label">{{ field.label }}</label>
+                                                <div class="col-sm-9">
+                                                    {% if field.name == 'programming_languages' %}
+                                                        <div class="checkbox-group">
+                                                            {{ field }}
+                                                        </div>
+                                                    {% elif field.name == 'application_status' %}
                                                         {{ field }}
-                                                        {% if field.errors %}
-                                                            <div class="invalid-feedback d-block">
-                                                                {{ field.errors }}
-                                                            </div>
-                                                        {% endif %}
-                                                    </div>
+                                                    {% else %}
+                                                        {{ field }}
+                                                    {% endif %}
+                                                    {% if field.help_text %}
+                                                        <small class="form-text text-muted">{{ field.help_text }}</small>
+                                                    {% endif %}
+                                                    {% if field.errors %}
+                                                        <div class="invalid-feedback d-block">
+                                                            {{ field.errors }}
+                                                        </div>
+                                                    {% endif %}
                                                 </div>
-                                            {% endif %}
-                                        {% endfor %}
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
                                     </div>
                                 </div>
                             {% endfor %}
