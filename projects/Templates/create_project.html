@@ -1,0 +1,135 @@
+{% extends "dashboard/Templates/base.html" %}
+{% load i18n %}
+
+{% block page_content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <h4 class="page-title">Criar Novo Projeto</h4>
+            </div>
+        </div>
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="header-title mb-3">Informações do Projeto</h4>
+                        {% for field in project_form %}
+                            <div class="form-group row">
+                                <label for="{{ field.id_for_label }}" class="col-sm-3 col-form-label">{{ field.label }}</label>
+                                <div class="col-sm-9">
+                                    {{ field }}
+                                    {% if field.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {{ field.errors }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="header-title mb-3">Tarefas do Projeto</h4>
+                        {{ task_formset.management_form }}
+                        <div id="task-formset">
+                            {% for task_form in task_formset %}
+                                <div class="card mb-3 task-form">
+                                    <div class="card-body">
+                                        <h5 class="card-title d-flex justify-content-between align-items-center">
+                                            Tarefa {{ forloop.counter }}
+                                            <button type="button" class="btn btn-danger btn-sm remove-task">Remover Tarefa</button>
+                                        </h5>
+                                        {% for field in task_form %}
+                                            {% if field.name != 'DELETE' and field.name != 'id' and field.name != 'project' %}
+                                                <div class="form-group row">
+                                                    <label for="{{ field.id_for_label }}" class="col-sm-3 col-form-label">{{ field.label }}</label>
+                                                    <div class="col-sm-9">
+                                                        {{ field }}
+                                                        {% if field.errors %}
+                                                            <div class="invalid-feedback d-block">
+                                                                {{ field.errors }}
+                                                            </div>
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <button type="button" id="add-task" class="btn btn-secondary">Adicionar Tarefa</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">Criar Projeto</button>
+            </div>
+        </div>
+
+    </form>
+</div>
+<br>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const addTaskBtn = document.getElementById('add-task');
+    const taskFormset = document.getElementById('task-formset');
+    let formCount = document.querySelectorAll('.task-form').length;
+
+    addTaskBtn.addEventListener('click', function() {
+        const newForm = taskFormset.querySelector('.task-form').cloneNode(true);
+        formCount++;
+
+        newForm.innerHTML = newForm.innerHTML.replace(/-\d+-/g, `-${formCount}-`);
+        newForm.querySelectorAll('input, select, textarea').forEach(input => {
+            input.value = '';
+            if (input.type === 'checkbox') {
+                input.checked = false;
+            }
+        });
+
+        const taskTitle = newForm.querySelector('.card-title');
+        taskTitle.firstChild.textContent = `Tarefa ${formCount}`;
+
+        taskFormset.appendChild(newForm);
+        updateFormsetManagement();
+    });
+
+    taskFormset.addEventListener('click', function(e) {
+        if (e.target.classList.contains('remove-task')) {
+            e.preventDefault();
+            const taskForm = e.target.closest('.task-form');
+            taskForm.remove();
+            updateFormsetManagement();
+            updateTaskNumbers();
+        }
+    });
+
+    function updateFormsetManagement() {
+        const totalForms = document.getElementById('id_tasks-TOTAL_FORMS');
+        formCount = document.querySelectorAll('.task-form').length;
+        totalForms.value = formCount;
+    }
+
+    function updateTaskNumbers() {
+        document.querySelectorAll('.task-form').forEach((form, index) => {
+            const taskTitle = form.querySelector('.card-title');
+            taskTitle.firstChild.textContent = `Tarefa ${index + 1}`;
+        });
+    }
+});
+</script>
+{% endblock %}

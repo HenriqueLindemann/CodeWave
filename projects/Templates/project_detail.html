@@ -5,9 +5,15 @@
 
 <style>
     .programming-lang {
-        color: #27639d;  /* Aplicando a cor desejada */
+        color: #27639d;
         font-weight: bold;
-        margin-right: 5px;  /* Espaçamento entre os nomes das linguagens */
+        margin-right: 5px;
+    }
+    .task-application {
+        margin-top: 10px;
+        padding: 10px;
+        background-color: #f8f9fa;
+        border-radius: 5px;
     }
 </style>
 
@@ -49,16 +55,30 @@
                             <p>{{ task.description }}</p>
                             <p><strong>{% trans "Status:" %}</strong> {{ task.status }}</p>
                             <p><strong>{% trans "Due Date:" %}</strong> {{ task.due_date|date:"Y-m-d" }}</p>
-                            <p><strong>{% trans "Proposed Value:" %}</strong> {{ task.proposed_value }}</p>
-                            <p><strong>{% trans "Accepted:" %}</strong> {{ task.is_accepted|yesno:"Yes,No" }}</p>
-                            <p><strong>{% trans "Application Status:" %}</strong> {{ task.application_status }}</p>
-                            <p><strong>{% trans "Assigned to:" %}</strong> {{ task.assigned_to }}</p>
+                            <p><strong>{% trans "Initial Value:" %}</strong> {{ task.initial_value }}</p>
                             <!-- Lista de Linguagens de Programação -->
                             <p><strong>{% trans "Programming Languages:" %}</strong>
                                 {% for language in task.programming_languages.all %}
                                     <span class="programming-lang">{{ language.name }}</span>
                                 {% endfor %}
                             </p>
+                            
+                            {% if is_project_owner %}
+                            <!-- Aplicações para esta task (apenas visível para o criador do projeto) -->
+                            <div class="task-application">
+                                <h5>{% trans "Applications" %}</h5>
+                                {% for application in task.taskapplication_set.all %}
+                                    <p>
+                                        <strong>{% trans "Developer:" %}</strong> {{ application.developer }}<br>
+                                        <strong>{% trans "Proposed Value:" %}</strong> {{ application.proposed_value }}<br>
+                                        <strong>{% trans "Status:" %}</strong> {{ application.get_status_display }}
+                                    </p>
+                                    {% if not forloop.last %}<hr>{% endif %}
+                                {% empty %}
+                                    <p>{% trans "No applications yet." %}</p>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
                         </div>
                         {% empty %}
                         <p>{% trans "No tasks available." %}</p>

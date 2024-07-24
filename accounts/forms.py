@@ -58,6 +58,7 @@ class UserCreationForm(UserCreationForm):
 
         }
 
+
     # def save(self, commit=True):
     #     instance = super(UserCreationForm, self).save(commit=False)
     #     group = Group.objects.get(name=self.cleaned_data['group'])

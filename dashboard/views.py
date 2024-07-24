@@ -27,14 +27,24 @@ def change_language(request, language_code):
     # Redirect back to the referring page or home
     return redirect(request.META.get('HTTP_REFERER', '/'))
 
- 
 @login_required
 def index(request):
-    projects = Project.objects.all()  # Obtém todos os projetos
+    projects = Project.objects.all().order_by('-date_created')  # Obtém todos os projetos, mais recentes primeiro
     developers = User.objects.filter(is_developer=True)  # Obtém todos os desenvolvedores
     
     context = {
         'projects': projects,
         'developers': developers
     }
-    return render(request, 'index.html', context)  
+
+    # Se o usuário for um cliente (is_client)
+    if hasattr(request.user, 'is_client') and request.user.is_client:
+        # Obtém os projetos criados pelo usuário atual
+        user_projects = Project.objects.filter(created_by=request.user).order_by('-date_created')
+        
+        # print(f"Projetos do usuário {request.user.username}: {user_projects}") #depuração
+
+        context['user_projects'] = user_projects
+    
+
+    return render(request, 'index.html', context)

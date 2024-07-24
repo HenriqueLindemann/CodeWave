@@ -19,7 +19,37 @@
             </div>
         </div>
     </div>
-    <div class="row">
+
+    {% if user.is_client %}
+    <div class="row mt-4">
+        <div class="col-12">
+            <h2>{% trans "Seus Projetos" %}</h2>
+            <div class="list-group">
+                {% for project in user_projects %}
+                    <a href="{% url 'projects:project_detail' project.id %}" class="list-group-item list-group-item-action flex-column align-items-start">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">{{ project.title }}</h5>
+                            <small>{% trans "Criado em" %}: {{ project.date_created|date:"SHORT_DATE_FORMAT" }}</small>
+                        </div>
+                        <p class="mb-1">{{ project.description|truncatechars:150 }}</p>
+                        <div>
+                            <strong>{% trans "Linguagens de Programação:" %}</strong>
+                            {% for language in project.get_unique_languages %}
+                                <span style="color: #27639d; font-weight: bold;">{{ language.name }}</span>{% if not forloop.last %}, {% endif %}
+                            {% empty %}
+                                <span style="color: #27639d; font-weight: bold;">{% trans "No languages specified" %}</span>
+                            {% endfor %}
+                        </div>
+                    </a>
+                {% empty %}
+                    <p>{% trans "Você ainda não criou nenhum projeto." %}</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="row mt-4">
         <!-- Coluna de Projetos -->
         <div class="col-md-6">
             <h2>{% trans "Projetos Disponíveis" %}</h2>
@@ -31,7 +61,6 @@
                             <small>{% trans "Criado em" %}: {{ project.date_created|date:"SHORT_DATE_FORMAT" }}</small>
                         </div>
                         <p class="mb-1">{{ project.description|truncatechars:150 }}</p>
-                        <!-- linguagens de programação com estilo inline -->
                         <div>
                             <strong>{% trans "Linguagens de Programação:" %}</strong>
                             {% for language in project.get_unique_languages %}
@@ -54,17 +83,16 @@
                 {% for developer in developers %}
                     <div class="list-group-item">
                         <h5 class="mb-1">{{ developer.name }}</h5>
-                        <p>{% trans "Avaliação" %}: {{ developer.rating }}/10</p>
-                        <p>{% trans "Rank" %}: {{ developer.rank }}</p>
-                        <!-- habilidades com estilo inline -->
+                        <p>{% trans "Avaliação" %}: {{ developer.rating|default:"N/A" }}/10</p>
+                        <p>{% trans "Rank" %}: {{ developer.rank|default:"N/A" }}</p>
                         <p><strong>{% trans "Habilidades" %}:</strong>
-                            {% with developer.skills.all as skills %}
-                                {% for skill in skills %}
+                            {% if developer.skills.exists %}
+                                {% for skill in developer.skills.all %}
                                     <span style="color: #27639d; font-weight: bold;">{{ skill.name }}</span>{% if not forloop.last %}, {% endif %}
-                                {% empty %}
-                                    <span style="color: #27639d; font-weight: bold;">{% trans "Sem habilidades especificadas" %}</span>
                                 {% endfor %}
-                            {% endwith %}
+                            {% else %}
+                                <span style="color: #27639d; font-weight: bold;">{% trans "Sem habilidades especificadas" %}</span>
+                            {% endif %}
                         </p>
                     </div>
                 {% empty %}
@@ -74,4 +102,5 @@
         </div>
     </div>
 </div>
+<br>
 {% endblock %}
