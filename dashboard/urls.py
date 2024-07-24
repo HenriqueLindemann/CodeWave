@@ -8,12 +8,16 @@ from django.utils.decorators import method_decorator
 from . import views
 from .views import change_language
 from django.conf.urls.i18n import i18n_patterns
+from accounts.views import search_developer
 
 app_name = 'dashboard'
 
 urlpatterns = [
     path("", views.index, name="index"),
     path('change_language/<str:language_code>/', change_language, name='change_language'),
+    path('accounts/', include(('accounts.urls', 'accounts'), namespace='accounts')),
+    #path('search_project/', views.search_project, name='search_project'),
+    #path('search_task/', views.search_task, name='search_task'),
 
 
 ] #+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

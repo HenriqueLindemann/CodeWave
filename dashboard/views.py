@@ -38,3 +38,5 @@ def index(request):
         'developers': developers
     }
     return render(request, 'index.html', context)  
+
+

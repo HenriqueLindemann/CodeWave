@@ -94,7 +94,24 @@
                                     </li>
                                 </ul>
                             </div>
-                        </li>                       
+                        </li> 
+                        
+                        <li class="menu-item"> 
+                            <a href="#menuSearch" data-bs-toggle="collapse" class="menu-link">
+                                <span class="menu-icon"><i data-feather="search"></i></span>
+                                <span class="menu-text"> {% trans "Search" %} </span>
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <div class="collapse" id="menuSearch">
+                                <ul class="sub-menu">
+                                    <li class="menu-item">
+                                        <a href="{% url 'accounts:search_developer' %}" class="menu-link">
+                                            <span class="menu-text">{% trans "Developer"%}</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
 
                     </ul>
                     <!--- End Menu -->

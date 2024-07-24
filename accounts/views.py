@@ -9,7 +9,9 @@ from django.urls import reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import PasswordChangeForm
 from .models import User
+from .models import Skill
 from .forms import *
+from django.db.models import Q
 
 
 current_dir = 'accounts/Templates/' # Path for specific apps templates
@@ -37,3 +39,31 @@ def edit_profile(request):
         form = UserProfileEditForm(instance=request.user)  # Formulário pré-preenchido com os dados do usuário
 
     return render(request, current_dir + 'edit_profile.html', {'form': form})
+
+@login_required
+def search_developer(request):
+    skills = Skill.objects.all()
+
+    if request.method == 'POST':
+        search_name = request.POST.get('searchInput', '')
+        search_skill = request.POST.get('filterSelect', '')
+        request.session['search_name'] = search_name
+        request.session['search_skill'] = search_skill
+
+        return redirect('accounts:results_search')
+
+    return render(request, 'search_developer.html', {'skills': skills})
+
+@login_required
+def results_search(request):
+    search_name = request.session.get('search_name', '')
+    search_skill = request.session.get('search_skill', '')
+    developers = User.objects.none()
+
+    if search_name:
+        developers = User.objects.filter(name__icontains=search_name)
+
+    if search_skill:
+        developers = developers.filter(skills__id=search_skill)
+
+    return render(request, 'results_search.html', {'developers': developers})
