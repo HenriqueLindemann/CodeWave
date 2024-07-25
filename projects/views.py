@@ -96,37 +96,48 @@ def results_search_projects(request):
 @login_required
 def search_tasks(request):
     projects = Project.objects.all()
-    tasks = Task.objects.all()
-    languages = ProgrammingLanguage.objects.all()
+    programming_languages = ProgrammingLanguage.objects.all()  # Mudamos o nome da variável
+    application_statuses = dict(Task.APPLICATION_STATUS_CHOICES)
 
     if request.method == 'POST':
         search_title = request.POST.get('searchInput', '')
         search_project = request.POST.get('projectSelect', '')
         search_language = request.POST.get('languageSelect', '')
+        search_app_status = request.POST.get('applicationStatusSelect', '')
 
         request.session['search_title'] = search_title
         request.session['search_project'] = search_project
         request.session['search_language'] = search_language
+        request.session['search_app_status'] = search_app_status
 
         return redirect('projects:results_search_tasks')
 
-    return render(request, 'search_tasks.html', {'projects': projects, 'tasks': tasks, 'lenguages': languages})
+    context = {
+        'projects': projects,
+        'programming_languages': programming_languages,  # Mudamos o nome da chave no contexto
+        'application_statuses': application_statuses,
+    }
+    return render(request, 'search_tasks.html', context)
 
 @login_required
 def results_search_tasks(request):
     search_title = request.session.get('search_title', '')
     search_project = request.session.get('search_project', '')
     search_language = request.session.get('search_language', '')
-    tasks = Task.objects.all()
+    search_app_status = request.session.get('search_app_status', '')
 
-    
-    if search_title:
-        tasks = tasks.filter(title__icontains=search_title)
+    tasks = Task.search(
+        title=search_title,
+        project=search_project,
+        language=search_language,
+        app_status=search_app_status
+    )
 
-    if search_project:
-        tasks = tasks.filter(project__title__icontains=search_project)
-
-    if search_language:
-        tasks = tasks.filter(programming_languages__name__icontains=search_language)
-
-    return render(request, 'results_search_tasks.html', {'tasks': tasks})
+    context = {
+        'tasks': tasks,
+        'search_title': search_title,
+        'search_project': search_project,
+        'search_language': search_language,
+        'search_app_status': search_app_status,
+    }
+    return render(request, 'results_search_tasks.html', context)

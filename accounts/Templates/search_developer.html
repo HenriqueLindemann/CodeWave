@@ -34,7 +34,7 @@
                                 <div class="mb-3">
                                     <label for="filterSelect" class="form-label">{% trans "Filtrar por Habilidade" %}</label>
                                     <select class="form-select" id="filterSelect" name="filterSelect">
-                                        <option value="">{% trans "Selecione uma habilidade" %}</option>
+                                        <option value="">{% trans "Todas as Habilidades" %}</option>
                                         {% for skill in skills %}
                                         <option value="{{ skill.id }}">{{ skill.name }}</option>
                                         {% endfor %}

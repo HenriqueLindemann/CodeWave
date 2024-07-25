@@ -34,7 +34,7 @@
                                 <div class="mb-3">
                                     <label for="categorySelect" class="form-label">{% trans "Categoria" %}</label>
                                     <select class="form-select" id="categorySelect" name="categorySelect">
-                                        <option value="">{% trans "Selecione uma categoria" %}</option>
+                                        <option value="">{% trans "Todas as Categorias" %}</option>
                                         {% for categorie in categories %}
                                         <option value="{{ categorie }}">{{ categorie }}</option>
                                         {% endfor %}

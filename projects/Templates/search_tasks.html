@@ -27,25 +27,34 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="searchInput" class="form-label">{% trans "Nome da Task" %}</label>
-                                    <input type="text" class="form-control" id="searchInput" name="searchInput" placeholder="{% trans 'Digite o nome do projeto' %}">
+                                    <input type="text" class="form-control" id="searchInput" name="searchInput" placeholder="{% trans 'Digite o nome da task' %}">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="projectSelect" class="form-label">{% trans "Projeto" %}</label>
+                                    <select class="form-select" id="projectSelect" name="projectSelect">
+                                        <option value="">{% trans "Todos os Projetos" %}</option>
+                                        {% for project in projects %}
+                                        <option value="{{ project.id }}">{{ project.title }}</option>
+                                        {% endfor %}
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="projectSelect" class="form-label">{% trans "Projeto" %}</label>
-                                    <select class="form-select" id="projectSelect" name="projectSelect">
-                                        <option value="">{% trans "Selecione um Projeto" %}</option>
-                                        {% for project in projects %}
-                                        <option value="{{ project.title }}">{{ project.title }}</option>
+                                    <label for="languageSelect" class="form-label">{% trans "Linguagem de Programação" %}</label>
+                                    <select class="form-select" id="languageSelect" name="languageSelect">
+                                        <option value="">{% trans "Qualquer Linguagem de Programação" %}</option>
+                                        {% for language in programming_languages %}
+                                        <option value="{{ language.id }}">{{ language.name }}</option>
                                         {% endfor %}
                                     </select>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="languageSelect" class="form-label">{% trans "Linguagem de Programação" %}</label>
-                                    <select class="form-select" id="languageSelect" name="languageSelect">
-                                        <option value="">{% trans "Selecione uma linguagem" %}</option>
-                                        {% for lenguage in lenguages %}
-                                        <option value="{{ lenguage }}">{{ lenguage }}</option>
+                                    <label for="applicationStatusSelect" class="form-label">{% trans "Status da Aplicação" %}</label>
+                                    <select class="form-select" id="applicationStatusSelect" name="applicationStatusSelect">
+                                        <option value="">{% trans "Todos os Status" %}</option>
+                                        {% for value, label in application_statuses.items %}
+                                        <option value="{{ value }}">{{ label }}</option>
                                         {% endfor %}
                                     </select>
                                 </div>

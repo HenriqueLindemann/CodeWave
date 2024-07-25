@@ -14,19 +14,30 @@
                     {% if tasks %}
                         <div class="list-group">
                             {% for task in tasks %}
-                                <div class="list-group-item list-group-item-action flex-column align-items-start mb-3">
+                                <a href="{% url 'projects:project_detail' task.project.id %}" class="list-group-item list-group-item-action flex-column align-items-start">
                                     <div class="d-flex w-100 justify-content-between">
                                         <h5 class="mb-1" style="color: #27639d;">{{ task.title }}</h5>
                                         <small>{% trans "Prazo" %}: {{ task.due_date|date:"SHORT_DATE_FORMAT" }}</small>
                                     </div>
                                     <p class="mb-1">{{ task.description|truncatechars:150 }}</p>
                                     <div class="mt-2">
-                                        <strong>{% trans "Projeto:" %}</strong> {{ task.project }}
+                                        <strong>{% trans "Projeto:" %}</strong> {{ task.project.title }}
                                     </div>
                                     <div class="mt-2">
-                                        <strong>{% trans "Linguagem de Programação:" %}</strong> {{ task.programming_languages }}
+                                        <strong>{% trans "Status:" %}</strong> {{ task.get_status_display }}
                                     </div>
-                                </div>
+                                    <div class="mt-2">
+                                        <strong>{% trans "Valor Inicial:" %}</strong> {{ task.initial_value }}
+                                    </div>
+                                    {% if task.programming_languages.all %}
+                                        <div class="mt-2">
+                                            <strong>{% trans "Linguagens de Programação:" %}</strong>
+                                            {% for language in task.programming_languages.all %}
+                                                <span class="badge bg-primary">{{ language.name }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </a>
                             {% endfor %}
                         </div>
                     {% else %}

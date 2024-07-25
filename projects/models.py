@@ -46,6 +46,27 @@ class Task(models.Model):
     application_status = models.CharField(max_length=50, choices=APPLICATION_STATUS_CHOICES, default='open')
     programming_languages = models.ManyToManyField(ProgrammingLanguage, related_name='tasks', blank=True)
 
+    def search_tasks(self, title='', project=None, language=None, app_status=''):
+        queryset = Task.objects.all()
+        
+        if title:
+            queryset = queryset.filter(title__icontains=title)
+        
+        if project:
+            queryset = queryset.filter(project_id=project)
+        
+        if language:
+            queryset = queryset.filter(programming_languages__id=language)
+        
+        if app_status:
+            queryset = queryset.filter(application_status=app_status)
+        
+        return queryset.distinct()
+    
+    @classmethod
+    def search(cls, title='', project=None, language=None, app_status=''):
+        return cls().search_tasks(title, project, language, app_status)
+    
     def __str__(self):
         return self.title
 
