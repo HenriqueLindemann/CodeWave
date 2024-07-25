@@ -1,7 +1,60 @@
 {% extends "dashboard/Templates/base.html" %}
 {% load i18n %}
+{% load static %}
 
 {% block page_content %}
+
+<style>
+    .logo-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+    }
+    .logo-image {
+        width: 200px;
+        height: auto;
+        margin-right: 1rem;
+        max-width: 100%;
+    }
+    .logo-text {
+        font-size: 4rem;
+        font-weight: bold;
+        letter-spacing: 2px;
+        text-align: center;
+    }
+    .logo-code {
+        color: #1a2a3a;
+    }
+    .logo-wave {
+        color: #3498db;
+    }
+
+    @media (max-width: 768px) {
+        .logo-container {
+            flex-direction: column;
+        }
+        .logo-image {
+            width: 150px;
+            margin-right: 0;
+            margin-bottom: 1rem;
+        }
+        .logo-text {
+            font-size: 3rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .logo-image {
+            width: 100px;
+        }
+        .logo-text {
+            font-size: 2.5rem;
+        }
+    }
+</style>
+
 <div class="container mt-4">  
     <div class="row">
         <div class="col-12">
@@ -11,8 +64,13 @@
             <hr>
             <div class="card">
                 <div class="card-body">
-                    <h1 class="display-1">CodeWave</h1>
-                    <p class="sub-header">
+                    <div class="logo-container">
+                        <img src="{% static 'assets/images/logo-new.png' %}" alt="CodeWave Logo" class="logo-image">
+                        <h1 class="logo-text">
+                            <span class="logo-code">CODE</span><span class="logo-wave">WAVE</span>
+                        </h1>
+                    </div>
+                    <p class="sub-header text-center">
                         {% trans "Conectando visões a soluções: onde sua ideia encontra seu desenvolvedor ideal." %}
                     </p>
                 </div>
