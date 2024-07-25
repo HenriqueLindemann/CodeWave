@@ -4,29 +4,55 @@
 {% load i18n %}
 
 {% block page_content %}
-<div class="row mt-3">
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="header-title mb-3">{% trans "Resultados da Pesquisa de Desenvolvedores" %}</h4>
 
-<div class="row mt-3">
-    <div class="col-12">
-        <div class="card-box">
-            <h4 class="header-title">{% trans "Resultados Desenvolvedores" %}</h4>
-            <div id="searchResults" class="mt-3">
-                {% if developers %}
-                    <ul>
-                    {% for developer in developers %}
-                        <li>
-                            <h5>{{ developer.name }}</h5>
-                            <p>{% trans "Skills: " %}{{ developer.skills.all|join:", " }}</p>
-                        </li>
-                    {% endfor %}
-                    </ul>
-                {% else %}
-                    <p>{% trans "No results found." %}</p>
-                {% endif %}
-            </div>
-            <a href="{% url 'accounts:search_developer' %}" class="btn btn-primary mt-3">{% trans "Voltar" %}</a>
-        </div>
-    </div>
-</div>
+                    {% if developers %}
+                        <div class="list-group">
+                            {% for developer in developers %}
+                                <a href="" class="list-group-item list-group-item-action flex-column align-items-start">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h5 class="mb-1" style="color: #27639d;">{{ developer.name }}</h5>
+                                        <small>{% trans "Membro desde" %}: {{ developer.date_joined|date:"SHORT_DATE_FORMAT" }}</small>
+                                    </div>
+                                    <p class="mb-1">{{ developer.bio|default:""|truncatechars:150 }}</p>
+                                    {% if developer.skills.all %}
+                                        <div class="mt-2">
+                                            <strong>{% trans "Habilidades:" %}</strong>
+                                            {% for skill in developer.skills.all %}
+                                                <span class="badge bg-primary">{{ skill.name }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                    {% if developer.languages.all %}
+                                        <div class="mt-2">
+                                            <strong>{% trans "Linguagens de Programação:" %}</strong>
+                                            {% for language in developer.languages.all %}
+                                                <span class="badge bg-info">{{ language.name }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </a>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="alert alert-info" role="alert">
+                            {% trans "Nenhum resultado encontrado." %}
+                        </div>
+                    {% endif %}
 
+                    <div class="mt-3">
+                        <a href="{% url 'accounts:search_developer' %}" class="btn btn-primary waves-effect waves-light">
+                            <i class="mdi mdi-arrow-left me-1"></i> {% trans "Voltar" %}
+                        </a>
+                    </div>
+                </div> <!-- end card-body -->
+            </div> <!-- end card -->
+        </div> <!-- end col -->
+    </div> <!-- end row -->
+</div> <!-- end container -->
 {% endblock %}

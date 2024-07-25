@@ -74,27 +74,29 @@
 
                         <li class="menu-title">{% trans "Menu" %}</li>
 
-                        <li class="menu-item"> 
-                            <a href="#menuDashboards" data-bs-toggle="collapse" class="menu-link">
-                                <span class="menu-icon"><i data-feather="airplay"></i></span>
-                                <span class="menu-text"> {% trans "Sites" %} </span>
+                        {% if user.is_client %}
+                        <li class="menu-item">
+                            <a href="#menuProjects" data-bs-toggle="collapse" class="menu-link">
+                                <span class="menu-icon"><i data-feather="briefcase"></i></span>
+                                <span class="menu-text">{% trans "Projects" %}</span>
                                 <span class="menu-arrow"></span>
                             </a>
-                            <div class="collapse" id="menuDashboards">
+                            <div class="collapse" id="menuProjects">
                                 <ul class="sub-menu">
                                     <li class="menu-item">
-                                        <a href="youtube.com" class="menu-link">
-                                            <span class="menu-text">{% trans "Youtube"%}</span>
+                                        <a href="{% url 'projects:create_project' %}" class="menu-link">
+                                            <span class="menu-text">{% trans "Criar Projeto" %}</span>
                                         </a>
                                     </li>
                                     <li class="menu-item">
-                                        <a href="instagram.com" class="menu-link">
-                                            <span class="menu-text">{% trans "Instagram" %}</span>
-                                        </a>                                                                         
+                                        <a href="{% url 'dashboard:index' %}" class="menu-link">
+                                            <span class="menu-text">{% trans "Ver Projetos" %}</span>
+                                        </a>
                                     </li>
                                 </ul>
                             </div>
-                        </li> 
+                        </li>
+                        {% endif %}
                         
                         <li class="menu-item"> 
                             <a href="#menuSearch" data-bs-toggle="collapse" class="menu-link">
@@ -106,12 +108,12 @@
                                 <ul class="sub-menu">
                                     <li class="menu-item">
                                         <a href="{% url 'accounts:search_developer' %}" class="menu-link">
-                                            <span class="menu-text">{% trans "Developer"%}</span>
+                                            <span class="menu-text">{% trans "Desenvolvedores"%}</span>
                                         </a>
                                     </li>
                                     <li class="menu-item">
                                         <a href="{% url 'projects:search_projects' %}" class="menu-link">
-                                            <span class="menu-text">{% trans "Project" %}</span>
+                                            <span class="menu-text">{% trans "Projetos" %}</span>
                                         </a>                                                                          
                                     </li>
                                 </ul>
