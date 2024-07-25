@@ -88,8 +88,13 @@
                             
                             {% if is_project_owner %}
                             <div class="owner-only">
-                                <p><strong>{% trans "Assigned to:" %}</strong> {{ task.assigned_to|default_if_none:"Not assigned" }}</p>
-                                
+                                <p><strong>{% trans "Assigned to:" %}</strong> 
+                                    {% if task.assigned_to %}
+                                        <a href="{% url 'accounts:view_profile' task.assigned_to.id %}">{{ task.assigned_to.get_full_name }}</a>
+                                    {% else %}
+                                        {% trans "Not assigned" %}
+                                    {% endif %}
+                                </p>                                
                                 <div class="applications">
                                     <h5>{% trans "Applications" %}</h5>
                                     {% for application in task.applications.all %}

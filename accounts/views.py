@@ -5,11 +5,14 @@ from django.shortcuts import render, redirect
 from django.views.generic import (
     CreateView, TemplateView, UpdateView, FormView
 )
+from django.shortcuts import render, get_object_or_404
+
 from django.urls import reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import PasswordChangeForm
 from .models import User, Skill
 from .forms import *
+from django.contrib.auth import get_user_model
 
 
 current_dir = 'accounts/Templates/' # Path for specific apps templates
@@ -65,3 +68,24 @@ def results_search_devs(request):
         developers = developers.filter(skills__id=search_skill)
 
     return render(request, 'results_search_devs.html', {'developers': developers})
+
+@login_required
+def view_profile(request, user_id):
+    User = get_user_model()
+    profile_user = get_object_or_404(User, id=user_id)
+    
+    # Determine se o usuário atual tem permissão para ver informações sensíveis
+    can_view_sensitive_info = request.user.is_staff or request.user == profile_user
+
+    context = {
+        'profile_user': profile_user,
+        'can_view_sensitive_info': can_view_sensitive_info,
+    }
+
+    # Se o usuário tem permissão, adicione informações sensíveis ao contexto
+    if can_view_sensitive_info:
+        context['user_balance'] = profile_user.balance
+        context['user_email'] = profile_user.email
+        # Adicione outras informações sensíveis conforme necessário
+
+    return render(request, 'view_profile.html', context)

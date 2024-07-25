@@ -1,0 +1,61 @@
+{% extends "dashboard/Templates/base.html" %}
+{% load i18n %}
+
+{% block page_content %}
+<style>
+    .user-name {
+        font-size: 1.8em; 
+        color: #27639d; 
+        font-weight: bold; 
+    }
+    .profile-details {
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        margin-bottom: 20px; 
+    }
+    .ribbon-box {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+</style>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-body">
+                <h4 class="mb-4">{% trans "Profile of" %} <span class="user-name">{{ profile_user.get_full_name }}</span></h4>
+                <div class="profile-details">
+                    <p class="profile-text"><strong>{% trans "Username" %}:</strong> {{ profile_user.username }}</p>
+                    {% if can_view_sensitive_info %}
+                    <p class="profile-text"><strong>{% trans "E-mail" %}:</strong> {{ user_email }}</p>
+                    <p class="profile-text"><strong>{% trans "Balance" %}:</strong> {{ user_balance }}</p>
+                    {% endif %}
+                    <p class="profile-text"><strong>{% trans "Developer Status" %}:</strong> {{ profile_user.is_developer|yesno:_("Yes,No") }}</p>
+                    <p class="profile-text"><strong>{% trans "Client Status" %}:</strong> {{ profile_user.is_client|yesno:_("Yes,No") }}</p>
+                    
+                    <!-- Ribbon da Bio -->
+                    <div class="card ribbon-box">
+                        <div class="card-body">
+                            <div class="ribbon ribbon-primary float-end">{{ profile_user.get_full_name }}</div>
+                            <h5 class="profile-text">{% trans "Biography" %}</h5>
+                            <div class="ribbon-content">
+                                <p class="mb-0">{{ profile_user.bio }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <p class="profile-text"><strong>{% trans "Rank" %}:</strong> {{ profile_user.rank }}</p>
+                    <p class="profile-text"><strong>{% trans "Rating" %}:</strong> {{ profile_user.rating }}</p>
+                    <p class="profile-text"><strong>{% trans "Skills" %}:</strong> {{ profile_user.skills.all|join:", " }}</p>
+                    {% if can_view_sensitive_info %}
+                    <p class="profile-text"><strong>{% trans "Staff Status" %}:</strong> {{ profile_user.is_staff|yesno:_("Yes,No") }}</p>
+                    <p class="profile-text"><strong>{% trans "Active Status" %}:</strong> {{ profile_user.is_active|yesno:_("Yes,No") }}</p>
+                    {% endif %}
+                    <p class="profile-text"><strong>{% trans "Date Joined" %}:</strong> {{ profile_user.date_joined|date:"DATE_FORMAT" }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

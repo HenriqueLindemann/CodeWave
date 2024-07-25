@@ -14,7 +14,7 @@
                     {% if developers %}
                         <div class="list-group">
                             {% for developer in developers %}
-                                <a href="" class="list-group-item list-group-item-action flex-column align-items-start">
+                                <a href="{% url 'accounts:view_profile' developer.id %}" class="list-group-item list-group-item-action flex-column align-items-start">
                                     <div class="d-flex w-100 justify-content-between">
                                         <h5 class="mb-1" style="color: #27639d;">{{ developer.name }}</h5>
                                         <small>{% trans "Membro desde" %}: {{ developer.date_joined|date:"SHORT_DATE_FORMAT" }}</small>

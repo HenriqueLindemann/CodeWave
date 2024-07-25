@@ -149,7 +149,7 @@
             </h2>
             <div class="list-group">
                 {% for developer in developers %}
-                    <div class="list-group-item">
+                    <a href="{% url 'accounts:view_profile' developer.id %}" class="list-group-item list-group-item-action">
                         <h5 class="mb-1">{{ developer.name }}</h5>
                         <p>{% trans "Avaliação" %}: {{ developer.rating|default:"N/A" }}/10</p>
                         <p>{% trans "Rank" %}: {{ developer.rank|default:"N/A" }}</p>
@@ -162,7 +162,7 @@
                                 <span style="color: #27639d; font-weight: bold;">{% trans "Sem habilidades especificadas" %}</span>
                             {% endif %}
                         </p>
-                    </div>
+                    </a>
                 {% empty %}
                     <p>{% trans "Nenhum desenvolvedor disponível no momento." %}</p>
                 {% endfor %}
