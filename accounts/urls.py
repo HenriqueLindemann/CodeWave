@@ -12,5 +12,7 @@ app_name = 'accounts'
 urlpatterns = [
     path('profile/', views.user_profile, name='user_profile'),
     path('edit-profile/', views.edit_profile, name='edit_profile'),
+    path('search_developer/', views.search_developer, name='search_developer'),
+    path('results_search/', views.results_search, name='results_search'),
 
 ]
