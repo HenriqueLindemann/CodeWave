@@ -52,7 +52,12 @@
     <div class="row mt-4">
         <!-- Coluna de Projetos -->
         <div class="col-md-6">
-            <h2>{% trans "Projetos Disponíveis" %}</h2>
+            <h2>
+                {% trans "Projetos Disponíveis" %}
+                <a href="{% url 'projects:search_projects' %}" class="text-muted" title="{% trans 'Pesquisar Projetos' %}">
+                    <i class="mdi mdi-magnify"></i>
+                </a>
+            </h2>
             <div class="list-group">
                 {% for project in projects %}
                     <a href="{% url 'projects:project_detail' project.id %}" class="list-group-item list-group-item-action flex-column align-items-start">
@@ -75,10 +80,15 @@
                 {% endfor %}
             </div>
         </div>
-
+    
         <!-- Coluna de Desenvolvedores -->
         <div class="col-md-6">
-            <h2>{% trans "Desenvolvedores Disponíveis" %}</h2>
+            <h2>
+                {% trans "Desenvolvedores Disponíveis" %}
+                <a href="{% url 'accounts:search_developer' %}" class="text-muted" title="{% trans 'Pesquisar Desenvolvedores' %}">
+                    <i class="mdi mdi-account-search"></i>
+                </a>
+            </h2>
             <div class="list-group">
                 {% for developer in developers %}
                     <div class="list-group-item">
