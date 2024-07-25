@@ -48,12 +48,12 @@ def search_developer(request):
         request.session['search_name'] = search_name
         request.session['search_skill'] = search_skill
 
-        return redirect('accounts:results_search')
+        return redirect('accounts:results_search_devs')
 
     return render(request, 'search_developer.html', {'skills': skills})
 
 @login_required
-def results_search(request):
+def results_search_devs(request):
     search_name = request.session.get('search_name', '')
     search_skill = request.session.get('search_skill', '')
     developers = User.objects.none()
@@ -64,4 +64,4 @@ def results_search(request):
     if search_skill:
         developers = developers.filter(skills__id=search_skill)
 
-    return render(request, 'results_search.html', {'developers': developers})
+    return render(request, 'results_search_devs.html', {'developers': developers})

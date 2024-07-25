@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404, render, redirect
-from .models import Project, Task, TaskApplication
+from .models import Project, Task, TaskApplication, ProgrammingLanguage
 from django.db.models import Prefetch
 from django.contrib.auth.decorators import login_required
 from .forms import ProjectForm, TaskFormSet
@@ -61,3 +61,33 @@ def create_project(request):
         'project_form': project_form,
         'task_formset': task_formset,
     })
+
+@login_required
+def search_projects(request):
+    projects = Project.objects.all()
+
+    if request.method == 'POST':
+        search_title = request.POST.get('searchInput', '')
+        search_category = request.POST.get('categorySelect', '')
+
+        request.session['search_title'] = search_title
+        request.session['search_category'] = search_category
+
+        return redirect('projects:results_search_projects')
+
+    return render(request, 'search_projects.html', {'projects': projects})
+
+@login_required
+def results_search_projects(request):
+    search_title = request.session.get('search_title', '')
+    search_category = request.session.get('search_category', '')
+    projects = Project.objects.all()
+    
+    if search_title:
+        projects = projects.filter(title__icontains=search_title)
+
+    if search_category:
+        projects = projects.filter(category__icontains=search_category)
+
+
+    return render(request, 'results_search_projects.html', {'projects': projects})

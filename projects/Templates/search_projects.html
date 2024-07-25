@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% load i18n %}
+
+{% block page_content %}
+
+<form method="POST" action="{% url 'projects:search_projects' %}">
+    {% csrf_token %}
+    <div class="row mt-3">
+        <div class="col-12">
+            <div class="page-title-box">
+                <h4 class="page-title">{% trans "Pesquisar Projetos" %}</h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-12">
+            <div class="card-box">
+                <h4 class="header-title">{% trans "Pesquisa" %}</h4>
+                <div class="form-group mt-3">
+                    <input type="text" class="form-control" id="searchInput" name="searchInput" placeholder="{% trans 'Nome do Projeto' %}">
+                </div>
+                <div class="form-group mt-3">
+                    <label for="categorySelect">{% trans "Categoria" %}</label>
+                    <select class="form-control" id="categorySelect" name="categorySelect">
+                        <option value="">{% trans "Selecione uma categoria" %}</option>
+                        {% for project in projects %}
+                        <option value="{{ project.category }}">{{ project.category }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary mt-3">{% trans "Pesquisar" %}</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+{% endblock %}
