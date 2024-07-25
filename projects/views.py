@@ -65,6 +65,7 @@ def create_project(request):
 @login_required
 def search_projects(request):
     projects = Project.objects.all()
+    categories = set(project.category for project in projects)
 
     if request.method == 'POST':
         search_title = request.POST.get('searchInput', '')
@@ -75,7 +76,7 @@ def search_projects(request):
 
         return redirect('projects:results_search_projects')
 
-    return render(request, 'search_projects.html', {'projects': projects})
+    return render(request, 'search_projects.html', {'projects': projects, 'categories': categories})
 
 @login_required
 def results_search_projects(request):
@@ -91,3 +92,41 @@ def results_search_projects(request):
 
 
     return render(request, 'results_search_projects.html', {'projects': projects})
+
+@login_required
+def search_tasks(request):
+    projects = Project.objects.all()
+    tasks = Task.objects.all()
+    languages = ProgrammingLanguage.objects.all()
+
+    if request.method == 'POST':
+        search_title = request.POST.get('searchInput', '')
+        search_project = request.POST.get('projectSelect', '')
+        search_language = request.POST.get('languageSelect', '')
+
+        request.session['search_title'] = search_title
+        request.session['search_project'] = search_project
+        request.session['search_language'] = search_language
+
+        return redirect('projects:results_search_tasks')
+
+    return render(request, 'search_tasks.html', {'projects': projects, 'tasks': tasks, 'lenguages': languages})
+
+@login_required
+def results_search_tasks(request):
+    search_title = request.session.get('search_title', '')
+    search_project = request.session.get('search_project', '')
+    search_language = request.session.get('search_language', '')
+    tasks = Task.objects.all()
+
+    
+    if search_title:
+        tasks = tasks.filter(title__icontains=search_title)
+
+    if search_project:
+        tasks = tasks.filter(project__title__icontains=search_project)
+
+    if search_language:
+        tasks = tasks.filter(programming_languages__name__icontains=search_language)
+
+    return render(request, 'results_search_tasks.html', {'tasks': tasks})

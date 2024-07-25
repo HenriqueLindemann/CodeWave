@@ -59,7 +59,7 @@ def search_developer(request):
 def results_search_devs(request):
     search_name = request.session.get('search_name', '')
     search_skill = request.session.get('search_skill', '')
-    developers = User.objects.none()
+    developers = User.objects.all()
 
     if search_name:
         developers = User.objects.filter(name__icontains=search_name)

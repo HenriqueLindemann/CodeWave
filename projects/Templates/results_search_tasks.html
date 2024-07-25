@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% load i18n %}
+
+{% block page_content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="header-title mb-3">{% trans "Resultados da Pesquisa de Tarefas" %}</h4>
+
+                    {% if tasks %}
+                        <div class="list-group">
+                            {% for task in tasks %}
+                                <div class="list-group-item list-group-item-action flex-column align-items-start mb-3">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h5 class="mb-1" style="color: #27639d;">{{ task.title }}</h5>
+                                        <small>{% trans "Prazo" %}: {{ task.due_date|date:"SHORT_DATE_FORMAT" }}</small>
+                                    </div>
+                                    <p class="mb-1">{{ task.description|truncatechars:150 }}</p>
+                                    <div class="mt-2">
+                                        <strong>{% trans "Projeto:" %}</strong> {{ task.project }}
+                                    </div>
+                                    <div class="mt-2">
+                                        <strong>{% trans "Linguagem de Programação:" %}</strong> {{ task.programming_languages }}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="alert alert-info" role="alert">
+                            {% trans "Nenhum resultado encontrado." %}
+                        </div>
+                    {% endif %}
+
+                    <div class="mt-3">
+                        <a href="{% url 'projects:search_tasks' %}" class="btn btn-primary waves-effect waves-light">
+                            <i class="mdi mdi-arrow-left me-1"></i> {% trans "Voltar" %}
+                        </a>
+                    </div>
+                </div> <!-- end card-body -->
+            </div> <!-- end card -->
+        </div> <!-- end col -->
+    </div> <!-- end row -->
+</div> <!-- end container -->
+{% endblock %}
