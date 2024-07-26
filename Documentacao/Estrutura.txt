@@ -26,6 +26,10 @@ localhost:8000/admin - Sistema de administração do Django
 
 Comandos úteis:
 
+pip install django-crispy-forms
+pip install crispy-bootstrap4
+
+
 python3 manage.py collectstatic -> Comando que precisa ser executado sempre que novos arquivos estáticos (Imagens, assets, etc)
 
 python3 manage.py migrate

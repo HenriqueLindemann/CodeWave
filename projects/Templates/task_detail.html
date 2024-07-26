@@ -1,0 +1,19 @@
+{% if user.is_developer and task.application_status == 'open' and user != task.project.created_by %}
+    <a href="{% url 'apply_for_task' task.id %}" class="btn btn-primary">Apply for this task</a>
+{% endif %}
+
+{% if user == task.project.created_by %}
+    <h3>Applications</h3>
+    {% for application in task.applications.all %}
+        <div>
+            <p>Applicant: {{ application.developer.username }}</p>
+            <p>Proposed Value: ${{ application.proposed_value }}</p>
+            <p>Status: {{ application.get_status_display }}</p>
+            {% if application.status == 'pending' %}
+                <a href="{% url 'review_application' application.id %}" class="btn btn-info">Review Application</a>
+            {% endif %}
+        </div>
+    {% empty %}
+        <p>No applications yet.</p>
+    {% endfor %}
+{% endif %}

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Review Application for Task: {{ task.title }}</h2>
+<p>Applicant: {{ application.developer.username }}</p>
+<p>Proposed Value: ${{ application.proposed_value }}</p>
+<p>Application Date: {{ application.application_date }}</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" name="action" value="accept" class="btn btn-success">Accept</button>
+    <button type="submit" name="action" value="reject" class="btn btn-danger">Reject</button>
+</form>
+{% endblock %}

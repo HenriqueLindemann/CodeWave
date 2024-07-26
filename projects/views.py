@@ -3,7 +3,9 @@ from .models import Project, Task, TaskApplication, ProgrammingLanguage
 from django.db.models import Prefetch
 from django.contrib.auth.decorators import login_required
 from .forms import ProjectForm, TaskFormSet
-
+from .forms import TaskApplicationForm
+from django.contrib import messages
+from django.db import transaction
 
 @login_required
 def project_detail(request, pk):
@@ -141,3 +143,106 @@ def results_search_tasks(request):
         'search_app_status': search_app_status,
     }
     return render(request, 'results_search_tasks.html', context)
+
+@login_required
+def apply_for_task(request, task_id):
+    task = get_object_or_404(Task, id=task_id)
+    
+    if request.user == task.project.created_by:
+        messages.error(request, "You can't apply for your own task.")
+        return redirect('projects:project_detail', pk=task.project.id)
+    
+    # Verificar se já existe uma aplicação do usuário para esta tarefa
+    existing_application = TaskApplication.objects.filter(
+        task=task, 
+        developer=request.user
+    ).first()
+
+    # Se a aplicação existente foi rejeitada, o usuário só pode visualizar
+    if existing_application and existing_application.status == 'rejected':
+        context = {
+            'task': task,
+            'application': existing_application,
+            'is_rejected': True
+        }
+        return render(request, 'apply_for_task.html', context)
+
+    # Verificar se a tarefa está aberta para candidaturas
+    if task.status != 'open' or task.application_status != 'open':
+        if existing_application:
+            # Se o usuário já se candidatou, mostrar os detalhes da candidatura
+            context = {
+                'task': task,
+                'application': existing_application,
+                'is_closed': True
+            }
+            return render(request, 'apply_for_task.html', context)
+        else:
+            messages.error(request, "This task is not open for applications.")
+            return redirect('projects:project_detail', pk=task.project.id)
+
+    if request.method == 'POST':
+        form = TaskApplicationForm(request.POST, instance=existing_application)
+        if form.is_valid():
+            application = form.save(commit=False)
+            application.task = task
+            application.developer = request.user
+            application.status = 'pending'  # Resetar o status para pendente em caso de atualização
+            application.save()
+            if existing_application:
+                messages.success(request, "Your application has been updated successfully.")
+            else:
+                messages.success(request, "Your application has been submitted successfully.")
+            return redirect('projects:project_detail', pk=task.project.id)
+    else:
+        form = TaskApplicationForm(instance=existing_application)
+    
+    context = {
+        'form': form,
+        'task': task,
+        'is_update': existing_application is not None
+    }
+    return render(request, 'apply_for_task.html', context)
+
+@login_required
+def review_application(request, application_id):
+    application = get_object_or_404(TaskApplication, id=application_id)
+    task = application.task
+    project = task.project
+    
+    if request.user != project.created_by:
+        messages.error(request, "You don't have permission to review this application.")
+        return redirect('projects:project_detail', pk=project.id)
+    
+    if task.status != 'open' or task.application_status != 'open':
+        messages.error(request, "This task is no longer open for applications.")
+        return redirect('projects:project_detail', pk=project.id)
+    
+    if request.method == 'POST':
+        action = request.POST.get('action')
+        
+        with transaction.atomic():  # Usamos uma transação para garantir a consistência dos dados
+            if action == 'accept':
+                # Aceita a aplicação atual
+                application.status = 'accepted'
+                task.assigned_to = application.developer
+                task.status = 'in_progress'
+                task.application_status = 'closed'  # Fecha a tarefa para novas candidaturas
+                application.save()
+                task.save()
+                
+                # Rejeita todas as outras aplicações para esta tarefa
+                TaskApplication.objects.filter(task=task).exclude(id=application.id).update(status='rejected')
+                
+                messages.success(request, "Application accepted. The task has been assigned, other applications have been rejected, and the task is now closed for new applications.")
+            elif action == 'reject':
+                application.status = 'rejected'
+                application.save()
+                messages.success(request, "Application rejected.")
+            else:
+                messages.error(request, "Invalid action.")
+                return redirect('projects:project_detail', pk=project.id)
+        
+        return redirect('projects:project_detail', pk=project.id)
+    
+    return render(request, 'review_application.html', {'application': application, 'task': task})

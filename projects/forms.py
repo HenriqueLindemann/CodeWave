@@ -51,3 +51,17 @@ class TaskApplicationForm(forms.ModelForm):
         if commit:
             instance.save()
         return instance
+
+class TaskApplicationForm(forms.ModelForm):
+    class Meta:
+        model = TaskApplication
+        fields = ['proposed_value']
+        widgets = {
+            'proposed_value': forms.NumberInput(attrs={'class': 'form-control', 'step': '0.01'}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        task = kwargs.pop('task', None)
+        super().__init__(*args, **kwargs)
+        if task:
+            self.fields['proposed_value'].initial = task.initial_value

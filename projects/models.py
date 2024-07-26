@@ -27,9 +27,12 @@ class ProgrammingLanguage(models.Model):
 
 class Task(models.Model):
     STATUS_CHOICES = [
-        ('open', 'Open'),
-        ('in_progress', 'In Progress'),
-        ('completed', 'Completed'),
+        ('open', 'Open'),  # Quando o cliente cria a task
+        ('in_progress', 'In Progress'),  # Após o cliente aceitar a candidatura de um desenvolvedor
+        ('under_review', 'Under Review'),  # Quando o desenvolvedor envia o trabalho para revisão
+        ('completed', 'Completed'),  # Quando o cliente aprova e confirma a conclusão da tarefa
+        ('rejected', 'Rejected'),  # Se o cliente rejeita o trabalho e requer alterações
+        ('cancelled', 'Cancelled'),  # Se a tarefa for cancelada por qualquer motivo
     ]
     APPLICATION_STATUS_CHOICES = [
         ('open', 'Open for Applications'),

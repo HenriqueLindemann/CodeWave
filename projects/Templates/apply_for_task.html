@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block page_content %}
+<h2>{{ task.title }}</h2>
+<p>{{ task.description }}</p>
+
+{% if is_rejected %}
+    <h3>Your application was rejected</h3>
+    <p>Proposed value: {{ application.proposed_value }}</p>
+    <p>Application date: {{ application.application_date }}</p>
+    <p>Status: Rejected</p>
+{% elif is_closed %}
+    <h3>Your application</h3>
+    <p>Proposed value: {{ application.proposed_value }}</p>
+    <p>Application date: {{ application.application_date }}</p>
+    <p>Status: {{ application.get_status_display }}</p>
+    <p>This task is no longer open for applications.</p>
+{% else %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">{% if is_update %}Update Application{% else %}Submit Application{% endif %}</button>
+    </form>
+{% endif %}
+
+<a href="{% url 'projects:project_detail' pk=task.project.id %}">Back to Project</a>
+{% endblock %}
