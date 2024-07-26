@@ -5,7 +5,37 @@ class ProjectForm(forms.ModelForm):
     class Meta:
         model = Project
         fields = ['title', 'description', 'category']
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
+            'category': forms.TextInput(attrs={'class': 'form-control'}),
+        }
 
+    def __init__(self, *args, **kwargs):
+        super(ProjectForm, self).__init__(*args, **kwargs)
+        self.fields['title'].label = "Título do Projeto"
+        self.fields['description'].label = "Descrição"
+        self.fields['category'].label = "Categoria"
+        
+        # Adicione placeholder e help_text
+        self.fields['title'].widget.attrs['placeholder'] = "Digite o título do projeto"
+        self.fields['description'].widget.attrs['placeholder'] = "Descreva o projeto"
+        self.fields['category'].widget.attrs['placeholder'] = "Digite a categoria do projeto"
+        
+        self.fields['description'].help_text = "Forneça uma descrição detalhada do projeto"
+        self.fields['category'].help_text = "Exemplo: Desenvolvimento Web, Mobile, IA, etc."
+
+    def clean_title(self):
+        title = self.cleaned_data.get('title')
+        if len(title) < 5:
+            raise forms.ValidationError("O título deve ter pelo menos 5 caracteres.")
+        return title
+
+    def clean_category(self):
+        category = self.cleaned_data.get('category')
+        if len(category) < 3:
+            raise forms.ValidationError("A categoria deve ter pelo menos 3 caracteres.")
+        return category
 class TaskForm(forms.ModelForm):
     programming_languages = forms.ModelMultipleChoiceField(
         queryset=ProgrammingLanguage.objects.all(),
@@ -37,27 +67,10 @@ TaskFormSet = forms.inlineformset_factory(
 class TaskApplicationForm(forms.ModelForm):
     class Meta:
         model = TaskApplication
-        fields = ['proposed_value']
-
-    def __init__(self, *args, **kwargs):
-        self.task = kwargs.pop('task', None)
-        self.developer = kwargs.pop('developer', None)
-        super().__init__(*args, **kwargs)
-
-    def save(self, commit=True):
-        instance = super().save(commit=False)
-        instance.task = self.task
-        instance.developer = self.developer
-        if commit:
-            instance.save()
-        return instance
-
-class TaskApplicationForm(forms.ModelForm):
-    class Meta:
-        model = TaskApplication
-        fields = ['proposed_value']
+        fields = ['proposed_value', 'comment']
         widgets = {
             'proposed_value': forms.NumberInput(attrs={'class': 'form-control', 'step': '0.01'}),
+            'comment': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
         }
 
     def __init__(self, *args, **kwargs):

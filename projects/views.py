@@ -3,7 +3,8 @@ from .models import Project, Task, TaskApplication, ProgrammingLanguage
 from django.db.models import Prefetch
 from django.contrib.auth.decorators import login_required
 from .forms import ProjectForm, TaskFormSet
-from .forms import TaskApplicationForm
+from .forms import TaskApplicationForm, TaskForm
+from django.forms import inlineformset_factory  
 from django.contrib import messages
 from django.db import transaction
 
@@ -62,6 +63,24 @@ def create_project(request):
     return render(request, 'create_project.html', {
         'project_form': project_form,
         'task_formset': task_formset,
+    })
+
+@login_required
+def edit_project(request, project_id):
+    project = get_object_or_404(Project, id=project_id, created_by=request.user)
+    
+    if request.method == 'POST':
+        form = ProjectForm(request.POST, instance=project)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Projeto atualizado com sucesso.')
+            return redirect('projects:project_detail', pk=project.id)
+    else:
+        form = ProjectForm(instance=project)
+    
+    return render(request, 'edit_project.html', {
+        'form': form,
+        'project': project
     })
 
 @login_required

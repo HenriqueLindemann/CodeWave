@@ -8,11 +8,13 @@
     <h3>Your application was rejected</h3>
     <p>Proposed value: {{ application.proposed_value }}</p>
     <p>Application date: {{ application.application_date }}</p>
+    <p>Comment: {{ application.comment }}</p>
     <p>Status: Rejected</p>
 {% elif is_closed %}
     <h3>Your application</h3>
     <p>Proposed value: {{ application.proposed_value }}</p>
     <p>Application date: {{ application.application_date }}</p>
+    <p>Comment: {{ application.comment }}</p>
     <p>Status: {{ application.get_status_display }}</p>
     <p>This task is no longer open for applications.</p>
 {% else %}

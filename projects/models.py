@@ -85,6 +85,7 @@ class TaskApplication(models.Model):
     proposed_value = models.DecimalField(max_digits=10, decimal_places=2)
     application_date = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=50, choices=APPLICATION_STATUS_CHOICES, default='pending')
+    comment = models.TextField(blank=True, null=True)  
 
     def __str__(self):
         return f"{self.developer.username} - {self.task.title}"
