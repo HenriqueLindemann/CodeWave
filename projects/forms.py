@@ -33,8 +33,8 @@ class ProjectForm(forms.ModelForm):
 
     def clean_category(self):
         category = self.cleaned_data.get('category')
-        if len(category) < 3:
-            raise forms.ValidationError("A categoria deve ter pelo menos 3 caracteres.")
+        if len(category) < 2:
+            raise forms.ValidationError("A categoria deve ter pelo menos 2 caracteres.")
         return category
 class TaskForm(forms.ModelForm):
     programming_languages = forms.ModelMultipleChoiceField(
