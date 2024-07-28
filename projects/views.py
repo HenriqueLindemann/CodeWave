@@ -7,6 +7,8 @@ from .forms import TaskApplicationForm, TaskForm
 from django.forms import inlineformset_factory  
 from django.contrib import messages
 from django.db import transaction
+from django.core.mail import send_mail
+from django.conf import settings
 
 @login_required
 def project_detail(request, pk):
@@ -252,12 +254,16 @@ def review_application(request, application_id):
                 
                 # Rejeita todas as outras aplicações para esta tarefa
                 TaskApplication.objects.filter(task=task).exclude(id=application.id).update(status='rejected')
+
+                #envia email
+                accept_email(application.developer.email, application.task.project.title)
                 
                 messages.success(request, "Application accepted. The task has been assigned, other applications have been rejected, and the task is now closed for new applications.")
             elif action == 'reject':
                 application.status = 'rejected'
                 application.save()
                 messages.success(request, "Application rejected.")
+                reject_email(application.developer.email, application.task.project.title)
             else:
                 messages.error(request, "Invalid action.")
                 return redirect('projects:project_detail', pk=project.id)
@@ -265,3 +271,19 @@ def review_application(request, application_id):
         return redirect('projects:project_detail', pk=project.id)
     
     return render(request, 'review_application.html', {'application': application, 'task': task})
+
+def accept_email(developer_email, project_title):
+    subject = 'Você foi aceito no projeto!'
+    message = f'Parabéns Desenvolvedor! Você foi aceito no projeto {project_title}.'
+    email_from = settings.DEFAULT_FROM_EMAIL
+    recipient_list = [developer_email]
+    
+    send_mail(subject, message, email_from, recipient_list)
+
+def reject_email(developer_email, project_title):
+    subject = 'Você não foi aceito no projeto!'
+    message = f'Infelizmente você não foi aceito no projeto {project_title}.'
+    email_from = settings.DEFAULT_FROM_EMAIL
+    recipient_list = [developer_email]
+    
+    send_mail(subject, message, email_from, recipient_list)
