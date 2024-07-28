@@ -16,4 +16,13 @@ urlpatterns = [
     path('task/<int:task_id>/apply/', views.apply_for_task, name='apply_for_task'),
     path('application/<int:application_id>/review/', views.review_application, name='review_application'),
 
+    # URL para editar uma tarefa
+    path('task/<int:task_id>/edit/', views.edit_task, name='edit_task'),
+    # URL para deletar uma tarefa
+    path('task/<int:task_id>/delete/', views.delete_task, name='delete_task'),
+
+    # URL para adicionar uma nova tarefa a um projeto
+    path('<int:project_id>/add_task/', views.add_task, name='add_task'),
+
+
 ]

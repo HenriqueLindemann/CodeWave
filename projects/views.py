@@ -9,6 +9,10 @@ from django.contrib import messages
 from django.db import transaction
 from django.core.mail import send_mail
 from django.conf import settings
+from django.utils.translation import gettext as _
+from django.views.decorators.http import require_POST
+from django.http import JsonResponse
+
 
 @login_required
 def project_detail(request, pk):
@@ -242,7 +246,7 @@ def review_application(request, application_id):
     if request.method == 'POST':
         action = request.POST.get('action')
         
-        with transaction.atomic():  # Usamos uma transação para garantir a consistência dos dados
+        with transaction.atomic():  # transação para garantir a consistência dos dados
             if action == 'accept':
                 # Aceita a aplicação atual
                 application.status = 'accepted'
@@ -259,11 +263,13 @@ def review_application(request, application_id):
                 accept_email(application.developer.email, application.task.project.title)
                 
                 messages.success(request, "Application accepted. The task has been assigned, other applications have been rejected, and the task is now closed for new applications.")
+            
             elif action == 'reject':
                 application.status = 'rejected'
                 application.save()
                 messages.success(request, "Application rejected.")
                 reject_email(application.developer.email, application.task.project.title)
+
             else:
                 messages.error(request, "Invalid action.")
                 return redirect('projects:project_detail', pk=project.id)
@@ -287,3 +293,91 @@ def reject_email(developer_email, project_title):
     recipient_list = [developer_email]
     
     send_mail(subject, message, email_from, recipient_list)
+
+@login_required
+def edit_task(request, task_id):
+    task = get_object_or_404(Task, id=task_id)
+    project = task.project
+
+    # Verificar se o usuário é o dono do projeto
+    if request.user != project.created_by:
+        messages.error(request, _("You don't have permission to edit this task."))
+        return redirect('projects:project_detail', pk=project.id)
+
+    if request.method == 'POST':
+        form = TaskForm(request.POST, instance=task)
+        if form.is_valid():
+            task = form.save(commit=False)
+            task.project = project
+            task.save()
+            form.save_m2m()  # Salva as relações many-to-many (programming_languages)
+            messages.success(request, _("Task updated successfully."))
+            return redirect('projects:project_detail', pk=project.id)
+    else:
+        form = TaskForm(instance=task)
+
+    context = {
+        'form': form,
+        'task': task,
+        'project': project,
+        'can_be_deleted': task.can_be_deleted(),  
+
+    }
+    return render(request, 'edit_task.html', context)
+
+def add_task(request, project_id):
+    project = get_object_or_404(Project, id=project_id)
+
+    # Verificar se o usuário é o dono do projeto
+    if request.user != project.created_by:
+        messages.error(request, _("You don't have permission to add tasks to this project."))
+        return redirect('projects:project_detail', pk=project.id)
+
+    if request.method == 'POST':
+        form = TaskForm(request.POST)
+        if form.is_valid():
+            task = form.save(commit=False)
+            task.project = project
+            task.save()
+            form.save_m2m()  # Salva as relações many-to-many (programming_languages)
+            messages.success(request, _("Task added successfully."))
+            return redirect('projects:project_detail', pk=project.id)
+    else:
+        form = TaskForm()
+
+    context = {
+        'form': form,
+        'project': project,
+    }
+    return render(request, 'add_task.html', context)
+
+@require_POST
+def delete_task(request, task_id):
+    task = get_object_or_404(Task, id=task_id)
+    project = task.project
+
+    # Verificar se o usuário é o dono do projeto
+    if request.user != project.created_by:
+        return JsonResponse({
+            'success': False,
+            'error': _("You don't have permission to delete this task.")
+        })
+
+    # Verificar se a tarefa pode ser excluída
+    if not task.can_be_deleted():
+        return JsonResponse({
+            'success': False,
+            'error': _("This task cannot be deleted in its current status.")
+        })
+
+    try:
+        task.delete()
+        return JsonResponse({
+            'success': True,
+            'message': _("Task deleted successfully.")
+        })
+    except Exception as e:
+        return JsonResponse({
+            'success': False,
+            'error': str(e)
+        })

@@ -66,6 +66,9 @@ class Task(models.Model):
         
         return queryset.distinct()
     
+    def can_be_deleted(self):
+        return self.status in ['open', 'completed', 'cancelled']
+    
     @classmethod
     def search(cls, title='', project=None, language=None, app_status=''):
         return cls().search_tasks(title, project, language, app_status)

@@ -17,11 +17,6 @@
                 {% trans "Projeto:" %}
                 <span style="color: #27639d; font-weight: bold; font-size: 1.5em;">{{ project.title }}</span>
             </h1>
-            {% if is_project_owner %}
-                <a href="{% url 'projects:edit_project' project.id %}" class="btn btn-primary mt-2">
-                    {% trans "Editar Projeto ou Tarefas" %}
-                </a>
-            {% endif %}
         </div>
     </div>
     <br>
@@ -42,6 +37,11 @@
                             {% trans "No languages specified" %}
                         {% endfor %}
                     </p>
+                    {% if is_project_owner %}
+                        <a href="{% url 'projects:edit_project' project.id %}" class="btn btn-primary mt-2">
+                            {% trans "Editar Projeto" %}
+                        </a>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -80,48 +80,48 @@
                                     </div>
                                     
                                     {% if is_project_owner %}
-                                    <div class="owner-only mt-3">
-                                        <p><strong>{% trans "Assigned to:" %}</strong> 
-                                            {% if task.assigned_to %}
-                                                <a href="{% url 'accounts:view_profile' task.assigned_to.id %}" class="text-decoration-none">{{ task.assigned_to.get_full_name }}</a>
-                                            {% else %}
-                                                <span class="text-muted">{% trans "Not assigned" %}</span>
-                                            {% endif %}
-                                        </p>                                
-                                        <div class="applications mt-3">
-                                            <h5>{% trans "Applications" %}</h5>
-                                            {% for application in task.applications.all %}
-                                                <div class="application card mb-2">
-                                                    <div class="card-body">
-                                                        <p><strong>{% trans "Developer:" %}</strong> 
-                                                            <a href="{% url 'accounts:view_profile' application.developer.id %}" class="text-decoration-none">
-                                                                {{ application.developer.get_full_name }}
-                                                            </a>
-                                                        </p>
-                                                        <p><strong>{% trans "Proposed Value:" %}</strong> {{ application.proposed_value }}</p>
-                                                        <p><strong>{% trans "Application Date:" %}</strong> {{ application.application_date|date:"Y-m-d H:i" }}</p>
-                                                        <p><strong>{% trans "Comment:" %}</strong> {{ application.comment }}</p>
-                                                        <p><strong>{% trans "Status:" %}</strong> {{ application.get_status_display }}</p>
-                                                        {% if application.status == 'pending' %}
-                                                            <form method="post" action="{% url 'projects:review_application' application.id %}">
-                                                                {% csrf_token %}
-                                                                <button type="submit" name="action" value="accept" class="btn btn-success btn-sm">{% trans "Accept" %}</button>
-                                                                <button type="submit" name="action" value="reject" class="btn btn-danger btn-sm">{% trans "Reject" %}</button>
-                                                            </form>
-                                                        {% endif %}
+                                        <a href="{% url 'projects:edit_task' task.id %}" class="btn btn-secondary mt-2">
+                                            {% trans "Editar Tarefa" %}
+                                        </a>
+                                    
+                                        <div class="owner-only mt-3">
+                                            <p><strong>{% trans "Assigned to:" %}</strong> 
+                                                {% if task.assigned_to %}
+                                                    <a href="{% url 'accounts:view_profile' task.assigned_to.id %}" class="text-decoration-none">{{ task.assigned_to.get_full_name }}</a>
+                                                {% else %}
+                                                    <span class="text-muted">{% trans "Not assigned" %}</span>
+                                                {% endif %}
+                                            </p>                                
+                                            <div class="applications mt-3">
+                                                <h5>{% trans "Applications" %}</h5>
+                                                {% for application in task.applications.all %}
+                                                    <div class="application card mb-2">
+                                                        <div class="card-body">
+                                                            <p><strong>{% trans "Developer:" %}</strong> 
+                                                                <a href="{% url 'accounts:view_profile' application.developer.id %}" class="text-decoration-none">
+                                                                    {{ application.developer.get_full_name }}
+                                                                </a>
+                                                            </p>
+                                                            <p><strong>{% trans "Proposed Value:" %}</strong> {{ application.proposed_value }}</p>
+                                                            <p><strong>{% trans "Application Date:" %}</strong> {{ application.application_date|date:"Y-m-d H:i" }}</p>
+                                                            <p><strong>{% trans "Comment:" %}</strong> {{ application.comment }}</p>
+                                                            <p><strong>{% trans "Status:" %}</strong> {{ application.get_status_display }}</p>
+                                                            {% if application.status == 'pending' %}
+                                                                <form method="post" action="{% url 'projects:review_application' application.id %}">
+                                                                    {% csrf_token %}
+                                                                    <button type="submit" name="action" value="accept" class="btn btn-success btn-sm">{% trans "Accept" %}</button>
+                                                                    <button type="submit" name="action" value="reject" class="btn btn-danger btn-sm">{% trans "Reject" %}</button>
+                                                                </form>
+                                                            {% endif %}
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            {% empty %}
-                                                <p class="text-muted">{% trans "No applications yet." %}</p>
-                                            {% endfor %}
+                                                {% empty %}
+                                                    <p class="text-muted">{% trans "No applications yet." %}</p>
+                                                {% endfor %}
+                                            </div>
                                         </div>
-                                    </div>
                                     {% endif %}
 
-                                    {% load i18n %}
-
-                                    {% get_user_application task user as user_application %}
-                                    
                                     {% load i18n %}
 
                                     {% get_user_application task user as user_application %}
@@ -187,6 +187,12 @@
                         </div>
                     {% else %}
                         <p class="text-muted">{% trans "No tasks available." %}</p>
+                    {% endif %}
+                    
+                    {% if is_project_owner %}
+                        <a href="{% url 'projects:add_task' project.id %}" class="btn btn-success mt-3">
+                            {% trans "Adicionar Tarefa" %}
+                        </a>
                     {% endif %}
                 </div>
             </div>

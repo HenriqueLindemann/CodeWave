@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block page_content %}
+<div class="container mt-4">
+    <h2>{% trans "Add Task to" %} {{ project.title }}</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="card mb-3 task-form">
+            <div class="card-body">
+                <h5 class="card-title">{% trans "New Task" %}</h5>
+                {% for field in form %}
+                    <div class="form-group row mb-3">
+                        <label for="{{ field.id_for_label }}" class="col-sm-3 col-form-label">{{ field.label }}</label>
+                        <div class="col-sm-9">
+                            {% if field.name == 'programming_languages' %}
+                                <div class="checkbox-group">
+                                    {{ field }}
+                                </div>
+                            {% else %}
+                                {{ field }}
+                            {% endif %}
+                            {% if field.help_text %}
+                                <small class="form-text text-muted">{{ field.help_text }}</small>
+                            {% endif %}
+                            {% if field.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ field.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">{% trans "Save Task" %}</button>
+        <a href="{% url 'projects:project_detail' project.id %}" class="btn btn-secondary">{% trans "Cancel" %}</a>
+    </form>
+</div>
+{% endblock %}
