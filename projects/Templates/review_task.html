@@ -1,0 +1,35 @@
+{% extends "dashboard/Templates/base.html" %}
+{% load i18n %}
+
+{% block page_content %}
+<div class="container mt-4">
+    <h1>{% trans "Revisar Tarefa" %}</h1>
+    <h2>{{ task.title }}</h2>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">{% trans "Detalhes da Tarefa" %}</h5>
+            <p><strong>{% trans "Descrição:" %}</strong> {{ task.description }}</p>
+            <p><strong>{% trans "Desenvolvedor:" %}</strong> {{ task.assigned_to.get_full_name }}</p>
+            <p><strong>{% trans "Data de Entrega:" %}</strong> {{ task.due_date|date:"d/m/Y" }}</p>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">{% trans "Comentários da Entrega Final" %}</h5>
+            {% if final_delivery_comments %}
+                <p>{{ final_delivery_comments }}</p>
+            {% else %}
+                <p>{% trans "O desenvolvedor não deixou comentários na entrega final." %}</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">{% trans "Enviar Revisão" %}</button>
+    </form>
+</div>
+{% endblock %}

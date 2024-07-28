@@ -48,6 +48,12 @@ class Task(models.Model):
     initial_value = models.DecimalField(max_digits=10, decimal_places=2)  # Valor proposto pelo cliente
     application_status = models.CharField(max_length=50, choices=APPLICATION_STATUS_CHOICES, default='open')
     programming_languages = models.ManyToManyField(ProgrammingLanguage, related_name='tasks', blank=True)
+    final_delivery_comments = models.TextField(blank=True, null=True)
+    feedback = models.TextField(blank=True, null=True)
+
+    def add_feedback(self, feedback):
+        self.feedback = feedback
+        self.save()
 
     def search_tasks(self, title='', project=None, language=None, app_status=''):
         queryset = Task.objects.all()

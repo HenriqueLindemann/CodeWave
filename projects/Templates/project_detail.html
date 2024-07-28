@@ -8,6 +8,10 @@
     .task-details { margin-top: 10px; padding: 10px; background-color: #f8f9fa; border-radius: 5px; }
     .owner-only { background-color: #e9ecef; padding: 10px; border-radius: 5px; margin-top: 10px; }
     .applications { margin-top: 10px; padding: 10px; background-color: #f1f3f5; border-radius: 5px; }
+    .feedback { margin-top: 10px; padding: 10px; background-color: #e6f3ff; border-radius: 5px; }
+    .client-feedback { color: #0056b3; }
+    .dev-feedback { color: #28a745; }
+    .rejected-feedback { color: #dc3545; font-weight: bold; }
 </style>
 
 <div class="container mt-4">
@@ -122,8 +126,6 @@
                                         </div>
                                     {% endif %}
 
-                                    {% load i18n %}
-
                                     {% get_user_application task user as user_application %}
                                     
                                     {% if user.is_developer and user != task.project.created_by %}
@@ -165,22 +167,52 @@
                                         </div>
                                     {% endif %}
 
+                                    {% if task.status == 'under_review' and task.assigned_to == user %}
+                                    <div class="alert alert-warning mt-3">
+                                        {% trans "Esta tarefa está em revisão pelo dono do projeto." %}
+                                    </div>
+                                    {% endif %}
+
                                     {% if task.status == 'in_progress' and task.assigned_to == user %}
-                                        <div class="mt-3">
-                                            <form method="post" action="">
-                                                {% csrf_token %}
-                                                <button type="submit" class="btn btn-success">{% trans "Mark as Completed" %}</button>
-                                            </form>
+                                    <div class="mt-3">
+                                        <a href="{% url 'projects:submit_final_delivery' task_id=task.id %}" class="btn btn-success">{% trans "Enviar Produção Final" %}</a>
+                                    </div>
+                                    {% endif %}
+
+                                    {% if task.status == 'completed' and is_project_owner or task.status == 'completed' and user == task.assigned_to %}
+                                        <div class="feedback mt-3">
+                                            <h5>{% trans "Feedback" %}</h5>
+                                            {% if task.final_delivery_comments %}
+                                                <p class="dev-feedback"><strong>{% trans "Developer's Comments:" %}</strong> {{ task.final_delivery_comments }}</p>
+                                            {% endif %}
+                                            {% if task.feedback %}
+                                                <p class="client-feedback"><strong>{% trans "Client's Feedback:" %}</strong> {{ task.feedback }}</p>
+                                            {% endif %}
+                                        </div>
+                                    {% elif task.status == 'in_progress' and task.feedback and is_project_owner or task.status == 'in_progress' and task.feedback and user == task.assigned_to %}
+                                        <div class="feedback mt-3">
+                                            <h5>{% trans "Client's Comments" %}</h5>
+                                            <p class="rejected-feedback">{{ task.feedback }}</p>
                                         </div>
                                     {% endif %}
 
-                                    {% if is_project_owner and task.status == 'completed' %}
+                                    {% if is_project_owner %}
+                                        {% if task.status == 'under_review' %}
                                         <div class="mt-3">
-                                            <form method="post" action="">
+                                            <a href="{% url 'projects:review_task' task_id=task.id %}" class="btn btn-primary">{% trans "Revisar Tarefa" %}</a>
+                                        </div>
+                                        {% elif task.status == 'in_progress' %}
+                                        <div class="mt-3">
+                                            <form method="post" action="{% url 'projects:confirm_task_completion' task.id %}">
                                                 {% csrf_token %}
                                                 <button type="submit" class="btn btn-info">{% trans "Confirm Completion" %}</button>
                                             </form>
                                         </div>
+                                        {% elif task.status == 'completed' %}
+                                        <div class="mt-3">
+                                            <p class="text-success"><i class="fas fa-check-circle"></i> {% trans "Esta tarefa foi concluída." %}</p>
+                                        </div>
+                                        {% endif %}
                                     {% endif %}
                                 </div>
                             {% endfor %}

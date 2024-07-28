@@ -2,8 +2,8 @@ from django.shortcuts import get_object_or_404, render, redirect
 from .models import Project, Task, TaskApplication, ProgrammingLanguage
 from django.db.models import Prefetch
 from django.contrib.auth.decorators import login_required
-from .forms import ProjectForm, TaskFormSet
-from .forms import TaskApplicationForm, TaskForm
+from .forms import ProjectForm, TaskFormSet, FinalDeliveryForm
+from .forms import TaskApplicationForm, TaskForm, TaskReviewForm
 from django.forms import inlineformset_factory  
 from django.contrib import messages
 from django.db import transaction
@@ -260,7 +260,7 @@ def review_application(request, application_id):
                 TaskApplication.objects.filter(task=task).exclude(id=application.id).update(status='rejected')
 
                 #envia email
-                accept_email(application.developer.email, application.task.project.title)
+                # accept_email(application.developer.email, application.task.project.title)
                 
                 messages.success(request, "Application accepted. The task has been assigned, other applications have been rejected, and the task is now closed for new applications.")
             
@@ -268,7 +268,7 @@ def review_application(request, application_id):
                 application.status = 'rejected'
                 application.save()
                 messages.success(request, "Application rejected.")
-                reject_email(application.developer.email, application.task.project.title)
+                # reject_email(application.developer.email, application.task.project.title)
 
             else:
                 messages.error(request, "Invalid action.")
@@ -381,3 +381,68 @@ def delete_task(request, task_id):
             'success': False,
             'error': str(e)
         })
+    
+@login_required
+def submit_final_delivery(request, task_id):
+    task = get_object_or_404(Task, id=task_id)
+    
+    if request.user != task.assigned_to or task.status != 'in_progress':
+        messages.error(request, 'Você não tem permissão para enviar a entrega final desta tarefa.')
+        return redirect('task_detail', task_id=task.id)
+    
+    if request.method == 'POST':
+        form = FinalDeliveryForm(request.POST)
+        if form.is_valid():
+            # Salvar os comentários na tarefa
+            task.final_delivery_comments = form.cleaned_data['comments']
+            task.status = 'under_review'
+            task.save()
+            
+            messages.success(request, 'Entrega final enviada com sucesso!')
+            return redirect('projects:project_detail', pk=task.project.id)
+    else:
+        form = FinalDeliveryForm()
+    
+    return render(request, 'submit_final_delivery.html', {'form': form, 'task': task})
+
+@login_required
+def review_task(request, task_id):
+    task = get_object_or_404(Task, id=task_id)
+    
+    # Verificar se o usuário é o dono do projeto
+    if request.user != task.project.created_by:
+        messages.error(request, "Você não tem permissão para revisar esta tarefa.")
+        return redirect('projects:project_detail', pk=task.project.id)
+    
+    # Verificar se a tarefa está no status 'under_review'
+    if task.status != 'under_review':
+        messages.error(request, "Esta tarefa não está disponível para revisão.")
+        return redirect('projects:project_detail', pk=task.project.id)
+
+    if request.method == 'POST':
+        form = TaskReviewForm(request.POST)
+        if form.is_valid():
+            review_status = form.cleaned_data['review_status']
+            feedback = form.cleaned_data['feedback']
+            
+            if review_status == 'approved':
+                task.status = 'completed'
+                messages.success(request, "Tarefa aprovada com sucesso!")
+            else:
+                task.status = 'in_progress'
+                messages.info(request, "Tarefa retornada para o desenvolvedor para ajustes.")
+            
+            task.feedback = feedback
+            task.save()
+            
+            # Redirecionando para a página do projeto
+            return redirect('projects:project_detail', pk=task.project.id)
+    else:
+        form = TaskReviewForm()
+
+    context = {
+        'task': task,
+        'form': form,
+        'final_delivery_comments': task.final_delivery_comments,
+    }
+    return render(request, 'review_task.html', context)

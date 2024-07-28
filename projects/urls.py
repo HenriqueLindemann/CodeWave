@@ -21,8 +21,14 @@ urlpatterns = [
     # URL para deletar uma tarefa
     path('task/<int:task_id>/delete/', views.delete_task, name='delete_task'),
 
+    path('task/<int:task_id>/submit-final-delivery/', views.submit_final_delivery, name='submit_final_delivery'),
+
+
     # URL para adicionar uma nova tarefa a um projeto
     path('<int:project_id>/add_task/', views.add_task, name='add_task'),
+
+    path('task/<int:task_id>/review/', views.review_task, name='review_task'),
+
 
 
 ]

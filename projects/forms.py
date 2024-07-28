@@ -1,5 +1,8 @@
 from django import forms
 from .models import Project, Task, ProgrammingLanguage, TaskApplication
+from django.core.validators import MinValueValidator
+from django.utils.translation import gettext_lazy as _
+
 
 class ProjectForm(forms.ModelForm):
     class Meta:
@@ -45,31 +48,50 @@ class TaskForm(forms.ModelForm):
 
     class Meta:
         model = Task
-        fields = ['title', 'description', 'status', 'due_date', 'initial_value', 'programming_languages', 'application_status']
+        fields = ['title', 'description', 'due_date', 'initial_value', 'programming_languages']
         widgets = {
             'due_date': forms.DateInput(attrs={'type': 'date'}),
-            'application_status': forms.Select(attrs={'class': 'form-select'}),
         }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields.pop('id', None)
         self.fields.pop('project', None)
-        self.fields['application_status'].label = "Application Status"
-        self.fields['application_status'].help_text = "Choose whether this task is open or closed for applications"
+
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        instance.status = 'open'
+        instance.application_status = 'open'
+        if commit:
+            instance.save()
+        return instance
 
 TaskFormSet = forms.inlineformset_factory(
     Project, Task, form=TaskForm,
     extra=1, can_delete=True,
-    fields=['title', 'description', 'status', 'due_date', 'initial_value', 'programming_languages', 'application_status']
+    fields=['title', 'description', 'due_date', 'initial_value', 'programming_languages']
 )
+
+class FinalDeliveryForm(forms.Form):
+    comments = forms.CharField(
+        widget=forms.Textarea(attrs={'rows': 5, 'class': 'form-control'}),
+        label='Comentários',
+        help_text='Inclua o link do repositório e quaisquer informações relevantes sobre a entrega.'
+    )
+    
+    class Meta:
+        fields = ['comments']
 
 class TaskApplicationForm(forms.ModelForm):
     class Meta:
         model = TaskApplication
         fields = ['proposed_value', 'comment']
         widgets = {
-            'proposed_value': forms.NumberInput(attrs={'class': 'form-control', 'step': '0.01'}),
+            'proposed_value': forms.NumberInput(attrs={
+                'class': 'form-control', 
+                'step': '0.01',
+                'min': '0.01'  # Adiciona validação no lado do cliente
+            }),
             'comment': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
         }
 
@@ -78,3 +100,20 @@ class TaskApplicationForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         if task:
             self.fields['proposed_value'].initial = task.initial_value
+
+        # Adiciona validação no lado do servidor
+        self.fields['proposed_value'].validators.append(MinValueValidator(0.01))
+
+    def clean_proposed_value(self):
+        value = self.cleaned_data['proposed_value']
+        if value <= 0:
+            raise forms.ValidationError(_("The proposed value must be greater than zero."))
+        return value
+    
+class TaskReviewForm(forms.Form):
+    REVIEW_CHOICES = [
+        ('approved', 'Aprovar'),
+        ('rejected', 'Rejeitar'),
+    ]
+    review_status = forms.ChoiceField(choices=REVIEW_CHOICES, widget=forms.RadioSelect, label="Status da Revisão")
+    feedback = forms.CharField(widget=forms.Textarea, label="Feedback")
