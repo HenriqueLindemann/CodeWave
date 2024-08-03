@@ -259,8 +259,8 @@ def review_application(request, application_id):
                 # Rejeita todas as outras aplicações para esta tarefa
                 TaskApplication.objects.filter(task=task).exclude(id=application.id).update(status='rejected')
 
-                #envia email
-                # accept_email(application.developer.email, application.task.project.title)
+                #envia email se for aceito
+                accept_email(application.developer.email, application.task.project.title)
                 
                 messages.success(request, "Application accepted. The task has been assigned, other applications have been rejected, and the task is now closed for new applications.")
             
@@ -268,7 +268,9 @@ def review_application(request, application_id):
                 application.status = 'rejected'
                 application.save()
                 messages.success(request, "Application rejected.")
-                # reject_email(application.developer.email, application.task.project.title)
+                
+                #Envia email se for rejeitado
+                reject_email(application.developer.email, application.task.project.title)
 
             else:
                 messages.error(request, "Invalid action.")
