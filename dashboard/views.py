@@ -34,7 +34,8 @@ def index(request):
     
     context = {
         'projects': projects,
-        'developers': developers
+        'developers': developers,
+        'wave_balance': request.user.wave_balance  # Adicione o saldo de wave ao contexto
     }
 
     # Se o usuário for um cliente (is_client)

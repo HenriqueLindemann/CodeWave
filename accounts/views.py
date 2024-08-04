@@ -13,6 +13,8 @@ from django.contrib.auth.forms import PasswordChangeForm
 from .models import User, Skill
 from .forms import *
 from django.contrib.auth import get_user_model
+#Emerson mexendo
+from .forms import AddWaveForm
 
 
 current_dir = 'accounts/Templates/' # Path for specific apps templates
@@ -24,7 +26,7 @@ class IndexView(LoginRequiredMixin, TemplateView):
 @login_required
 def user_profile(request):
     user = request.user
-    return render(request, current_dir + 'user_profile.html', {'user': user})
+    return render(request, current_dir + 'user_profile.html', {'user': user, 'wave_balance': user.wave_balance})#{'user': user})
 
 @login_required
 def edit_profile(request):
@@ -89,3 +91,26 @@ def view_profile(request, user_id):
         # Adicione outras informações sensíveis conforme necessário
 
     return render(request, 'view_profile.html', context)
+
+#Emerson mexendo 
+@login_required
+def add_wave(request):
+    if request.method == 'POST':
+        form = AddWaveForm(request.POST)
+        if form.is_valid():
+            amount = form.cleaned_data['amount']
+            user = request.user
+            
+            # Adiciona o valor ao saldo do usuário
+            user.wave_balance += amount
+            user.save()
+
+            messages.success(request, f'Você adicionou {amount} Wave à sua conta!')
+            return redirect('accounts:user_profile')
+        else:
+            messages.error(request, 'Por favor, corrija o erro abaixo.')
+    else:
+        form = AddWaveForm()
+
+    return render(request, 'add_wave.html', {'form': form})
+

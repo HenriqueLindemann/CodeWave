@@ -7,6 +7,8 @@ from django.conf.urls.static import static
 
 from . import views
 
+from .views import add_wave
+
 app_name = 'accounts' 
 
 urlpatterns = [
@@ -15,4 +17,6 @@ urlpatterns = [
     path('edit-profile/', views.edit_profile, name='edit_profile'),
     path('search_developer/', views.search_developer, name='search_developer'),
     path('results_search_devs/', views.results_search_devs, name='results_search_devs'),
+#Emerson mexendo
+    path('add-wave/', views.add_wave, name='add_wave'),
 ]

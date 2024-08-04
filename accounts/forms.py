@@ -101,6 +101,13 @@ class Autenticacao(AuthenticationForm):
     username = forms.CharField(max_length=254, widget=forms.TextInput(attrs={'class': 'form-control form-control-sm'}))
     password = forms.CharField(label=_("Senha"),
                                widget=forms.PasswordInput(attrs={'class': 'form-control form-control-sm'}))
-    
 
+#Emerson mexendo    
+class AddWaveForm(forms.Form):
+    amount = forms.DecimalField(
+        max_digits=10, 
+        decimal_places=2, 
+        min_value=0.01, 
+        label='Amount to add'
+    )
 

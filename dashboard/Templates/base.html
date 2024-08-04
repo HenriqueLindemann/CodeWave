@@ -160,7 +160,12 @@
                         </div>
 
                         <ul class="topbar-menu d-flex align-items-center">
-                          
+                             <!-- Wave Balance Display -->
+                            <li class="d-none d-md-inline-block me-3">
+                                <span class="nav-link">
+                                    {% trans "Saldo de Waves" %}: {{ user.wave_balance }}
+                                </span>
+                            </li>
                             <!-- Language flag dropdown -->
                             <li class="dropdown d-none d-md-inline-block">
                                 <a class="nav-link dropdown-toggle waves-effect waves-light arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">

@@ -44,6 +44,8 @@
                     <p class="profile-text"><strong>{% trans "Date Joined" %}:</strong> {{ user.date_joined|date:"DATE_FORMAT" }}</p>
                 </div>
                 <a href="{% url 'accounts:edit_profile' %}" class="btn btn-primary waves-effect waves-light">{% trans "Edit Profile" %}</a>
+            
+                <a href="{% url 'accounts:add_wave' %}" class="btn btn-success waves-effect waves-light">{% trans "Add Wave" %}</a>
             </div>
         </div>
     </div>

@@ -1,0 +1,19 @@
+{% extends "dashboard/Templates/base.html" %}
+{% load i18n %}
+
+{% block page_content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-body">
+                <h4 class="mb-4">{% trans "Add Wave to Your Account" %}</h4>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-success">{% trans "Add Wave" %}</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

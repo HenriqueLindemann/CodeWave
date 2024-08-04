@@ -60,6 +60,15 @@ class User(AbstractBaseUser, PermissionsMixin):
         blank=True, 
         verbose_name=_("Skills")
     )
+    #Emerson mexendo
+    wave_balance = models.DecimalField(
+        _("Wave Balance"), 
+        max_digits=10, 
+        decimal_places=2, 
+        default=0.00, 
+        validators=[MinValueValidator(0)],
+        help_text=_("Balance of Wave currency.")
+    )
 
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email']
