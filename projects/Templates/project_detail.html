@@ -196,18 +196,12 @@
                                         </div>
                                     {% endif %}
 
-                                    {% if is_project_owner %}
-                                        {% if task.status == 'under_review' %}
+                                    {% if is_project_owner or user == task.assigned_to%}
+                                        {% if task.status == 'under_review' and is_project_owner%}
                                         <div class="mt-3">
                                             <a href="{% url 'projects:review_task' task_id=task.id %}" class="btn btn-primary">{% trans "Revisar Tarefa" %}</a>
                                         </div>
-                                        {% elif task.status == 'in_progress' %}
-                                        <div class="mt-3">
-                                            <form method="post" action="{% url 'projects:confirm_task_completion' task.id %}">
-                                                {% csrf_token %}
-                                                <button type="submit" class="btn btn-info">{% trans "Confirm Completion" %}</button>
-                                            </form>
-                                        </div>
+
                                         {% elif task.status == 'completed' %}
                                         <div class="mt-3">
                                             <p class="text-success"><i class="fas fa-check-circle"></i> {% trans "Esta tarefa foi concluída." %}</p>
