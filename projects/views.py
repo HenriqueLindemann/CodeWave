@@ -89,7 +89,6 @@ def edit_project(request, project_id):
         'project': project
     })
 
-@login_required
 def search_projects(request):
     projects = Project.objects.all()
     categories = set(project.category for project in projects)
@@ -105,7 +104,6 @@ def search_projects(request):
 
     return render(request, 'search_projects.html', {'projects': projects, 'categories': categories})
 
-@login_required
 def results_search_projects(request):
     search_title = request.session.get('search_title', '')
     search_category = request.session.get('search_category', '')
@@ -120,7 +118,6 @@ def results_search_projects(request):
 
     return render(request, 'results_search_projects.html', {'projects': projects})
 
-@login_required
 def search_tasks(request):
     projects = Project.objects.all()
     programming_languages = ProgrammingLanguage.objects.all()  # Mudamos o nome da variável
@@ -146,7 +143,6 @@ def search_tasks(request):
     }
     return render(request, 'search_tasks.html', context)
 
-@login_required
 def results_search_tasks(request):
     search_title = request.session.get('search_title', '')
     search_project = request.session.get('search_project', '')

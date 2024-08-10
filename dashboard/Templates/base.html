@@ -161,9 +161,13 @@
 
                         <ul class="topbar-menu d-flex align-items-center">
                              <!-- Wave Balance Display -->
-                            <li class="d-none d-md-inline-block me-3">
+                             <li class="d-none d-md-inline-block me-3">
                                 <span class="nav-link">
-                                    {% trans "Saldo de Waves" %}: {{ user.wave_balance }}
+                                    {% if user.is_authenticated %}
+                                        {% trans "Saldo de Waves" %}: {{ user.wave_balance }}
+                                    {% else %}
+                                        {% trans "Faça login para ver seu saldo" %}
+                                    {% endif %}
                                 </span>
                             </li>
                             <!-- Language flag dropdown -->

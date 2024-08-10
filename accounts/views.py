@@ -43,7 +43,6 @@ def edit_profile(request):
 
     return render(request, current_dir + 'edit_profile.html', {'form': form})
 
-@login_required
 def search_developer(request):
     skills = Skill.objects.all()
 
@@ -57,7 +56,6 @@ def search_developer(request):
 
     return render(request, 'search_developer.html', {'skills': skills})
 
-@login_required
 def results_search_devs(request):
     search_name = request.session.get('search_name', '')
     search_skill = request.session.get('search_skill', '')
