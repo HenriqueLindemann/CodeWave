@@ -8,11 +8,20 @@
         color: #27639d; 
         font-weight: bold; 
     }
-    .profile-details {
+    .profile-details, .project-section {
         padding: 20px;
         border-radius: 10px;
         box-shadow: 0 0 10px rgba(0,0,0,0.1);
         margin-bottom: 20px; 
+    }
+    .ribbon-box {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+    .section-title {
+        color: #27639d;
+        font-size: 1.4em;
+        margin-bottom: 15px;
     }
 </style>
 
@@ -20,8 +29,9 @@
     <div class="row">
         <div class="col-12">
             <div class="card card-body">
-                <h4 class="mb-4">{% trans "Profile of" %} <span class="user-name">{{ user.get_full_name }}</span></h4>
+                <h4 class="mb-4">{% trans "Your Profile" %}</h4>
                 <div class="profile-details">
+                    <p class="profile-text"><strong>{% trans "Full Name" %}:</strong> {{ user.get_full_name }}</p>
                     <p class="profile-text"><strong>{% trans "Username" %}:</strong> {{ user.username }}</p>
                     <p class="profile-text"><strong>{% trans "E-mail" %}:</strong> {{ user.email }}</p>
                     <p class="profile-text"><strong>{% trans "Developer Status" %}:</strong> {{ user.is_developer|yesno:_("Yes,No") }}</p>
@@ -30,22 +40,96 @@
                     <div class="card ribbon-box">
                         <div class="card-body">
                             <div class="ribbon ribbon-primary float-end">{{ user.get_full_name }}</div>
-                            <h5 class="profile-text">{% trans "Biografy"%}</h5>
+                            <h5 class="profile-text">{% trans "Biography" %}</h5>
                             <div class="ribbon-content">
                                 <p class="mb-0">{{ user.bio }}</p>
                             </div>
                         </div>
-                    </div>                    <p class="profile-text"><strong>{% trans "Balance" %}:</strong> {{ user.balance }}</p>
+                    </div>
+                    <p class="profile-text"><strong>{% trans "Balance" %}:</strong> {{ user.balance }}</p>
+                    <p class="profile-text"><strong>{% trans "Wave Balance" %}:</strong> {{ wave_balance }}</p>
                     <p class="profile-text"><strong>{% trans "Rank" %}:</strong> {{ user.rank }}</p>
                     <p class="profile-text"><strong>{% trans "Rating" %}:</strong> {{ user.rating }}</p>
                     <p class="profile-text"><strong>{% trans "Skills" %}:</strong> {{ user.skills.all|join:", " }}</p>
                     <p class="profile-text"><strong>{% trans "Staff Status" %}:</strong> {{ user.is_staff|yesno:_("Yes,No") }}</p>
                     <p class="profile-text"><strong>{% trans "Active Status" %}:</strong> {{ user.is_active|yesno:_("Yes,No") }}</p>
                     <p class="profile-text"><strong>{% trans "Date Joined" %}:</strong> {{ user.date_joined|date:"DATE_FORMAT" }}</p>
+                    <p class="profile-text"><strong>{% trans "Last Login" %}:</strong> {{ user.last_login|date:"DATE_FORMAT" }}</p>
                 </div>
                 <a href="{% url 'accounts:edit_profile' %}" class="btn btn-primary waves-effect waves-light">{% trans "Edit Profile" %}</a>
-            
                 <a href="{% url 'accounts:add_wave' %}" class="btn btn-success waves-effect waves-light">{% trans "Add Wave" %}</a>
+            </div>
+
+            <!-- Owned Projects section -->
+            <div class="project-section">
+                <h5 class="section-title">{% trans "Your Owned Projects" %}</h5>
+                {% if owned_projects %}
+                    <div class="list-group">
+                        {% for project in owned_projects %}
+                            <a href="{% url 'projects:project_detail' project.id %}" class="list-group-item list-group-item-action flex-column align-items-start">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1" style="color: #27639d;">{{ project.title }}</h5>
+                                    <small>{% trans "Created on" %}: {{ project.date_created|date:"SHORT_DATE_FORMAT" }}</small>
+                                </div>
+                                <p class="mb-1">{{ project.description|truncatechars:150 }}</p>
+                                <div class="mt-2">
+                                    <strong>{% trans "Category:" %}</strong> {{ project.category }}
+                                </div>
+                                {% if project.get_unique_languages %}
+                                    <div class="mt-2">
+                                        <strong>{% trans "Programming Languages:" %}</strong>
+                                        {% for language in project.get_unique_languages %}
+                                            <span class="badge bg-primary">{{ language.name }}</span>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </a>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="alert alert-info" role="alert">
+                        {% trans "You don't have any owned projects yet." %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Assigned Tasks section -->
+            <div class="project-section">
+                <h5 class="section-title">{% trans "Your Assigned Tasks" %}</h5>
+                {% if assigned_tasks %}
+                    <div class="list-group">
+                        {% for task in assigned_tasks %}
+                            <a href="{% url 'projects:project_detail' task.project.id %}" class="list-group-item list-group-item-action flex-column align-items-start">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1" style="color: #27639d;">{{ task.title }}</h5>
+                                    <small>{% trans "Due Date" %}: {{ task.due_date|date:"SHORT_DATE_FORMAT" }}</small>
+                                </div>
+                                <p class="mb-1">{{ task.description|truncatechars:150 }}</p>
+                                <div class="mt-2">
+                                    <strong>{% trans "Project:" %}</strong> {{ task.project.title }}
+                                </div>
+                                <div class="mt-2">
+                                    <strong>{% trans "Status:" %}</strong> {{ task.get_status_display }}
+                                </div>
+                                <div class="mt-2">
+                                    <strong>{% trans "Initial Value:" %}</strong> {{ task.initial_value }}
+                                </div>
+                                {% if task.programming_languages.all %}
+                                    <div class="mt-2">
+                                        <strong>{% trans "Programming Languages:" %}</strong>
+                                        {% for language in task.programming_languages.all %}
+                                            <span class="badge bg-primary">{{ language.name }}</span>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </a>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="alert alert-info" role="alert">
+                        {% trans "You don't have any assigned tasks yet." %}
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>

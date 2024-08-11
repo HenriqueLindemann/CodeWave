@@ -31,7 +31,9 @@
                 <div class="card-body">
                     <p><strong>{% trans "Category:" %}</strong> {{ project.category }}</p>
                     <p><strong>{% trans "Description:" %}</strong> {{ project.description }}</p>
-                    <p><strong>{% trans "Created by:" %}</strong> {{ project.created_by }}</p>
+                    <p><strong>{% trans "Created by:" %}</strong> 
+                        <a href="{% url 'accounts:view_profile' project.created_by.id %}">{{ project.created_by.get_full_name|default:project.created_by.username }}</a>
+                    </p>                    
                     <p><strong>{% trans "Date Created:" %}</strong> {{ project.date_created|date:"Y-m-d H:i" }}</p>
                     <p><strong>{% trans "Last Updated:" %}</strong> {{ project.date_updated|date:"Y-m-d H:i" }}</p>
                     <p><strong>{% trans "Unique Programming Languages:" %}</strong>

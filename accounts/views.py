@@ -11,6 +11,7 @@ from django.urls import reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import PasswordChangeForm
 from .models import User, Skill
+from projects.models import Project, Task
 from .forms import *
 from django.contrib.auth import get_user_model
 #Emerson mexendo
@@ -26,7 +27,19 @@ class IndexView(LoginRequiredMixin, TemplateView):
 @login_required
 def user_profile(request):
     user = request.user
-    return render(request, current_dir + 'user_profile.html', {'user': user, 'wave_balance': user.wave_balance})#{'user': user})
+    owned_projects = Project.objects.filter(created_by=user)
+    assigned_tasks = Task.objects.filter(assigned_to=user)
+
+    assigned_tasks = user.assigned_tasks.all()
+    
+    context = {
+        'user': user,
+        'wave_balance': user.wave_balance,
+        'owned_projects': owned_projects,
+        'assigned_tasks': assigned_tasks,
+    }
+    
+    return render(request, current_dir + 'user_profile.html', context)
 
 @login_required
 def edit_profile(request):
@@ -74,19 +87,30 @@ def view_profile(request, user_id):
     User = get_user_model()
     profile_user = get_object_or_404(User, id=user_id)
     
-    # Determine se o usuário atual tem permissão para ver informações sensíveis
+    # Determina se o usuário atual tem permissão para ver informações sensíveis
     can_view_sensitive_info = request.user.is_staff or request.user == profile_user
+
+    # Projetos que o usuário é dono
+    owned_projects = Project.objects.filter(created_by=profile_user)
+
+    # Projetos em que o usuário é responsável por desenvolver uma task
+    projects_with_tasks = Project.objects.filter(tasks__assigned_to=profile_user).distinct()
+
+    # Tasks que o usuário é responsável por desenvolver
+    assigned_tasks = Task.objects.filter(assigned_to=profile_user)
 
     context = {
         'profile_user': profile_user,
         'can_view_sensitive_info': can_view_sensitive_info,
+        'owned_projects': owned_projects,
+        'projects_with_tasks': projects_with_tasks,
+        'assigned_tasks': assigned_tasks,
     }
 
-    # Se o usuário tem permissão, adicione informações sensíveis ao contexto
+    # Se o usuário tem permissão, adiciona informações sensíveis ao contexto
     if can_view_sensitive_info:
         context['user_balance'] = profile_user.balance
         context['user_email'] = profile_user.email
-        # Adicione outras informações sensíveis conforme necessário
 
     return render(request, 'view_profile.html', context)
 
