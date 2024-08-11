@@ -46,22 +46,42 @@ def project_detail(request, pk):
 
 @login_required
 def create_project(request):
+    user = request.user
     if request.method == 'POST':
         project_form = ProjectForm(request.POST)
         task_formset = TaskFormSet(request.POST)
         
         if project_form.is_valid() and task_formset.is_valid():
-            project = project_form.save(commit=False)
-            project.created_by = request.user
-            project.save()
-            
             tasks = task_formset.save(commit=False)
-            for task in tasks:
-                task.project = project
-                task.save()
-            task_formset.save_m2m()  # Salva as relações many-to-many
+
+            # Soma o custo total das tasks usando o campo 'initial_value'
+            total_cost = sum(task.initial_value for task in tasks)
             
-            return redirect('projects:project_detail', pk=project.pk)
+            # Verifica se o usuário tem Waves suficientes
+            if user.wave_balance < total_cost:
+                messages.error(request, 'Você não tem Waves suficientes para criar este projeto.')
+                return redirect('projects:create_project')
+
+            with transaction.atomic():
+                # Desconta o saldo do usuário
+                user.wave_balance -= total_cost
+                user.save()
+
+                # Cria o projeto
+                project = project_form.save(commit=False)
+                project.created_by = request.user
+                project.save()
+
+                # Cria as tasks associadas ao projeto
+                for task in tasks:
+                    task.project = project
+                    task.save()
+
+                # Salva as relações many-to-many (programming_languages)
+                task_formset.save_m2m()
+                
+                messages.success(request, f'Projeto criado com sucesso! {total_cost} Waves foram descontados do seu saldo.')
+                return redirect('projects:project_detail', pk=project.pk)
     else:
         project_form = ProjectForm()
         task_formset = TaskFormSet()
@@ -293,6 +313,7 @@ def reject_email(developer_email, project_title):
     send_mail(subject, message, email_from, recipient_list)
 
 @login_required
+@login_required
 def edit_task(request, task_id):
     task = get_object_or_404(Task, id=task_id)
     project = task.project
@@ -305,12 +326,39 @@ def edit_task(request, task_id):
     if request.method == 'POST':
         form = TaskForm(request.POST, instance=task)
         if form.is_valid():
-            task = form.save(commit=False)
-            task.project = project
-            task.save()
-            form.save_m2m()  # Salva as relações many-to-many (programming_languages)
-            messages.success(request, _("Task updated successfully."))
-            return redirect('projects:project_detail', pk=project.id)
+            updated_task = form.save(commit=False)
+
+            # Debugging prints to check values
+            print(f"Original Value: {task.initial_value}")
+            print(f"New Value: {updated_task.initial_value}")
+
+            # Calcular a diferença de custo entre o valor anterior e o novo valor da tarefa
+            difference = updated_task.initial_value - task.initial_value
+            print(f"Difference: {difference}")
+
+            # Verificar se o saldo é suficiente para cobrir o custo adicional, se houver
+            if difference > 0 and request.user.wave_balance < difference:
+                messages.error(request, 'Você não tem Waves suficientes para atualizar esta tarefa.')
+                return redirect('projects:project_detail', pk=project.id)
+
+            with transaction.atomic():
+                # Descontar a diferença do saldo do usuário, se necessário
+                if difference > 0:
+                    request.user.wave_balance -= difference
+                    request.user.save()
+
+                # Atualizar a tarefa com os novos valores
+                updated_task.save()
+                form.save_m2m()  # Salva as relações many-to-many (programming_languages)
+
+                if difference > 0:
+                    messages.success(request, f'Tarefa atualizada com sucesso! {difference} Waves foram descontados do seu saldo.')
+                else:
+                    messages.success(request, 'Tarefa atualizada com sucesso.')
+                    
+                return redirect('projects:project_detail', pk=project.id)
+        else:
+            print("Form is not valid:", form.errors)
     else:
         form = TaskForm(instance=task)
 
@@ -318,10 +366,10 @@ def edit_task(request, task_id):
         'form': form,
         'task': task,
         'project': project,
-        'can_be_deleted': task.can_be_deleted(),  
-
+        'can_be_deleted': task.can_be_deleted(),
     }
     return render(request, 'edit_task.html', context)
+
 
 def add_task(request, project_id):
     project = get_object_or_404(Project, id=project_id)
@@ -335,11 +383,28 @@ def add_task(request, project_id):
         form = TaskForm(request.POST)
         if form.is_valid():
             task = form.save(commit=False)
-            task.project = project
-            task.save()
-            form.save_m2m()  # Salva as relações many-to-many (programming_languages)
-            messages.success(request, _("Task added successfully."))
-            return redirect('projects:project_detail', pk=project.id)
+
+            # Verificar se o usuário tem Waves suficientes para adicionar a tarefa
+            initial_value = task.initial_value
+
+            if request.user.wave_balance < initial_value:
+                messages.error(request, 'Você não tem Waves suficientes para adicionar esta tarefa.')
+                return redirect('projects:project_detail', pk=project.id)
+
+            with transaction.atomic():
+                # Desconta o saldo do usuário
+                request.user.wave_balance -= initial_value
+                request.user.save()
+
+                # Associa a tarefa ao projeto e salva
+                task.project = project
+                task.save()
+                
+                # Salva as relações many-to-many (programming_languages)
+                form.save_m2m()
+
+                messages.success(request, f'Tarefa adicionada com sucesso! {initial_value} Waves foram descontados do seu saldo.')
+                return redirect('projects:project_detail', pk=project.id)
     else:
         form = TaskForm()
 
@@ -369,11 +434,21 @@ def delete_task(request, task_id):
         })
 
     try:
-        task.delete()
-        return JsonResponse({
-            'success': True,
-            'message': _("Task deleted successfully.")
-        })
+        # Recuperar o valor da tarefa para adicionar de volta ao saldo do usuário
+        task_value = task.initial_value
+
+        with transaction.atomic():  # Garantir a consistência dos dados
+            # Adicionar o valor da tarefa de volta ao saldo do usuário
+            request.user.wave_balance += task_value
+            request.user.save()
+
+            # Deletar a tarefa
+            task.delete()
+
+            return JsonResponse({
+                'success': True,
+                'message': _("Task deleted successfully and value added back to your Waves balance.")
+            })
     except Exception as e:
         return JsonResponse({
             'success': False,
