@@ -501,6 +501,28 @@ def review_task(request, task_id):
             if review_status == 'approved':
                 task.status = 'completed'
                 messages.success(request, "Tarefa aprovada com sucesso!")
+
+                # Obter a aplicação aprovada para esta tarefa
+                application = TaskApplication.objects.filter(task=task, status='accepted').first()
+
+                if application and task.assigned_to:
+                    # Adicionar o valor proposto da aplicação ao saldo do desenvolvedor
+                    task.assigned_to.wave_balance += application.proposed_value
+                    task.assigned_to.save()
+
+                    # Verificar a diferença entre o valor proposto e o valor inicial
+                    difference = application.proposed_value - task.initial_value
+                    
+                    if difference > 0:
+                        # Descontar a diferença do saldo do criador do projeto
+                        project_owner = task.project.created_by
+                        if project_owner.wave_balance >= difference:
+                            project_owner.wave_balance -= difference
+                            project_owner.save()
+                        else:
+                            messages.error(request, "Saldo insuficiente do criador do projeto para cobrir a diferença.")
+                            return redirect('projects:project_detail', pk=task.project.id)
+                    
             else:
                 task.status = 'in_progress'
                 messages.info(request, "Tarefa retornada para o desenvolvedor para ajustes.")
