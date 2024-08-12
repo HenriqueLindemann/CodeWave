@@ -190,7 +190,7 @@ def apply_for_task(request, task_id):
     task = get_object_or_404(Task, id=task_id)
     
     if request.user == task.project.created_by:
-        messages.error(request, "You can't apply for your own task.")
+        messages.error(request, "Você não pode se candidatar à sua própria tarefa.")
         return redirect('projects:project_detail', pk=task.project.id)
     
     # Verificar se já existe uma aplicação do usuário para esta tarefa
@@ -219,7 +219,7 @@ def apply_for_task(request, task_id):
             }
             return render(request, 'apply_for_task.html', context)
         else:
-            messages.error(request, "This task is not open for applications.")
+            messages.error(request, "Esta tarefa não está aberta para candidaturas.")
             return redirect('projects:project_detail', pk=task.project.id)
 
     if request.method == 'POST':
@@ -230,10 +230,16 @@ def apply_for_task(request, task_id):
             application.developer = request.user
             application.status = 'pending'  # Resetar o status para pendente em caso de atualização
             application.save()
+
+            # Enviar email ao cliente do projeto
+            project_owner_email = task.project.created_by.email
+            project_title = task.project.title 
+            notify_application(project_owner_email, task.title, project_title)
+
             if existing_application:
-                messages.success(request, "Your application has been updated successfully.")
+                messages.success(request, "Sua candidatura foi atualizada com sucesso.")
             else:
-                messages.success(request, "Your application has been submitted successfully.")
+                messages.success(request, "Sua candidatura foi submetida com sucesso.")
             return redirect('projects:project_detail', pk=task.project.id)
     else:
         form = TaskApplicationForm(instance=existing_application)
@@ -276,7 +282,7 @@ def review_application(request, application_id):
                 TaskApplication.objects.filter(task=task).exclude(id=application.id).update(status='rejected')
 
                 #envia email se for aceito
-                # accept_email(application.developer.email, application.task.project.title)
+                #accept_email(application.developer.email, application.task.project.title)
                 
                 messages.success(request, "Application accepted. The task has been assigned, other applications have been rejected, and the task is now closed for new applications.")
             
@@ -286,7 +292,7 @@ def review_application(request, application_id):
                 messages.success(request, "Application rejected.")
                 
                 #Envia email se for rejeitado
-                # reject_email(application.developer.email, application.task.project.title)
+                reject_email(application.developer.email, application.task.project.title)
 
             else:
                 messages.error(request, "Invalid action.")
@@ -296,6 +302,7 @@ def review_application(request, application_id):
     
     return render(request, 'review_application.html', {'application': application, 'task': task})
 
+#funcoes de envio de email
 def accept_email(developer_email, project_title):
     subject = 'Você foi aceito no projeto!'
     message = f'Parabéns Desenvolvedor! Você foi aceito no projeto {project_title}.'
@@ -311,6 +318,39 @@ def reject_email(developer_email, project_title):
     recipient_list = [developer_email]
     
     send_mail(subject, message, email_from, recipient_list)
+
+def final_delivery_email(project_owner_email, task_title, project_title):
+    subject = 'Entrega Final Submetida!'
+    message = f'O desenvolvedor sinalizou que a tarefa "{task_title}" do projeto "{project_title}" foi concluída e está pronta para revisão.'
+    email_from = settings.DEFAULT_FROM_EMAIL
+    recipient_list = [project_owner_email]
+    
+    send_mail(subject, message, email_from, recipient_list)
+
+def developer_task_approved(developer_email, task_title, project_title):
+    subject = 'Sua tarefa foi aprovada!'
+    message = f'Parabéns! Sua tarefa "{task_title}" do projeto "{project_title}" foi aprovada. Ótimo trabalho!'
+    email_from = settings.DEFAULT_FROM_EMAIL
+    recipient_list = [developer_email]
+    
+    send_mail(subject, message, email_from, recipient_list)
+
+def developer_task_rejected(developer_email, task_title, project_title):
+    subject = 'Sua tarefa foi rejeitada'
+    message = f'Olá, desenvolvedor! Sua tarefa "{task_title}" do projeto "{project_title}" foi rejeitada. Por favor, leia os comentários feito pelo cliente e faça os ajustes necessários.'
+    email_from = settings.DEFAULT_FROM_EMAIL
+    recipient_list = [developer_email]
+    
+    send_mail(subject, message, email_from, recipient_list)
+
+def notify_application(project_owner_email, task_title, project_title):
+    subject = 'Novo Desenvolvedor Aplicou para sua Tarefa!'
+    message = f'Olá, um desenvolvedor aplicou para a sua tarefa "{task_title}" do projeto "{project_title}".'
+    email_from = settings.DEFAULT_FROM_EMAIL
+    recipient_list = [project_owner_email]
+    
+    send_mail(subject, message, email_from, recipient_list)
+
 
 @login_required
 @login_required
@@ -471,6 +511,12 @@ def submit_final_delivery(request, task_id):
             task.status = 'under_review'
             task.save()
             
+            # Enviar e-mail ao criador do projeto
+            project_owner_email = task.project.created_by.email
+            task_title = task.title
+            project_title = task.project.title
+            final_delivery_email(project_owner_email, task_title, project_title)
+            
             messages.success(request, 'Entrega final enviada com sucesso!')
             return redirect('projects:project_detail', pk=task.project.id)
     else:
@@ -523,9 +569,16 @@ def review_task(request, task_id):
                             messages.error(request, "Saldo insuficiente do criador do projeto para cobrir a diferença.")
                             return redirect('projects:project_detail', pk=task.project.id)
                     
+                    # Enviar email para o desenvolvedor notificando a aprovação da tarefa
+                    developer_task_approved(task.assigned_to.email, task.title, task.project.title)
+                    
             else:
                 task.status = 'in_progress'
                 messages.info(request, "Tarefa retornada para o desenvolvedor para ajustes.")
+
+                # Enviar email para o desenvolvedor notificando a rejeição da tarefa
+                if task.assigned_to:
+                    developer_task_rejected(task.assigned_to.email, task.title, task.project.title)
             
             task.feedback = feedback
             task.save()
