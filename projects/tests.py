@@ -51,7 +51,8 @@ class ProjectDetailViewTest(TestCase):
         self.user = User.objects.create_user(
             username='testuser',
             password='12345',
-            email='testuser@example.com' 
+            email='testuser@example.com',
+            wave_balance=1000000.00
         )
         self.project = Project.objects.create(
             title='Test Project',
@@ -108,7 +109,7 @@ class ProjectDetailViewTest(TestCase):
 class ProjectViewsTest(TestCase):
     def setUp(self):
         self.client = Client()
-        self.user = User.objects.create_user(username='testuser', password='12345', email='testuser@example.com')
+        self.user = User.objects.create_user(username='testuser', password='12345', email='testuser@example.com', wave_balance=1000000.00)
         self.project = Project.objects.create(
             title='Test Project',
             description='A test project',
