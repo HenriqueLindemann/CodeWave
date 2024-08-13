@@ -85,17 +85,15 @@ class UserViewTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'accounts/Templates/edit_profile.html')
 
-        # Test profile update
         new_data = {
             'name': 'Updated Name',
             'bio': 'Updated bio',
             'is_developer': False,
             'is_client': True,
-            'email': 'testuser@example.com',  # Include the email field
-            'username': 'testuser',  # Include the username field
+            'email': 'testuser@example.com',  
+            'username': 'testuser', 
         }
         response = self.client.post(reverse('accounts:edit_profile'), new_data)
-        
         if response.status_code != 302:
             print("Form errors:", response.context['form'].errors)
         
