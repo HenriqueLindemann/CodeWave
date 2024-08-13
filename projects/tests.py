@@ -150,7 +150,6 @@ class ProjectViewsTest(TestCase):
         
         if response.status_code == 200:
             print("Response content:", response.content.decode())
-            
             if 'form' in response.context:
                 print("Project form errors:", response.context['form'].errors)
             if 'task_formset' in response.context:
@@ -158,13 +157,6 @@ class ProjectViewsTest(TestCase):
         
         # Verificar se o projeto foi criado
         project_exists = Project.objects.filter(title='New Project').exists()
-        print(f"Project exists: {project_exists}")
-        
-        if project_exists:
-            project = Project.objects.get(title='New Project')
-            print(f"Project ID: {project.id}")
-            print(f"Project tasks count: {project.tasks.count()}")
-        
         self.assertTrue(project_exists, "O projeto não foi criado.")
         
         if project_exists:
